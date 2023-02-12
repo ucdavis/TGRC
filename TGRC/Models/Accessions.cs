@@ -6,6 +6,8 @@ namespace TGRC.Models
 {
     public class Accessions 
     {
+
+        //Hand built by james
         public string AccessionNum { get; set; }
         
         public string Status { get; set; }
