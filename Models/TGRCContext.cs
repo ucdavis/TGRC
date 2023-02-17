@@ -18,7 +18,7 @@ namespace TGRC.Models
 
         public virtual DbSet<Accession> Accessions { get; set; }
         public virtual DbSet<AccessionCategoriesInAccession> AccessionCategoriesInAccessions { get; set; }
-        public virtual DbSet<AccessionCategory> AccessionCategories { get; set; }
+        public virtual DbSet<AccessionCategories> AccessionCategories { get; set; }
         public virtual DbSet<AccessionCluster> AccessionClusters { get; set; }
         public virtual DbSet<AccessionStatus> AccessionStatuses { get; set; }
         public virtual DbSet<AccessionsInImage> AccessionsInImages { get; set; }
@@ -39,13 +39,25 @@ namespace TGRC.Models
         public virtual DbSet<PhenoInGene> PhenoInGenes { get; set; }
         public virtual DbSet<PhenotypicCategory> PhenotypicCategories { get; set; }
 
+
+         public static ILoggerFactory GetLoggerFactory()
+        {
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging(builder =>
+                   builder.AddConsole()
+                          .AddFilter(DbLoggerCategory.Database.Command.Name,
+                                     LogLevel.Information));
+            return serviceCollection.BuildServiceProvider()
+                    .GetService<ILoggerFactory>();
+        }
+
        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Accession>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e =>e.AccessionNum);
 
                 entity.Property(e => e.AccessionNum).HasMaxLength(10);
 
@@ -132,22 +144,24 @@ namespace TGRC.Models
                 entity.Property(e => e.Traits).HasMaxLength(200);
 
                 entity.Property(e => e.VegetationType).HasMaxLength(20);
+
+                entity.HasMany(e => e.Donors);
             });
 
             modelBuilder.Entity<AccessionCategoriesInAccession>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new {e.AccessionNum, e.AccessionCategory});
 
                 entity.Property(e => e.AccessionCategory).HasMaxLength(40);
 
                 entity.Property(e => e.AccessionNum).HasMaxLength(50);
             });
 
-            modelBuilder.Entity<AccessionCategory>(entity =>
+            modelBuilder.Entity<AccessionCategories>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.AccessionCategory);
 
-                entity.Property(e => e.AccessionCategory1)
+                entity.Property(e => e.AccessionCategory)
                     .HasMaxLength(40)
                     .HasColumnName("AccessionCategory");
 
@@ -195,8 +209,7 @@ namespace TGRC.Models
             });
 
             modelBuilder.Entity<Colleague>(entity =>
-            {
-                entity.HasNoKey();
+            {               
 
                 entity.ToTable("COLLEAGUES");
 
@@ -294,7 +307,7 @@ namespace TGRC.Models
 
             modelBuilder.Entity<CulturalRecommendation>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.RecommendationNum);
 
                 entity.Property(e => e.Description).HasMaxLength(50);
 
@@ -307,7 +320,7 @@ namespace TGRC.Models
 
             modelBuilder.Entity<CultureInAccession>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new {e.AccessionNum, e.RecommendationNum});
 
                 entity.ToTable("CultureInAccession");
 
@@ -316,7 +329,7 @@ namespace TGRC.Models
 
             modelBuilder.Entity<DonorsInAccession>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new {e.ColleagueNum, e.AccessionNum});
 
                 entity.Property(e => e.AccessionNum).HasMaxLength(50);
 

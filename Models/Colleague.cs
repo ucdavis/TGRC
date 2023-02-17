@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TGRC.Models
 {
     public partial class Colleague
     {
+        [Key]
         public int? ColleagueNum { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
@@ -36,5 +38,9 @@ namespace TGRC.Models
         public string User { get; set; }
         public string UsdaOrganizationalCategory { get; set; }
         public string Salutation { get; set; }
+
+        public string FullName() {
+            return $"{FirstName} {LastName}";
+        }
     }
 }

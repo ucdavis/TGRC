@@ -1,9 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+using TGRC.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 //builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
+builder.Services.AddDbContext<TGRCContext>( o =>
+            {
+                o.UseSqlServer(builder.Configuration.GetConnectionString("ServiceTrackerContext"));
+                o.UseLoggerFactory(TGRCContext.GetLoggerFactory());                
+            });
 
 var app = builder.Build();
 
