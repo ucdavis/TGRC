@@ -8,5 +8,7 @@ namespace TGRC.Models
         public int? ImageNum { get; set; }
         public string AccessionNum { get; set; }
         public DateTime? DateModified { get; set; }
+
+        public Image Image { get; set; }
     }
 }

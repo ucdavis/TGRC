@@ -16,7 +16,13 @@ public class AccessionController : Controller
 
     public async Task<IActionResult> Detail(string id)
     {
-        var model = await _context.Accessions.Include(a => a.Donors).ThenInclude(d => d.Colleague).Include(a => a.Categories).Include(a => a.Cultures).ThenInclude(c => c.Recommendation).Where(a => a.AccessionNum == id).FirstOrDefaultAsync();
+        var model = await _context.Accessions
+            .Include(a => a.Donors).ThenInclude(d => d.Colleague)
+            .Include(a => a.Categories)
+            .Include(a => a.Cultures).ThenInclude(c => c.Recommendation)
+            .Include(a => a.Genes)
+            .Include(a => a.Images).ThenInclude(i => i.Image)
+            .Where(a => a.AccessionNum == id).FirstOrDefaultAsync();
         return View(model);
     }
 

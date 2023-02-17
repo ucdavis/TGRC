@@ -77,6 +77,7 @@ namespace TGRC.Models
         [Display(Name = "Latitude/longitude source")]
         public string LatLonSource { get; set; }
         public string ElevSource { get; set; }
+        [Display(Name ="Use of this accession is restricted by:")]
         public string Mta { get; set; }
         public int? CulRecId { get; set; }
         public int? DiseaseResist { get; set; }
@@ -168,6 +169,13 @@ namespace TGRC.Models
 
         [ForeignKey("AccessionNum")]
         public ICollection<CultureInAccession> Cultures { get; set; }
+
+        [ForeignKey("AccessionNum")]
+        public ICollection<GenesAndAllelesInAccession> Genes { get; set; }
+        
+        [ForeignKey("AccessionNum")]
+        public ICollection<AccessionsInImage> Images { get; set; }
+        
         
     }
 }

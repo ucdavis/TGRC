@@ -194,7 +194,7 @@ namespace TGRC.Models
 
             modelBuilder.Entity<AccessionsInImage>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new {e.AccessionNum, e.ImageNum});
 
                 entity.Property(e => e.AccessionNum).HasMaxLength(50);
 
@@ -382,8 +382,7 @@ namespace TGRC.Models
 
             modelBuilder.Entity<GenesAndAllelesInAccession>(entity =>
             {
-                entity.HasNoKey();
-
+                entity.HasKey(e => new {e.AccessionNum, e.Gene, e.Allele});
                 entity.Property(e => e.AccessionNum).HasMaxLength(10);
 
                 entity.Property(e => e.Allele).HasMaxLength(8);
@@ -410,7 +409,7 @@ namespace TGRC.Models
 
             modelBuilder.Entity<Image>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.ImageNum);
 
                 entity.ToTable("IMAGES");
 
@@ -430,9 +429,7 @@ namespace TGRC.Models
 
                 entity.Property(e => e.DateModified).HasColumnType("datetime");
 
-                entity.Property(e => e.File).HasMaxLength(150);
-
-                entity.Property(e => e.ImageNumOld).HasColumnName("ImageNum_old");
+                entity.Property(e => e.File).HasMaxLength(150);                
 
                 entity.Property(e => e.Location).HasMaxLength(50);
 

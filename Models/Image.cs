@@ -4,9 +4,8 @@ using System.Collections.Generic;
 namespace TGRC.Models
 {
     public partial class Image
-    {
-        public int? ImageNumOld { get; set; }
-        public int? ImageNum { get; set; }
+    {        
+        public int ImageNum { get; set; }
         public string Caption { get; set; }
         public string Hyperlink { get; set; }
         public string File { get; set; }
