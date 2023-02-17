@@ -1,0 +1,407 @@
+@model TGRC.Models.Accession
+
+@{
+    var donorI = 1;
+    var donorCount = @Model.Donors.Count;
+    var categoryI = 1;
+    var categoryCount = @Model.Categories.Count;
+    var cultureI = 1;
+    var cultureCount = @Model.Cultures.Count;
+    var geneI = 1;
+    var geneCount = @Model.Genes.Count;
+    var imageI = 1;
+    var imageCount = @Model.Images.Count;
+}
+
+<h2>Accession Details</h2>
+
+<div>
+    <div class="form-group row">
+        <label asp-for="AccessionNum" class="col-sm-3 col-form-label"></label>
+        <div class="col-sm-9">
+            <input type="text" asp-for="AccessionNum" readonly class="form-control-plaintext">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Status" class="col-sm-3 col-form-label"></label>
+        <div class="col-sm-9">
+            <input type="text" asp-for="Status" readonly class="form-control-plaintext">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Inspected" class="col-sm-3 col-form-label"></label>
+        <div class="col-sm-9">
+            <input type="text" value="@(Model.Inspected ?  "Yes" : "No" )" readonly class="form-control-plaintext">
+        </div>
+    </div>
+    @if (!String.IsNullOrWhiteSpace(Model.OtherId))
+    {
+        <div class="form-group row">
+            <label asp-for="OtherId" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="OtherId" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    <div class="form-group row">
+        <label asp-for="Taxon2" class="col-sm-3 col-form-label"></label>
+        <div class="col-sm-9">
+            <input type="text" asp-for="Taxon2" readonly class="form-control-plaintext">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Taxon" class="col-sm-3 col-form-label"></label>
+        <div class="col-sm-9">
+            <input type="text" asp-for="Taxon" readonly class="form-control-plaintext">
+        </div>
+    </div>
+    @if(!String.IsNullOrEmpty(Model.CultivarName))
+    {
+        <div class="form-group row">
+            <label asp-for="CultivarName" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="CultivarName" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if (Model.Donors.Count > 0)
+    {
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Donor(s)</label>
+            <div class="col-sm-9">
+                <span class="form-control-plaintext">
+                    @foreach (var donor in Model.Donors)
+                    {
+                        if (donorI == donorCount)
+                        {
+                            @donor.Colleague.FullName()
+                        }
+                        else
+                        {
+                            <span>@donor.Colleague.FullName(); </span>
+                        }
+                        donorI += 1;
+                    }
+                </span>
+            </div>
+        </div>
+    }
+    @if(!String.IsNullOrWhiteSpace(Model.SourceOfAccession))
+    {
+        <div class="form-group row">
+            <label asp-for="SourceOfAccession" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="SourceOfAccession" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if (!String.IsNullOrWhiteSpace(Model.CollectionNum))
+    {
+        <div class="form-group row">
+            <label asp-for="CollectionNum" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="CollectionNum" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if (!String.IsNullOrWhiteSpace(Model.SiteDetails))
+    {
+        <div class="form-group row">
+            <label asp-for="SiteDetails" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="SiteDetails" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if (!String.IsNullOrWhiteSpace(Model.CollectionSite))
+    {
+        <div class="form-group row">
+            <label asp-for="CollectionSite" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="CollectionSite" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if (!String.IsNullOrWhiteSpace(Model.ProvinceOrDepartment))
+    {
+        <div class="form-group row">
+            <label asp-for="ProvinceOrDepartment" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="ProvinceOrDepartment" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if (!String.IsNullOrWhiteSpace(Model.Country))
+    {
+        <div class="form-group row">
+            <label asp-for="Country" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="Country" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if (Model.LatDeg != null || Model.LatDec != null || Model.LonDeg != null || Model.LonDec != null)
+    {
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Latitude/longitude</label>
+            <div class="col-sm-9">
+                Latitude: @Model.LatitudeCombined; Longitude: @Model.LongitudeCombined
+            </div>
+        </div>
+    }
+    @if (!String.IsNullOrWhiteSpace(Model.LatLonSource))
+    {
+        <div class="form-group row">
+            <label asp-for="LatLonSource" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="LatLonSource" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if (!String.IsNullOrWhiteSpace(Model.Elevation))
+    {
+        <div class="form-group row">
+            <label asp-for="Elevation" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="Elevation" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if (!String.IsNullOrWhiteSpace(Model.CollectionDate) || !String.IsNullOrWhiteSpace(Model.CollectionMonth) ||
+    !String.IsNullOrEmpty(Model.CollectionYear))
+    {
+        <div class="form-group row">
+            <label asp-for="CollectionDateCombined" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="CollectionDateCombined" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if (!String.IsNullOrWhiteSpace(Model.PopulationSize))
+    {
+        <div class="form-group row">
+            <label asp-for="PopulationSize" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="PopulationSize" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if (!String.IsNullOrWhiteSpace(Model.SampleSize))
+    {
+        <div class="form-group row">
+            <label asp-for="SampleSize" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="SampleSize" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if (!String.IsNullOrWhiteSpace(Model.Habitat))
+    {
+        <div class="form-group row">
+            <label asp-for="Habitat" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="Habitat" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if(!String.IsNullOrWhiteSpace(Model.AssociatedBiota))
+    { 
+        <div class="form-group row">
+            <label asp-for="AssociatedBiota" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="AssociatedBiota" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if(!String.IsNullOrWhiteSpace(Model.VegetationType))
+    {
+        <div class="form-group row">
+            <label asp-for="VegetationType" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="VegetationType" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if (!String.IsNullOrWhiteSpace(Model.CollectionNotes))
+    {
+        <div class="form-group row">
+            <label asp-for="CollectionNotes" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <textarea class="form-control-plaintext" readonly asp-for="CollectionNotes"></textarea>
+            </div>
+        </div>
+    }
+    @if (!String.IsNullOrWhiteSpace(Model.MatingSystem))
+    {
+        <div class="form-group row">
+            <label asp-for="MatingSystem" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="MatingSystem" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if(!String.IsNullOrWhiteSpace(Model.ChromosomeNum) && Model.ChromosomeNum != "24")
+    {
+        <div class="form-group row">
+            <label asp-for="ChromosomeNum" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="ChromosomeNum" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if(!String.IsNullOrWhiteSpace(Model.Traits))
+    {
+        <div class="form-group row">
+            <label asp-for="Traits" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="Traits" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if(!String.IsNullOrWhiteSpace(Model.KaryotypicalVariations))
+    {
+        <div class="form-group row">
+            <label asp-for="KaryotypicalVariations" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="KaryotypicalVariations" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if(!String.IsNullOrWhiteSpace(Model.RelevantChromosome))
+    {
+        <div class="form-group row">
+            <label asp-for="RelevantChromosome" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="RelevantChromosome" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if (Model.Cultures.Count > 0)
+    {
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Horticultural Recommendations</label>
+            <div class="col-sm-9">
+                <span class="form-control-plaintext">
+                    @foreach (var cult in Model.Cultures)
+                    {
+                        if (cultureI == cultureCount)
+                        {
+                            @cult.Recommendation.Description
+                        }
+                        else
+                        {
+                            <span>@cult.Recommendation.Description;</span>
+                        }
+                        cultureI += 1;
+                    }
+                </span>
+            </div>
+        </div>
+    }
+    @if (!String.IsNullOrWhiteSpace(Model.Comments))
+    {
+        <div class="form-group row">
+            <label asp-for="Comments" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <textarea class="form-control-plaintext" readonly asp-for="Comments"></textarea>
+            </div>
+        </div>
+
+    }
+    @if (Model.Categories.Count > 0)
+    {
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Categories</label>
+            <div class="col-sm-9">
+                <span class="form-control-plaintext">
+                    @foreach (var cat in Model.Categories)
+                    {
+                        if (categoryI == categoryCount)
+                        {
+                            @cat.AccessionCategory //TODO Link to Genes
+                        }
+                        else
+                        {
+                            <span>@cat.AccessionCategory;</span>
+                        }
+                        categoryI += 1;
+                    }
+                </span>
+            </div>
+        </div>
+    }
+    @if(Model.AccessionYear.HasValue)
+    {
+        <div class="form-group row">
+            <label asp-for="AccessionYear" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <input type="text" asp-for="AccessionYear" readonly class="form-control-plaintext">
+            </div>
+        </div>
+    }
+    @if(!String.IsNullOrWhiteSpace(Model.Mta))
+    {
+        <div class="form-group row">
+            <label asp-for="Mta" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <a href="https://tgrc.ucdavis.edu/MTA/@Model.Mta" class="form-control-plaintext">@Model.Mta</a>
+            </div>
+        </div>
+    }
+    @if (Model.Genes.Count > 0)
+    {
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Genes</label>
+            <div class="col-sm-9">
+                <span class="form-control-plaintext">
+                    @foreach (var gene in Model.Genes)
+                    {
+                        if (geneI == geneCount)
+                        {
+                            @gene.Gene
+                        }
+                        else
+                        {
+                            <span>@gene.Gene;</span>
+                        }
+                        geneI += 1;
+                    }
+                </span>
+            </div>
+        </div>
+    }
+    @if (Model.Images.Count > 0)
+    {
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Images</label>
+            <div class="col-sm-9">
+                <span class="form-control-plaintext">
+                    @foreach (var image in Model.Images)
+                    {
+                        if (imageI == imageCount)
+                        {
+                            <a href="https://tgrc.ucdavis.edu/images/@image.Image.File">@image.Image.File</a>                            
+                        }
+                        else
+                        {
+                            <a href="https://tgrc.ucdavis.edu/images/@image.Image.File">@image.Image.File</a>;
+                        }
+                        imageI += 1;
+                    }
+                </span>
+            </div>
+        </div>
+    }
+</div>
+
+
+@section Scripts {
+    <script type="text/Javascript">
+        $("textarea").each(function () {
+            this.setAttribute("style", "height:" + (this.scrollHeight) + "px;overflow-y:hidden;");
+            }).on("input", function () {
+            this.style.height = 0;
+            this.style.height = (this.scrollHeight) + "px";
+        });
+    </script>
+}
