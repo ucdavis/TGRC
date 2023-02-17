@@ -20,3 +20,16 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.navbar-nav {
+  background: #022851;
+  padding: .24em .3em .25em;
+  font-weight: bold;
+}
+
+.nav-link:hover, .nav-link:active:hover{
+  background-color: #ffbf00;
+  color: #022851 !important;
+  font-weight: bold;
+}
+
