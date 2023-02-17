@@ -1,0 +1,61 @@
+@model TGRC.Models.Gene
+
+<h2>Gene Details</h2>
+
+<div>
+    <table class="table">
+        <thead>
+            <th>Gene</th>
+            <th>Locus Name</th>
+            <th>Chromosome</th>
+            <th>Arm</th>
+            <th>Marker type</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Gene1</td>
+                <td>@Model.LocusName</td>
+                <td>@Model.Chromosome</td>
+                <td>@Model.Arm</td>
+                <td>@Model.MarkerType</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table">
+        <thead>
+            <th>Allele</th>
+            <th>Allele Name</th>
+            <th>Synonyms</th>
+            <th>Source</th>
+            <th>Notes</th>
+            <th>Phenotype</th>
+            <th>Primary</th>
+            <th>Description</th>
+        </thead>
+        <tbody>
+            @foreach (var allele in Model.Alleles)
+            {
+                <tr>
+                    <td>@allele.Allele</td>
+                    <td>@allele.AlleleName</td>
+                    <td>@allele.SynonymsOfAllele</td>
+                    <td>@allele.MutantType</td>
+                    <td>@allele.Notes</td>
+                    <td>@allele.Phenotype</td>
+                    <td>@allele.PhenoTypeDetails.PrimaryPhenotype</td>
+                    <td>@allele.PhenoTypeDetails.Category.Description</td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    <div class="col-10 border container row">
+        <h5>Accessions with this gene (only Active accessions shown)</h5>
+        @foreach (var acc in Model.Accessions)
+        {
+            <div class="col-2">
+                <a asp-action="details" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a>
+            </div>
+        }
+    </div>
+</div>

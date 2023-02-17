@@ -12,5 +12,7 @@ namespace TGRC.Models
         public bool? PrimarySource { get; set; }
         public string Background { get; set; }
         public DateTime? DateModified { get; set; }
+
+        public Accession Accession { get; set; }
     }
 }

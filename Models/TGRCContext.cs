@@ -340,7 +340,7 @@ namespace TGRC.Models
 
             modelBuilder.Entity<Gene>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Gene1);
 
                 entity.ToTable("GENES");
 
@@ -363,7 +363,7 @@ namespace TGRC.Models
 
             modelBuilder.Entity<GenesAndAllele>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new {e.Gene, e.Allele});
 
                 entity.Property(e => e.Allele).HasMaxLength(8);
 
@@ -475,7 +475,7 @@ namespace TGRC.Models
 
             modelBuilder.Entity<PhenoInGene>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new {e.Gene, e.Allele});
 
                 entity.Property(e => e.Allele).HasMaxLength(50);
 
@@ -492,7 +492,7 @@ namespace TGRC.Models
 
             modelBuilder.Entity<PhenotypicCategory>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.PhenotypicCategory1);
 
                 entity.Property(e => e.AbbrevForSolgenes).HasMaxLength(255);
 
