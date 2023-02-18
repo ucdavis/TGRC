@@ -5,7 +5,7 @@ namespace TGRC.Models
 {
     public partial class AccessionStatus
     {
-        public string AccessionStatus1 { get; set; }
+        public string Status { get; set; }
         public string Definition { get; set; }
     }
 }

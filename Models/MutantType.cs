@@ -5,7 +5,7 @@ namespace TGRC.Models
 {
     public partial class MutantType
     {
-        public string MutantType1 { get; set; }
+        public string Type { get; set; }
         public string MutMeaning { get; set; }
     }
 }
