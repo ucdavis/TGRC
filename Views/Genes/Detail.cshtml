@@ -54,7 +54,7 @@
         @foreach (var acc in Model.GeneAccessions)
         {
             <div class="col-2">
-                <a asp-action="details" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a>
+                <a asp-action="detail" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a>
             </div>
         }
     </div>
