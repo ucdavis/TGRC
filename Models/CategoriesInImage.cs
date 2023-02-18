@@ -5,7 +5,7 @@ namespace TGRC.Models
 {
     public partial class CategoriesInImage
     {
-        public int? ImageNum { get; set; }
+        public int ImageNum { get; set; }
         public string Category { get; set; }
     }
 }

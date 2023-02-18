@@ -7,7 +7,7 @@ namespace TGRC.Models
     public partial class Colleague
     {
         [Key]
-        public int? ColleagueNum { get; set; }
+        public int ColleagueNum { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string MiddleInitial { get; set; }

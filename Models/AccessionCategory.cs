@@ -7,6 +7,6 @@ namespace TGRC.Models
     {
         public string AccessionCategory { get; set; }
         public string Definition { get; set; }
-        public byte? Priority { get; set; }
+        public byte Priority { get; set; }
     }
 }

@@ -170,7 +170,7 @@ namespace TGRC.Models
 
             modelBuilder.Entity<AccessionCluster>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new {e.AccessionNum, e.ClusterName});
 
                 entity.ToTable("AccessionCluster");
 
@@ -181,11 +181,11 @@ namespace TGRC.Models
 
             modelBuilder.Entity<AccessionStatus>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Status);
 
                 entity.ToTable("AccessionStatus");
 
-                entity.Property(e => e.AccessionStatus1)
+                entity.Property(e => e.Status)
                     .HasMaxLength(255)
                     .HasColumnName("AccessionStatus");
 
@@ -203,7 +203,7 @@ namespace TGRC.Models
 
             modelBuilder.Entity<CategoriesInImage>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new {e.ImageNum, e.Category });
 
                 entity.Property(e => e.Category).HasMaxLength(50);
             });
@@ -300,7 +300,7 @@ namespace TGRC.Models
 
             modelBuilder.Entity<ColleaguesInImage>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new {e.ColleagueNum, e.ImageNum});
 
                 entity.Property(e => e.DateModified).HasColumnType("datetime");
             });
@@ -440,7 +440,7 @@ namespace TGRC.Models
 
             modelBuilder.Entity<IsogenicityType>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Isogenicity);
 
                 entity.ToTable("IsogenicityType");
 
@@ -453,22 +453,21 @@ namespace TGRC.Models
 
             modelBuilder.Entity<MatingSystem>(entity =>
             {
-                entity.HasNoKey();
-
-                entity.Property(e => e.MatingSystem1)
+                entity.HasKey(e => e.System);
+                entity.Property(e => e.System)
                     .HasMaxLength(20)
                     .HasColumnName("MatingSystem");
             });
 
             modelBuilder.Entity<MutantType>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Type);
 
                 entity.ToTable("MutantType");
 
                 entity.Property(e => e.MutMeaning).HasMaxLength(50);
 
-                entity.Property(e => e.MutantType1)
+                entity.Property(e => e.Type)
                     .HasMaxLength(12)
                     .HasColumnName("MutantType");
             });

@@ -5,6 +5,6 @@ namespace TGRC.Models
 {
     public partial class MatingSystem
     {
-        public string MatingSystem1 { get; set; }
+        public string System { get; set; }
     }
 }
