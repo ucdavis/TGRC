@@ -10,7 +10,7 @@ builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 builder.Services.AddDbContext<TGRCContext>( o =>
             {
-                o.UseSqlServer(builder.Configuration.GetConnectionString("ServiceTrackerContext"));
+                o.UseSqlServer(builder.Configuration.GetConnectionString("TGRCContext"));
                 o.UseLoggerFactory(TGRCContext.GetLoggerFactory());                
             });
 
