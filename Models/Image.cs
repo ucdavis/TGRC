@@ -20,8 +20,6 @@ namespace TGRC.Models
         public string B { get; set; }
         public short? Chk { get; set; }
         public int? Chkthumb { get; set; }
-
-        [ForeignKey("ImageNum")]
-        public AccessionsInImage MyProperty { get; set; }
+       
     }
 }

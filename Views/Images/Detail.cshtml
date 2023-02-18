@@ -1,12 +1,43 @@
-@model TGRC.Models.Image
+@model TGRC.Models.ImageDetailsViewModel
 
 <h2>Image Information</h2>
 
 <div>
     <div class="form-group row">
-        <label asp-for="Caption" class="col-sm-3 col-form-label"></label>
+        <label asp-for="image.Caption" class="col-sm-3 col-form-label"></label>
         <div class="col-sm-9">
-            <input type="text" asp-for="Caption" readonly class="form-control-plaintext">
+            <input type="text" asp-for="image.Caption" readonly class="form-control-plaintext">
         </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="taxon" class="col-sm-3 col-form-label"></label>
+        <div class="col-sm-9">
+            <input type="text" asp-for="taxon" readonly class="form-control-plaintext">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Gene (format:gene^allele)</label>
+        <div class="col-sm-9">
+            <ul class="list-group list-group-horizontal form-control-plaintext">
+                @foreach (var gene in Model.genes)
+                {
+                    <li class="list-group-item"><a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Gene^@gene.Allele</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Accession(s)</label>
+        <div class="col-sm-9">
+            <ul class="list-group list-group-horizontal form-control-plaintext">
+                @foreach (var acc in Model.accession)
+                {
+                    <li class="list-group-item"><a asp-action="Detail" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div>
+        <a href="https://tgrc-app.ucdavis.edu/Images/@Model.image.File"><img src="https://tgrc-app.ucdavis.edu/Images/thumbnails/@Model.image.File"></a> (click for full size image)
     </div>
 </div>

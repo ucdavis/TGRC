@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TGRC.Models
 {
@@ -9,6 +10,7 @@ namespace TGRC.Models
         public string AccessionNum { get; set; }
         public DateTime? DateModified { get; set; }
 
+        [ForeignKey("ImageNum")]
         public Image Image { get; set; }
     }
 }

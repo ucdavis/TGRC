@@ -16,7 +16,7 @@ public class ImagesController : Controller
 
     public async Task<IActionResult> Detail(string id)
     {
-        var model = await _context.Images.Where(i => i.File == id).FirstOrDefaultAsync();
+        var model = await ImageDetailsViewModel.Create(_context, id);
         return View(model);
     }
 
