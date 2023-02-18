@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TGRC.Models
 {
@@ -10,5 +11,8 @@ namespace TGRC.Models
         public string Allele { get; set; }
         public string PrimaryPhenotype { get; set; }
         public DateTime? DateModified { get; set; }
+
+        [ForeignKey("PhenotypicalCategory")]
+        public PhenotypicCategory Category { get; set; }
     }
 }

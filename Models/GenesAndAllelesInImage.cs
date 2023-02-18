@@ -9,5 +9,7 @@ namespace TGRC.Models
         public string Gene { get; set; }
         public string Allele { get; set; }
         public DateTime? DateModified { get; set; }
+        
+        public Image Image { get; set; }
     }
 }
