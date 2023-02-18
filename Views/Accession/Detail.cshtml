@@ -358,11 +358,11 @@
                     {
                         if (geneI == geneCount)
                         {
-                            @gene.Gene
+                            <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Gene</a>
                         }
                         else
                         {
-                            <span>@gene.Gene;</span>
+                            <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Gene</a><span>; </span>
                         }
                         geneI += 1;
                     }
