@@ -18,6 +18,9 @@ namespace TGRC.Models
         public ICollection<GenesAndAllele> Alleles { get; set; }
         
         [ForeignKey("Gene")]
-        public ICollection<GenesAndAllelesInAccession> Accessions { get; set; }
+        public ICollection<GenesAndAllelesInAccession> GeneAccessions { get; set; }
+
+        [ForeignKey("Gene")]
+        public ICollection<GenesAndAllelesInImage> GeneImages { get; set; }
     }
 }

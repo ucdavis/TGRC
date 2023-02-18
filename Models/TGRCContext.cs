@@ -398,7 +398,7 @@ namespace TGRC.Models
 
             modelBuilder.Entity<GenesAndAllelesInImage>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new {e.ImageNum, e.Gene, e.Allele});
 
                 entity.Property(e => e.Allele).HasMaxLength(50);
 

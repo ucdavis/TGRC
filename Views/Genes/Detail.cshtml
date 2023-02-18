@@ -51,10 +51,25 @@
     </table>
     <div class="col-10 border container row">
         <h5>Accessions with this gene (only Active accessions shown)</h5>
-        @foreach (var acc in Model.Accessions)
+        @foreach (var acc in Model.GeneAccessions)
         {
             <div class="col-2">
                 <a asp-action="details" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a>
+            </div>
+        }
+    </div>
+    <div class="col-12 border">
+        <h5>Image Links</h5>
+        @foreach (var image in Model.GeneImages)
+        {
+            <div class="col-12 container row imageRow">
+                <div class="col">
+                    <a asp-action="Image" asp-controller="Images" asp-route-id="@image.Image.File"><img src="https://tgrc-app.ucdavis.edu/Images/thumbnails/@image.Image.File"></a>
+                </div>
+                <div class="col">
+                    <a asp-action="Image" asp-controller="Images" asp-route-id="@image.Image.File">@image.Image.File</a>
+                </div>
+                <div class="col-8"> - @image.Image.Caption</div>               
             </div>
         }
     </div>

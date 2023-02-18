@@ -16,7 +16,11 @@ public class GenesController : Controller
 
     public async Task<IActionResult> Detail(string id)
     {
-        var model = await _context.Genes.Include(g => g.Alleles).ThenInclude(a => a.PhenoTypeDetails).ThenInclude(d => d.Category).Include(g => g.Accessions.Where(a => a.Accession.Status == "Active")).Where(g => g.Gene1==id).FirstOrDefaultAsync();
+        var model = await _context.Genes
+            .Include(g => g.Alleles).ThenInclude(a => a.PhenoTypeDetails).ThenInclude(d => d.Category)
+            .Include(g => g.GeneAccessions.Where(a => a.Accession.Status == "Active"))
+            .Include(g => g.GeneImages).ThenInclude(i => i.Image)
+            .Where(g => g.Gene1==id).FirstOrDefaultAsync();
         return View(model);
     }
 
