@@ -38,6 +38,7 @@ namespace TGRC.Models
         public virtual DbSet<MutantType> MutantTypes { get; set; }
         public virtual DbSet<PhenoInGene> PhenoInGenes { get; set; }
         public virtual DbSet<PhenotypicCategory> PhenotypicCategories { get; set; }
+        public virtual DbSet<Taxa> Taxa { get; set; }
 
 
          public static ILoggerFactory GetLoggerFactory()
@@ -155,6 +156,12 @@ namespace TGRC.Models
                 entity.Property(e => e.AccessionCategory).HasMaxLength(40);
 
                 entity.Property(e => e.AccessionNum).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Taxa>(entity =>
+            {
+                entity.HasKey(e => e.Taxon);
+
             });
 
             modelBuilder.Entity<AccessionCategories>(entity =>

@@ -26,5 +26,16 @@ public class AccessionController : Controller
         return View(model);
     }
 
+    public async Task<IActionResult> Search(AccessionSearchViewModel vm)
+    {
+        if(!vm.Search)
+        {
+            var freshModel = await AccessionSearchViewModel.Create(_context, null);
+            return View(freshModel);
+        }
+        var model = await AccessionSearchViewModel.Create(_context, vm);
+        return View(model);
+    }
+
     
 }

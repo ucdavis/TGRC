@@ -5,8 +5,8 @@
 <div>
     <div class="form-group row">
         <label asp-for="image.Caption" class="col-sm-3 col-form-label"></label>
-        <div class="col-sm-9">
-            <input type="text" asp-for="image.Caption" readonly class="form-control-plaintext">
+        <div class="col-sm-9">            
+            <textarea class="form-control-plaintext" readonly asp-for="image.Caption"></textarea>
         </div>
     </div>
     <div class="form-group row">
@@ -41,3 +41,12 @@
         <a href="https://tgrc-app.ucdavis.edu/Images/@Model.image.File"><img src="https://tgrc-app.ucdavis.edu/Images/thumbnails/@Model.image.File"></a> (click for full size image)
     </div>
 </div>
+
+
+@section Scripts {
+    <script type="text/Javascript">
+        $("textarea").each(function () {
+            this.setAttribute("style", "height:" + (this.scrollHeight) + "px;overflow-y:hidden;");
+        });
+    </script>
+}
