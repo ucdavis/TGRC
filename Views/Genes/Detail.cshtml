@@ -1,5 +1,12 @@
 @model TGRC.Models.Gene
 
+@{
+    if(ViewBag.Frame == "yes")
+    {
+        Layout = "_LayoutFrame";
+    }
+}
+
 <h2>Gene Details</h2>
 
 <div>
