@@ -71,13 +71,7 @@ namespace TGRC.Models
                               
             if(vm != null)
             {
-                var accToFind = _context.Accessions
-                    //.Include(a => a.Donors).ThenInclude(d => d.Colleague)
-                    //.Include(a => a.Categories)
-                    //.Include(a => a.Cultures).ThenInclude(c => c.Recommendation)
-                    //.Include(a => a.Genes)
-                    //.Include(a => a.Images).ThenInclude(i => i.Image)
-                    .AsQueryable();
+                var accToFind = _context.Accessions.AsQueryable();
                 
                 if(!string.IsNullOrWhiteSpace(vm.AccessionNumberToSearch))
                 {
