@@ -31,6 +31,7 @@ namespace TGRC.Models
         public string SelectedPhenotypeCategory { get; set; }
         public List<PhenotypicCategory> PhenotypeCategoryList { get; set; }
         public string PhenotypeToSearch { get; set; }
+        public string PhenotypeKeyword { get; set; }
 
         public GeneSearchViewModel() {
             Search = false;
@@ -78,13 +79,17 @@ namespace TGRC.Models
                 {
                     geneToFind = geneToFind.Where(g => g.MarkerType == vm.SelectedMarker);
                 }
-                if(vm.SelectedMutant != ")")
+                if(vm.SelectedMutant != "0")
                 {
                     geneToFind = geneToFind.Where(g => g.Alleles.Any(a => a.MutantType == vm.SelectedMutant));
                 }
                 if(!string.IsNullOrWhiteSpace(vm.SelectedPhenotypeCategory))
                 {
                     geneToFind = geneToFind.Where(g => g.Alleles.Any(a => a.PhenoTypeDetails.PhenotypicalCategory == vm.SelectedPhenotypeCategory));
+                }
+                if(!string.IsNullOrWhiteSpace(vm.PhenotypeKeyword))
+                {
+                    geneToFind = geneToFind.Where(g => g.Alleles.Any(a=> EF.Functions.Like(a.Phenotype, "%" + vm.PhenotypeKeyword + "%")));
                 }
 
                 
