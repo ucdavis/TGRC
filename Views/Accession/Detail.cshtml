@@ -1,6 +1,14 @@
 @model TGRC.Models.Accession
 
 @{
+    if(ViewBag.Frame == "yes")
+    {
+        Layout = "_LayoutFrame";
+    }
+}
+
+
+@{
     var donorI = 1;
     var donorCount = @Model.Donors.Count;
     var categoryI = 1;
