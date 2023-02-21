@@ -63,7 +63,50 @@
                 </div>
             </div>
             <div class="col-sm-6 border">@* Second column*@
-
+                <div class="form-group row">
+                    <label asp-for="SelectedCountry" class="col-sm-5 col-form-label">Country</label>
+                    <div class="col-sm-4">
+                        <select asp-for="SelectedCountry" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.Countries))"></select>                
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="SearchProvince" class="col-sm-5 col-form-label">Province/Department </label>
+                    <div class="col-sm-4">
+                        <select asp-for="SearchProvince" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.ProvinceList))"></select>                
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="SearchCollectionSite" class="col-sm-3 col-form-label">Collection Site</label>
+                    <div class="col-sm-6">
+                        <input type="text" asp-for="SearchCollectionSite" class="form-control">
+                        (Enter all or part of the collection site, eg. Jipijapa, Nazca )
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="SearchComments" class="col-sm-3 col-form-label">Notes (comments)</label>
+                    <div class="col-sm-6">
+                        <input type="text" asp-for="SearchComments" class="form-control">
+                        (keyword search e.g. drought, heat, salinity, nematode, etc.)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="SelectedMatingSystem" class="col-sm-5 col-form-label">Mating System</label>
+                    <div class="col-sm-4">
+                        <select asp-for="SelectedMatingSystem" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.MattingSystems))"></select>                
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="SelectedGene" class="col-sm-5 col-form-label">Gene</label>
+                    <div class="col-sm-4">
+                        <select asp-for="SelectedGene" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.GeneList))"></select>                
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="SelectedBackgroundGenotype" class="col-sm-5 col-form-label">Background Genotype</label>
+                    <div class="col-sm-5">
+                        <select asp-for="SelectedBackgroundGenotype" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.BackgroundGenotypeList))"></select>                
+                    </div>
+                </div>
             </div>            
         </div>
         <div>

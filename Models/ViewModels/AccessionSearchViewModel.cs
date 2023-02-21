@@ -31,6 +31,18 @@ namespace TGRC.Models
         public List<string> Cultivars { get; set; }
         public string CategoryToSearch { get; set; }
         public List<string> Categories { get; set; }
+        public string SelectedCountry { get; set; }
+        public List<string> Countries { get; set; }
+        public string SearchProvince { get; set; }
+        public List<string> ProvinceList { get; set; }
+        public string SearchCollectionSite { get; set; }
+        public string SearchComments { get; set; }
+        public string SelectedMatingSystem { get; set; }
+        public List<string> MattingSystems { get; set; }
+        public string SelectedGene { get; set; }
+        public List<string> GeneList { get; set; }
+        public string SelectedBackgroundGenotype { get; set; }
+        public List<string> BackgroundGenotypeList { get; set; }
         
 
         public AccessionSearchViewModel() {
@@ -45,6 +57,17 @@ namespace TGRC.Models
            cultivars.Insert(0, "");
            var cat = await _context.AccessionCategories.Select(c => c.AccessionCategory).Distinct().ToListAsync();
            cat.Insert(0, "");
+           var countries = await _context.Accessions.Where(a => a.Country != null).Select(a => a.Country).Distinct().OrderBy( a=> a).ToListAsync();           
+           countries.Insert(0,"");
+           var provinces = await _context.Accessions.Where(a => a.ProvinceOrDepartment != null).Select(a => a.ProvinceOrDepartment).Distinct().OrderBy(a=>a).ToListAsync();
+           provinces.Insert(0,"");
+           var matingList = await _context.MatingSystems.Select(a =>a.System).OrderBy(a => a).ToListAsync();
+           matingList.Insert(0,"");
+           var geneList = await _context.GenesAndAllelesInAccessions.Select(a => a.Gene).Distinct().OrderBy(a=>a).ToListAsync();
+           geneList.Insert(0,"");
+           var genotypeList = await _context.Accessions.Where(a => a.SourceOfAccession != null).Select(a => a.SourceOfAccession).Distinct().OrderBy(a=>a).ToListAsync();
+           genotypeList.Insert(0,"");
+
                               
             if(vm != null)
             {
@@ -90,7 +113,34 @@ namespace TGRC.Models
                 {
                     accToFind = accToFind.Where(a => a.Categories.Any(c => c.AccessionCategory == vm.CategoryToSearch));
                 }
-                
+                if(!string.IsNullOrWhiteSpace(vm.SelectedCountry))
+                {
+                    accToFind = accToFind.Where(a => a.Country == vm.SelectedCountry);
+                }
+                if(!string.IsNullOrWhiteSpace(vm.SearchProvince))
+                {
+                    accToFind = accToFind.Where(a => a.ProvinceOrDepartment == vm.SearchProvince);
+                }
+                if(!string.IsNullOrWhiteSpace(vm.SearchCollectionSite))
+                {
+                    accToFind = accToFind.Where(a => EF.Functions.Like(a.CollectionSite, "%" + vm.SearchCollectionSite + "%"));
+                }
+                if(!string.IsNullOrWhiteSpace(vm.SearchComments))
+                {
+                    accToFind = accToFind.Where(a => EF.Functions.Like(a.Comments, "%" + vm.SearchComments + "%"));
+                }
+                if(!string.IsNullOrWhiteSpace(vm.SelectedMatingSystem))
+                {
+                    accToFind = accToFind.Where(a => a.MatingSystem == vm.SelectedMatingSystem);
+                }
+                if(!string.IsNullOrWhiteSpace(vm.SelectedGene))
+                {
+                    accToFind = accToFind.Where(a => a.Genes.Any(g => g.Gene == vm.SelectedGene));
+                }
+                if(!string.IsNullOrWhiteSpace(vm.SelectedBackgroundGenotype))
+                {
+                    accToFind = accToFind.Where(a => a.SourceOfAccession == vm.SelectedBackgroundGenotype);
+                }
                 
                 
                 var viewModel = new AccessionSearchViewModel
@@ -99,6 +149,25 @@ namespace TGRC.Models
                     Taxons = taxa,
                     Cultivars = cultivars,
                     Categories = cat,
+                    Countries = countries,
+                    ProvinceList = provinces,
+                    MattingSystems = matingList,
+                    GeneList = geneList,
+                    BackgroundGenotypeList = genotypeList,
+                    AccessionNumberToSearch = vm.AccessionNumberToSearch,
+                    StatusToSearch = vm.StatusToSearch,
+                    InspectedSearch = vm.InspectedSearch,
+                    OtherIdSearch = vm.OtherIdSearch,
+                    SelectedTaxon = vm.SelectedTaxon,
+                    CultivarToSearch = vm.CultivarToSearch,
+                    CategoryToSearch = vm.CategoryToSearch,
+                    SelectedCountry = vm.SelectedCountry,
+                    SearchCollectionSite = vm.SearchCollectionSite,
+                    SearchProvince = vm.SearchProvince,
+                    SearchComments = vm.SearchComments,
+                    SelectedMatingSystem = vm.SelectedMatingSystem,
+                    SelectedGene = vm.SelectedGene,
+                    SelectedBackgroundGenotype = vm.SelectedBackgroundGenotype
                 };  
                 return viewModel;
 
@@ -109,7 +178,12 @@ namespace TGRC.Models
                 accessions = new List<Accession>(),  
                 Taxons = taxa,       
                 Cultivars = cultivars,
-                Categories = cat,       
+                Categories = cat,  
+                Countries = countries,
+                ProvinceList = provinces,
+                MattingSystems = matingList,    
+                BackgroundGenotypeList = genotypeList,
+                GeneList = geneList
             };           
 
             return freshModel;
