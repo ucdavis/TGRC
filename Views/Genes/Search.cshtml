@@ -1,0 +1,104 @@
+@model TGRC.Models.GeneSearchViewModel
+
+
+<h3>Gene Search</h3>
+    
+<form asp-action="search" method="post">
+    <input type="hidden" id="Search" name="Search" value="True">
+    <div class="container col-sm-8 text-center">
+        <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#SearchCollapse" aria-expanded="false" aria-controls="SearchCollapse">
+            Hide Search
+        </button> 
+    </div>
+    <div class="container col-sm-12 collapse show" id="SearchCollapse">
+        <div class="row col-sm-12">
+            <h6>Please enter your search criteria below. All fields are optional; searches are case insensitive; partial text values are allowed; multiple criteria are linked by 'AND'.</h6>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 border">@* First column*@
+                <div class="form-group row">
+                    <label asp-for="SelectedGene" class="col-sm-3 col-form-label">Gene</label>
+                    <div class="col-sm-3">
+                        <select asp-for="SelectedGene" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.GeneList))"></select>                
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="SelectedLocus" class="col-sm-3 col-form-label">Locus Name</label>
+                    <div class="col-sm-7">
+                        <select asp-for="SelectedLocus" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.LocusList))"></select>                
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="SelectedAllele" class="col-sm-3 col-form-label">Allele</label>
+                    <div class="col-sm-3">
+                        <select asp-for="SelectedAllele" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.AlleleList))"></select>                
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="SynonymToSearch" class="col-sm-3 col-form-label">Synonym</label>
+                    <div class="col-sm-7">
+                        <input type="text" asp-for="SynonymToSearch" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="SelectedMarker" class="col-sm-3 col-form-label">Marker Type</label>
+                    <div class="col-sm-3">
+                        <select asp-for="SelectedMarker" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.MarkerList))"></select>                
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 border">@* Second column*@
+                <div class="form-group row">
+                    <label asp-for="SelectedMutant" class="col-sm-4 col-form-label">Mutant Type</label>
+                    <div class="col-sm-4">
+                        <select asp-for="SelectedMutant" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.MutantList, "Type","MutMeaning"))"></select>                
+                    </div>
+                </div> 
+                <div class="form-group row">
+                    <label asp-for="SelectedChromosome" class="col-sm-4 col-form-label">Chromosome</label>
+                    <div class="col-sm-4">
+                        <select asp-for="SelectedChromosome" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.ChromosomeList))"></select>                
+                    </div>
+                </div> 
+                <div class="form-group row">
+                    <label asp-for="SelectedPhenotypeCategory" class="col-sm-4 col-form-label">Phenotypic Category</label>
+                    <div class="col-sm-8">
+                        <select asp-for="SelectedPhenotypeCategory" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.PhenotypeCategoryList, "PhenotypicCategory1","FullName"))"></select>                
+                    </div>
+                </div> 
+                <div class="form-group row">
+                    <label asp-for="PhenotypeKeyword" class="col-sm-3 col-form-label">Phenotype (keyword)</label>
+                    <div class="col-sm-7">
+                        <input type="text" asp-for="PhenotypeKeyword" class="form-control">
+                    </div>
+                </div>               
+            </div>            
+        </div>
+        <div class="text-center">
+            <input type="submit" value="Search" class="btn btn-primary"></input> 
+        </div>
+    </div>
+
+</form>
+
+@if(Model.genes.Any())
+{
+    <hr>
+    <div class="col-sm-12 container row" style="min-height: 100%; height: 100%;">
+        <div class="col-sm-2 border">
+            <h3>Results</h3>
+            <div>
+                @foreach (var gene in Model.genes)
+                {                   
+                        <a target="resultFrame" asp-action="detail" asp-controller="Genes" asp-route-frame="yes" asp-route-id="@gene.Gene1">@gene.Gene1</a><br>
+                }
+            </div>
+        </div>
+        <div class="col-sm-10 border embed-responsive iframe-container">
+           <iframe width="100%" height="100%" class="embed-responsive-item" title="Results View of from selected Gene" name="resultFrame"></iframe>          
+        </div>
+        
+    </div>
+    
+    
+}

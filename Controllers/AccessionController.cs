@@ -14,7 +14,7 @@ public class AccessionController : Controller
         _context = context;
     }
 
-    public async Task<IActionResult> Detail(string id)
+    public async Task<IActionResult> Detail(string id, string frame = "no")
     {
         var model = await _context.Accessions
             .Include(a => a.Donors).ThenInclude(d => d.Colleague)
@@ -23,6 +23,7 @@ public class AccessionController : Controller
             .Include(a => a.Genes)
             .Include(a => a.Images).ThenInclude(i => i.Image)
             .Where(a => a.AccessionNum == id).FirstOrDefaultAsync();
+        ViewBag.Frame = frame;
         return View(model);
     }
 
