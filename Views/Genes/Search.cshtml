@@ -17,20 +17,20 @@
         <div class="row">
             <div class="col-sm-6 border">@* First column*@
                 <div class="form-group row">
-                    <label asp-for="SelectedGene" class="col-sm-5 col-form-label">Gene</label>
-                    <div class="col-sm-4">
+                    <label asp-for="SelectedGene" class="col-sm-3 col-form-label">Gene</label>
+                    <div class="col-sm-3">
                         <select asp-for="SelectedGene" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.GeneList))"></select>                
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="SelectedLocus" class="col-sm-5 col-form-label">Locus Name</label>
-                    <div class="col-sm-4">
+                    <label asp-for="SelectedLocus" class="col-sm-3 col-form-label">Locus Name</label>
+                    <div class="col-sm-7">
                         <select asp-for="SelectedLocus" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.LocusList))"></select>                
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="SelectedAllele" class="col-sm-5 col-form-label">Allele</label>
-                    <div class="col-sm-4">
+                    <label asp-for="SelectedAllele" class="col-sm-3 col-form-label">Allele</label>
+                    <div class="col-sm-3">
                         <select asp-for="SelectedAllele" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.AlleleList))"></select>                
                     </div>
                 </div>
@@ -41,14 +41,31 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="SelectedMarker" class="col-sm-5 col-form-label">Marker Type</label>
-                    <div class="col-sm-4">
+                    <label asp-for="SelectedMarker" class="col-sm-3 col-form-label">Marker Type</label>
+                    <div class="col-sm-3">
                         <select asp-for="SelectedMarker" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.MarkerList))"></select>                
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 border">@* Second column*@
-                
+                <div class="form-group row">
+                    <label asp-for="SelectedMutant" class="col-sm-4 col-form-label">Mutant Type</label>
+                    <div class="col-sm-4">
+                        <select asp-for="SelectedMutant" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.MutantList, "Type","MutMeaning"))"></select>                
+                    </div>
+                </div> 
+                <div class="form-group row">
+                    <label asp-for="SelectedChromosome" class="col-sm-4 col-form-label">Chromosome</label>
+                    <div class="col-sm-4">
+                        <select asp-for="SelectedChromosome" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.ChromosomeList))"></select>                
+                    </div>
+                </div> 
+                <div class="form-group row">
+                    <label asp-for="SelectedPhenotypeCategory" class="col-sm-4 col-form-label">Phenotypic Category</label>
+                    <div class="col-sm-8">
+                        <select asp-for="SelectedPhenotypeCategory" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.PhenotypeCategoryList, "PhenotypicCategory1","FullName"))"></select>                
+                    </div>
+                </div>                
             </div>            
         </div>
         <div class="text-center">

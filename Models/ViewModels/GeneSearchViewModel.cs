@@ -24,6 +24,13 @@ namespace TGRC.Models
         public string SynonymToSearch { get; set; }
         public string SelectedMarker { get; set; }
         public List<string> MarkerList { get; set; }  
+        public string SelectedMutant { get; set; }
+        public List<MutantType> MutantList { get; set; }
+        public string SelectedChromosome { get; set; }
+        public List<string> ChromosomeList { get; set; }
+        public string SelectedPhenotypeCategory { get; set; }
+        public List<PhenotypicCategory> PhenotypeCategoryList { get; set; }
+        public string PhenotypeToSearch { get; set; }
 
         public GeneSearchViewModel() {
             Search = false;
@@ -39,6 +46,12 @@ namespace TGRC.Models
            alleleList.Insert(0,"");
            var markerList = await _context.Genes.Where(g => g.MarkerType != null).Select(g => g.MarkerType).Distinct().OrderBy(a=>a).ToListAsync();
            markerList.Insert(0,"");
+           var mutantList = await _context.GenesAndAlleles.Where(ga => ga.MutantType != null).Include(ga => ga.MutantTypeTranslation).Select(ga => ga.MutantTypeTranslation).Distinct().OrderBy(m=> m.MutMeaning).ToListAsync();
+           mutantList.Insert(0, new MutantType { Type="0", MutMeaning=""});
+           var chromosomeList = await _context.Genes.Where(g => g.Chromosome != null).Select(g => g.Chromosome).Distinct().OrderBy(a=>a).ToListAsync();
+           chromosomeList.Insert(0, "");
+           var phenoCat = await _context.PhenotypicCategories.Distinct().OrderBy(a =>a.PhenotypicCategory1).ToListAsync();
+           phenoCat.Insert(0, new PhenotypicCategory { PhenotypicCategory1 = "" });
 
                               
             if(vm != null)
@@ -65,6 +78,15 @@ namespace TGRC.Models
                 {
                     geneToFind = geneToFind.Where(g => g.MarkerType == vm.SelectedMarker);
                 }
+                if(vm.SelectedMutant != ")")
+                {
+                    geneToFind = geneToFind.Where(g => g.Alleles.Any(a => a.MutantType == vm.SelectedMutant));
+                }
+                if(!string.IsNullOrWhiteSpace(vm.SelectedPhenotypeCategory))
+                {
+                    geneToFind = geneToFind.Where(g => g.Alleles.Any(a => a.PhenoTypeDetails.PhenotypicalCategory == vm.SelectedPhenotypeCategory));
+                }
+
                 
                 
                 var viewModel = new GeneSearchViewModel
@@ -75,10 +97,17 @@ namespace TGRC.Models
                     LocusList = locusList,
                     AlleleList = alleleList,
                     MarkerList = markerList,
+                    MutantList = mutantList,
+                    ChromosomeList = chromosomeList,
+                    PhenotypeCategoryList = phenoCat,
                     SelectedLocus = vm.SelectedLocus,
                     SelectedAllele = vm.SelectedAllele,
                     SelectedMarker = vm.SelectedMarker,
-                    SynonymToSearch = vm.SynonymToSearch
+                    SynonymToSearch = vm.SynonymToSearch,
+                    SelectedMutant = vm.SelectedMutant,
+                    SelectedChromosome = vm.SelectedChromosome,
+                    SelectedPhenotypeCategory = vm.SelectedPhenotypeCategory,
+                    PhenotypeToSearch = vm.PhenotypeToSearch,                    
                 };  
                 return viewModel;
 
@@ -90,7 +119,10 @@ namespace TGRC.Models
                 GeneList = geneList,
                 LocusList = locusList,
                 AlleleList = alleleList,
-                MarkerList = markerList
+                MarkerList = markerList,
+                MutantList = mutantList,
+                ChromosomeList = chromosomeList,
+                PhenotypeCategoryList = phenoCat,
             };           
 
             return freshModel;
