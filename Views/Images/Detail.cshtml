@@ -1,5 +1,12 @@
 @model TGRC.Models.ImageDetailsViewModel
 
+@{
+    if(ViewBag.Frame == "yes")
+    {
+        Layout = "_LayoutFrame";
+    }
+}
+
 <h2>Image Information</h2>
 
 <div>

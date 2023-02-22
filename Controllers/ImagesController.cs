@@ -14,9 +14,10 @@ public class ImagesController : Controller
         _context = context;
     }
 
-    public async Task<IActionResult> Detail(string id)
+    public async Task<IActionResult> Detail(string id, string frame = "no")
     {
         var model = await ImageDetailsViewModel.Create(_context, id);
+        ViewBag.Frame = frame;
         return View(model);
     }
 
