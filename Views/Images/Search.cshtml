@@ -1,0 +1,58 @@
+@model TGRC.Models.ImageSearchViewModel
+
+
+<h3>Image Search</h3>
+    
+<form asp-action="search" method="post">
+    <input type="hidden" id="Search" name="Search" value="True">
+    <div class="container col-sm-8 text-center">
+        <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#SearchCollapse" aria-expanded="false" aria-controls="SearchCollapse">
+            Hide Search
+        </button> 
+    </div>
+    <div class="container col-sm-12 collapse show" id="SearchCollapse">
+        <div class="row col-sm-12">
+            <h6>Please enter your search criteria below. All fields are optional; searches are case insensitive; partial text values are allowed; multiple criteria are linked by 'AND'.</h6>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 border">@* First column*@
+                <div class="form-group row">
+                    <label asp-for="SelectedGene" class="col-sm-3 col-form-label">Gene</label>
+                    <div class="col-sm-3">
+                        <select asp-for="SelectedGene" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.GeneList))"></select>                
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-sm-6 border">@* Second column*@
+                         
+            </div>            
+        </div>
+        <div class="text-center">
+            <input type="submit" value="Search" class="btn btn-primary"></input> 
+        </div>
+    </div>
+
+</form>
+
+@if(Model.image.Any())
+{
+    <hr>
+    <div class="col-sm-12 container row" style="min-height: 100%; height: 100%;">
+        <div class="col-sm-2 border">
+            <h3>Results</h3>
+            <div>
+                @foreach (var image in Model.image)
+                {                   
+                        <a target="resultFrame" asp-action="detail" asp-controller="Images" asp-route-frame="yes" asp-route-id="@image.Image.File">@image.Image.File</a><br>
+                }
+            </div>
+        </div>
+        <div class="col-sm-10 border embed-responsive iframe-container">
+           <iframe width="100%" height="100%" class="embed-responsive-item" title="Results View of from selected Gene" name="resultFrame"></iframe>          
+        </div>
+        
+    </div>
+    
+    
+}
