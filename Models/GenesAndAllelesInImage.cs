@@ -11,5 +11,6 @@ namespace TGRC.Models
         public DateTime? DateModified { get; set; }
         
         public Image Image { get; set; }
+        public GenesAndAllele GeneAndAlleleDetails { get; set; }
     }
 }
