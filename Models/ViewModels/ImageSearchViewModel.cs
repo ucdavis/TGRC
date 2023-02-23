@@ -30,6 +30,8 @@ namespace TGRC.Models
         { 
            var geneList = await _context.GenesAndAllelesInAccessions.Select(a => a.Gene).Distinct().OrderBy(a=>a).ToListAsync();
            geneList.Insert(0,"");
+           var phenoCat = await _context.PhenotypicCategories.Distinct().OrderBy(a =>a.PhenotypicCategory1).ToListAsync();
+           phenoCat.Insert(0, new PhenotypicCategory { PhenotypicCategory1 = "" });
            
                               
             if(vm != null)
@@ -40,6 +42,10 @@ namespace TGRC.Models
                 {
                     imageToFind = imageToFind.Where(i => i.Gene == vm.SelectedGene);
                 }
+                if(!string.IsNullOrWhiteSpace(vm.SelectedPhenotypeCategory))
+                {
+                    imageToFind = imageToFind.Where(i => i.GeneAndAlleleDetails.PhenoTypeDetails.PhenotypicalCategory == vm.SelectedPhenotypeCategory);
+                }
                
 
                 
@@ -48,7 +54,9 @@ namespace TGRC.Models
                 {
                     image = await imageToFind.ToListAsync(),                    
                     SelectedGene = vm.SelectedGene,
+                    SelectedPhenotypeCategory = vm.SelectedPhenotypeCategory,
                     GeneList = geneList,
+                    PhenotypeCategoryList = phenoCat,
                                         
                 };  
                 return viewModel;
@@ -59,6 +67,7 @@ namespace TGRC.Models
             {
                 image = new List<GenesAndAllelesInImage>(),
                 GeneList = geneList,
+                PhenotypeCategoryList = phenoCat
             };           
 
             return freshModel;
