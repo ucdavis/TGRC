@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TGRC.Models
 {
@@ -42,5 +43,14 @@ namespace TGRC.Models
         public string FullName() {
             return $"{FirstName} {LastName}";
         }
+        public string DisplayName {
+            get
+            {
+                return $"{FirstName} {MiddleInitial} {LastName}";
+            }            
+        }
+
+        [ForeignKey("ColleagueNum")]
+        public ICollection<ColleaguesInImage> Images { get; set; }
     }
 }
