@@ -9,24 +9,35 @@
     <link rel="stylesheet" href="~/TGRC.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
+    <header><a class="navbar-brand" href="https://tgrc.ucdavis.edu"><img src="~/siteImages/tgrc-logo2.png" alt="TGRC Log" style="max-height: 6.25rem;"></a><br>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="https://tgrc.ucdavis.edu"><img src="~/siteImages/tgrc-logo2.png" alt="TGRC Log" style="max-height: 6.25rem;"></a>
+            <div class="container-fluid">                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1">                                     
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Accession" asp-action="Search">Accessions</a>
+                            <a class="nav-link text-light" asp-controller="Accession" asp-action="Search">Accession Search</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Genes" asp-action="Search">Genes</a>
+                            <a class="nav-link text-light" asp-controller="Genes" asp-action="Search">Gene Search</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Images" asp-action="Search">Images</a>
+                            <a class="nav-link text-light" asp-controller="Images" asp-action="Search">Image Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Maps" asp-action="Index">GIS Maps</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Accession" asp-action="Core">Core Collections</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Accession" asp-action="Recent">Recent Acquisitions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Accession" asp-action="Frequent">Frequently Requested</a>
                         </li>
                     </ul>
                 </div>
