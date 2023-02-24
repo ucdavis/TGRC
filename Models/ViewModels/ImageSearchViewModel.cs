@@ -83,22 +83,33 @@ namespace TGRC.Models
                     // Should this be from CategoriesInImages instead of AccessionCategoryInAccessions?????
                     accNumList = accNumList.Where(a => a.Categories.Any(c=> c.AccessionCategory == vm.AccessionCategoryToSearch));
                 }
-
-
-                
+                               
 
 
                 var geneImage = await geneAlleleImages.Select(g => g.Image).ToListAsync();
                 var accNumbers = await accNumList.Select(a => a.AccessionNum).ToListAsync();
                 var accImages = await _context.AccessionsInImages.Where(i => accNumbers.Contains(i.AccessionNum)).Select(i => i.Image).ToListAsync();
 
+                var imageList = geneImage.Intersect(accImages).ToList();
+
+                if(vm.SelectedContributor != 0)
+                {
+                    var contribImages = await _context.ColleaguesInImages.Where(c => c.ColleagueNum == vm.SelectedContributor).Select(c => c.Image).ToListAsync();
+                    imageList = imageList.Intersect(contribImages).ToList();                    
+                }
+
+                if(!string.IsNullOrWhiteSpace(vm.CaptionSearchString))
+                {
+                    imageList = imageList.Where(i => i.Caption.Contains(vm.CaptionSearchString, StringComparison.OrdinalIgnoreCase)).ToList();
+                }
 
 
-                 var imageList = geneImage.Intersect(accImages).ToList();
+
+                 
                 
                 var viewModel = new ImageSearchViewModel
                 {
-                    image = imageList.Where(i => i.Web == 0 ).ToList(),                    
+                    image = imageList.Where(i => i.Web != 0 ).ToList(),                    
                     SelectedGene = vm.SelectedGene,
                     SelectedPhenotypeCategory = vm.SelectedPhenotypeCategory,
                     GeneList = geneList,
