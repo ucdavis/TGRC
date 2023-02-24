@@ -1,0 +1,98 @@
+@model TGRC.Models.ImageSearchViewModel
+
+
+<h3>Image Search</h3>
+    
+<form asp-action="search" method="post">
+    <input type="hidden" id="Search" name="Search" value="True">
+    <div class="container col-sm-8 text-center">
+        <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#SearchCollapse" aria-expanded="false" aria-controls="SearchCollapse">
+            Hide Search
+        </button> 
+    </div>
+    <div class="container col-sm-12 collapse show" id="SearchCollapse">
+        <div class="row col-sm-12">
+            <h6>Please enter your search criteria below. All fields are optional; searches are case insensitive; partial text values are allowed; multiple criteria are linked by 'AND'.</h6>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 border">@* First column*@
+                <div class="form-group row">
+                    <label asp-for="SelectedGene" class="col-sm-4 col-form-label">Gene</label>
+                    <div class="col-sm-3">
+                        <select asp-for="SelectedGene" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.GeneList))"></select>                
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="SelectedPhenotypeCategory" class="col-sm-4 col-form-label">Phenotypic Category</label>
+                    <div class="col-sm-8">
+                        <select asp-for="SelectedPhenotypeCategory" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.PhenotypeCategoryList,"PhenotypicCategory1","FullName"))"></select>                
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="SelectedAccession" class="col-sm-4 col-form-label">Accession</label>
+                    <div class="col-sm-3">
+                        <select asp-for="SelectedAccession" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.AccessionList))"></select>                
+                    </div>
+                </div> 
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Taxon (only use one)</label>
+                    <div class="col-sm-7">
+                        <div class="row">
+                            Solanum: &nbsp;&nbsp;<select asp-for="SelectedSolanumName" style="max-width: 200px;" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.SolanumList))"></select>
+                        </div>
+                        <div class="row">
+                            Lycopersicon: <select asp-for="SelectedLycopersiconNames" style="max-width: 200px;" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.LycopersiconList))"></select> 
+                        </div>         
+                    </div>
+                </div>               
+            </div>
+            <div class="col-sm-6 border">@* Second column*@
+                <div class="form-group row">
+                    <label asp-for="AccessionCategoryToSearch" class="col-sm-4 col-form-label">Accession Category</label>
+                    <div class="col-sm-7">
+                        <select asp-for="AccessionCategoryToSearch" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.AccessionCategories))"></select>                
+                    </div>
+                </div> 
+                <div class="form-group row">
+                    <label asp-for="SelectedContributor" class="col-sm-4 col-form-label">Contributor</label>
+                    <div class="col-sm-5">
+                        <select asp-for="SelectedContributor" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.ContributorList,"ColleagueNum","DisplayName"))"></select>                
+                    </div>
+                </div> 
+                <div class="form-group row">
+                    <label asp-for="CaptionSearchString" class="col-sm-4 col-form-label">Image caption</label>
+                    <div class="col-sm-7">
+                        <input type="text" asp-for="CaptionSearchString"  class="form-control">
+                    </div>
+                </div>                         
+            </div>            
+        </div>
+        <div class="text-center">
+            <input type="submit" value="Search" class="btn btn-primary"></input> 
+        </div>
+    </div>
+
+</form>
+
+@if(Model.image.Any())
+{
+    <hr>
+    <div class="col-sm-12 container row" style="min-height: 100%; height: 100%;">
+        <div class="col-sm-2 border">
+            <h3>Results</h3>
+            <h5>Total: @Model.image.Count</h5>
+            <div>
+                @foreach (var image in Model.image)
+                {                   
+                        <a target="resultFrame" asp-action="detail" asp-controller="Images" asp-route-frame="yes" asp-route-id="@image.File">@image.File</a><br>
+                }
+            </div>
+        </div>
+        <div class="col-sm-10 border embed-responsive iframe-container">
+           <iframe width="100%" height="100%" class="embed-responsive-item" title="Results View of from selected Gene" name="resultFrame"></iframe>          
+        </div>
+        
+    </div>
+    
+    
+}
