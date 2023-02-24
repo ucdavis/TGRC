@@ -140,7 +140,7 @@ namespace TGRC.Models
                 
                 var viewModel = new AccessionSearchViewModel
                 {
-                    accessions = await accToFind.ToListAsync(),
+                    accessions = await accToFind.OrderBy(a => a.AccessionNum).ToListAsync(),
                     Taxons = taxa,
                     Cultivars = cultivars,
                     Categories = cat,
