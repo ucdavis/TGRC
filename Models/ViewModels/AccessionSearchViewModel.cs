@@ -47,6 +47,7 @@ namespace TGRC.Models
 
         public AccessionSearchViewModel() {
             Search = false;
+            StatusToSearch = "Active";
         }
         
         public static async Task<AccessionSearchViewModel> Create(TGRCContext _context, AccessionSearchViewModel vm)
