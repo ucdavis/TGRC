@@ -400,13 +400,63 @@
             </div>
         </div>
     }
+    @if(Model.LatDec != null && Model.LonDeg != null)
+    {
+        <div class="form-group text-center">
+            <p class="bolded"><asp:label id="lblMap" runat="server" Visible="false" Text="Google Map:" /></p>
+            <div id="map" style="width: 600px; height: 450px;" runat="server" visible="true"></div>  
+        </div>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4TCJI-Gh6lmCjfJ2FvHg2Z_VL9gJ5Jqc&callback=initMap&v=weekly" defer></script>
+    }
 </div>
 
 
 @section Scripts {
+    
+    
+    
     <script type="text/Javascript">
         $("textarea").each(function () {
             this.setAttribute("style", "height:" + (this.scrollHeight) + "px;overflow-y:hidden;");
         });
+
+        @if(Model.LatDec != null && Model.LonDeg != null)
+        {
+            <text>
+            $( document ).ready(function() {
+             var myLatlng = new google.maps.LatLng(@Model.LatDec,@Model.LonDec);
+             var mapinfo = "Accession: @Model.AccessionNum  <br /> longitude,latitude: @Model.LonDec , @Model.LatDec";
+
+             var marker = new google.maps.Marker({
+                position: myLatlng,
+                title:"@Model.AccessionNum"
+            });
+            marker.setMap(map);
+            const infoWindow = new google.maps.InfoWindow();
+
+            marker.addListener("click", () => {
+                infoWindow.close();
+                infoWindow.setContent(mapinfo);
+                infoWindow.open(marker.getMap(), marker);
+            });                       
+            });
+
+            let map;
+
+            function initMap() {
+                map = new google.maps.Map(document.getElementById("map"), {
+                    center: { lat: @Model.LatDec, lng: @Model.LonDec },
+                    zoom: 10,
+                });
+            }
+
+            window.initMap = initMap;
+            </text>
+            
+        }
+
+             
     </script>
+    
+    
 }
