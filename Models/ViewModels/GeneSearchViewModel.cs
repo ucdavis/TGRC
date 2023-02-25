@@ -62,15 +62,14 @@ namespace TGRC.Models
                 if(!string.IsNullOrWhiteSpace(vm.SelectedGene))
                 {
                     geneToFind = geneToFind.Where(g => g.Gene1 == vm.SelectedGene);
+                } else  if(!string.IsNullOrWhiteSpace(vm.SelectedAllele))
+                {
+                    geneToFind = geneToFind.Where(g => g.Alleles.Any(a => a.Allele == vm.SelectedAllele));
                 }
                 if(!string.IsNullOrWhiteSpace(vm.SelectedLocus))
                 {
                     geneToFind = geneToFind.Where(g => g.LocusName == vm.SelectedLocus);
-                }
-                if(!string.IsNullOrWhiteSpace(vm.SelectedAllele))
-                {
-                    geneToFind = geneToFind.Where(g => g.Alleles.Any(a => a.Allele == vm.SelectedAllele));
-                }
+                }              
                 if(!string.IsNullOrWhiteSpace(vm.SynonymToSearch))
                 {
                     geneToFind = geneToFind.Where(g => g.Alleles.Any(a => EF.Functions.Like(a.SynonymsOfAllele, "%" + vm.SynonymToSearch + "%")));
