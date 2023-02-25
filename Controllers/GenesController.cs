@@ -34,14 +34,7 @@ public class GenesController : Controller
         }
         var model = await GeneSearchViewModel.Create(_context, vm);
         return View(model);
-    }
-
-    public async Task<IActionResult> GetAlleleForGene(string id)
-    {
-        var alleles = await _context.GenesAndAlleles.Where(g => g.Gene == id).Select(a => a.Allele).Distinct().OrderBy(a=>a).ToListAsync();
-        alleles.Insert(0, "");
-        return Json(alleles);
-    }
+    }  
 
     
 }

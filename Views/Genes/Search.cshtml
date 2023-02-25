@@ -101,33 +101,3 @@
         
     </div>
 }
-
-@section Scripts {
-    <script type="text/Javascript">
-        $(document).ready( function () {
-            $("#SelectedGene").change(function() {
-                var geneId = $("#SelectedGene").val()                
-                $.ajax({
-                    method: 'Get',
-                    url: '/Genes/GetAlleleForGene/' + geneId,
-                })
-                .done(function(data) {
-                    alert(data);
-                    var items = "";
-                    $("#SelectedAllele").empty();
-                    $.each(data, function (i, allele) {
-                        items += "<option value= '" + allele + "'>" + allele + "</option>";
-                    });
-                     $("#SelectedAllele").html(items);
-                })
-                .fail(function(xhr) {
-                    alert("Couldn't load alleles!");
-                    console.log('error', xhr);
-                
-                });
-            });
-
-        });
-       
-    </script>
-}
