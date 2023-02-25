@@ -38,5 +38,16 @@ public class AccessionController : Controller
         return View(model);
     }
 
+    public async Task<IActionResult> Cluster(AccessionClusterViewModel vm)
+    {
+        if(!vm.Search)
+        {
+            var freshModel = await AccessionClusterViewModel.Create(_context, null);
+            return View(freshModel);
+        }
+        var model = await AccessionClusterViewModel.Create(_context, vm);
+        return View(model);
+    }
+
     
 }
