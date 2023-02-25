@@ -101,3 +101,26 @@
         
     </div>
 }
+
+@section Scripts {
+    
+    
+    
+    <script type="text/Javascript">       
+        $( document ).ready(function() {
+            $("#SelectedGene").change(function() {
+               var geneId = $("#SelectedGene").val();
+               if(geneId != "") 
+               {
+                alert("test");
+                $("#SelectedAllele").prop('disabled', true);
+               } else {
+                $("#SelectedAllele").prop('disabled', false);
+
+               }
+            });            
+        });  
+    </script>
+    
+    
+}
