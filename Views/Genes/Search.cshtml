@@ -7,7 +7,7 @@
     <input type="hidden" id="Search" name="Search" value="True">
     <div class="container col-sm-8 text-center">
         <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#SearchCollapse" aria-expanded="false" aria-controls="SearchCollapse">
-            Hide Search
+            Hide/Show Search
         </button> 
     </div>
     <div class="container col-sm-12 collapse show" id="SearchCollapse">
@@ -100,6 +100,25 @@
         </div>
         
     </div>
+}
+
+@section Scripts {
+    
+    
+    
+    <script type="text/Javascript">       
+        $( document ).ready(function() {
+            $("#SelectedGene").change(function() {
+               var geneId = $("#SelectedGene").val();
+               if(geneId != "") 
+               {
+                $("#SelectedAllele").prop('disabled', true);
+               } else {
+                $("#SelectedAllele").prop('disabled', false);
+               }
+            });            
+        });  
+    </script>
     
     
 }

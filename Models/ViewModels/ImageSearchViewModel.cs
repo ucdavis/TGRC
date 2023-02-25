@@ -21,10 +21,8 @@ namespace TGRC.Models
         public List<PhenotypicCategory> PhenotypeCategoryList { get; set; }
         public string SelectedAccession { get; set; }
         public List<string> AccessionList { get; set; }
-        public string SelectedSolanumName { get; set; }
-        public string SelectedLycopersiconNames { get; set; }
-        public List<string> SolanumList { get; set; }
-        public List<string> LycopersiconList { get; set; }
+        public string SelectedTaxon { get; set; }
+        public List<Taxa> Taxons { get; set; }
         public string AccessionCategoryToSearch { get; set; }
         public List<string> AccessionCategories { get; set; }
         public int SelectedContributor { get; set; }
@@ -43,10 +41,8 @@ namespace TGRC.Models
            phenoCat.Insert(0, new PhenotypicCategory { PhenotypicCategory1 = "" });
            var accList = await _context.Accessions.Select(a=>a.AccessionNum).OrderBy(a=>a).ToListAsync();
            accList.Insert(0,"");
-           var solList = await _context.Accessions.Where(a=>a.Taxon2 != null).Select(a=>a.Taxon2).Distinct().OrderBy(a=>a).ToListAsync();
-           solList.Insert(0,"");
-           var lycoList = await _context.Accessions.Where(a=>a.Taxon != null).Select(a=>a.Taxon).Distinct().OrderBy(a=>a).ToListAsync();
-           lycoList.Insert(0,"");
+           var taxa = await _context.Taxa.OrderByDescending(t => t.L).ThenBy(t => t.Taxon).ToListAsync();
+           taxa.Insert(0, new Taxa { Taxon = "", CompleteName = "", Synonym = "", L="z"});
            var cat = await _context.AccessionCategories.Select(c => c.AccessionCategory).Distinct().ToListAsync();
            cat.Insert(0, "");
            var contrib = await _context.Colleagues.Where(c => c.Images.Any()).Distinct().OrderBy(c => c.LastName).ThenBy(c=> c.FirstName).ToListAsync();
@@ -70,14 +66,10 @@ namespace TGRC.Models
                 {
                     accNumList = accNumList.Where(a => a.AccessionNum == vm.SelectedAccession);
                 }
-                if(!string.IsNullOrWhiteSpace(vm.SelectedSolanumName))
+                if(!string.IsNullOrWhiteSpace(vm.SelectedTaxon))
                 {
-                    accNumList = accNumList.Where(a => a.Taxon2 == vm.SelectedSolanumName);
-
-                } else if(!string.IsNullOrWhiteSpace(vm.SelectedLycopersiconNames))
-                {
-                    accNumList = accNumList.Where(a => a.Taxon == vm.SelectedLycopersiconNames);
-                }
+                    accNumList = accNumList.Where(a => a.Taxon2 == vm.SelectedTaxon || a.Taxon == vm.SelectedTaxon);
+                } 
                 if(!string.IsNullOrWhiteSpace(vm.AccessionCategoryToSearch))
                 {
                     // Should this be from CategoriesInImages instead of AccessionCategoryInAccessions?????
@@ -116,10 +108,8 @@ namespace TGRC.Models
                     PhenotypeCategoryList = phenoCat,
                     AccessionList = accList,     
                     SelectedAccession = vm.SelectedAccession,  
-                    SolanumList = solList,
-                    SelectedSolanumName = vm.SelectedSolanumName,
-                    LycopersiconList = lycoList,
-                    SelectedLycopersiconNames = vm.SelectedLycopersiconNames, 
+                    Taxons = taxa,
+                    SelectedTaxon = vm.SelectedTaxon,
                     AccessionCategories = cat,
                     AccessionCategoryToSearch = vm.AccessionCategoryToSearch, 
                     ContributorList = contrib,
@@ -136,8 +126,7 @@ namespace TGRC.Models
                 GeneList = geneList,
                 PhenotypeCategoryList = phenoCat,
                 AccessionList = accList,
-                SolanumList = solList,
-                LycopersiconList = lycoList,
+                Taxons = taxa,
                 AccessionCategories = cat,
                 ContributorList = contrib,
             };           

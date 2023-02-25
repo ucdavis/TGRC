@@ -2,17 +2,19 @@
 
 
 <h3>Accession Search</h3>
-    
+
 <form asp-action="search" method="post">
     <input type="hidden" id="Search" name="Search" value="True">
     <div class="container col-sm-8 text-center">
-        <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#SearchCollapse" aria-expanded="false" aria-controls="SearchCollapse">
-            Hide Search
-        </button> 
+        <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#SearchCollapse"
+            aria-expanded="false" aria-controls="SearchCollapse">
+            Hide/Show Search
+        </button>
     </div>
     <div class="container col-sm-12 collapse show" id="SearchCollapse">
         <div class="row col-sm-12">
-            <h6>Please enter your search criteria below. All fields are optional; searches are case insensitive; partial text values are allowed; multiple criteria are linked by 'AND'.</h6>
+            <h6>Please enter your search criteria below. All fields are optional; searches are case insensitive; partial
+                text values are allowed; multiple criteria are linked by 'AND'.</h6>
         </div>
         <div class="row">
             <div class="col-sm-6 border">@* First column*@
@@ -21,6 +23,12 @@
                     <div class="col-sm-7">
                         <input type="text" asp-for="AccessionNumberToSearch" class="form-control">
                         (enter all or part of the accession number)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="OtherIdSearch" class="col-sm-4 col-form-label">Other Identifier</label>
+                    <div class="col-sm-4">
+                        <input type="text" asp-for="OtherIdSearch" class="form-control">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -35,7 +43,8 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="InspectedSearch" class="col-sm-7 col-form-label">Inspected for International Shipment?</label>
+                    <label asp-for="InspectedSearch" class="col-sm-7 col-form-label">Inspected for International
+                        Shipment?</label>
                     <div class="col-sm-2">
                         <select asp-for="InspectedSearch" class="form-select">
                             <option value=""></option>
@@ -45,85 +54,89 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="OtherIdSearch" class="col-sm-4 col-form-label">Other Identifier</label>
-                    <div class="col-sm-4">
-                        <input type="text" asp-for="OtherIdSearch" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="SelectedTaxon" class="col-sm-3 col-form-label"></label>
-                    <div class="col-sm-9">
-                        <select asp-for="SelectedTaxon" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.Taxons, "Taxon", "Display"))"></select>                
+                    <label asp-for="CategoryToSearch" class="col-sm-5 col-form-label">Accession Category</label>
+                    <div class="col-sm-7">
+                        <select asp-for="CategoryToSearch" class="form-select form-select-sm"
+                            asp-items="@(new SelectList(Model.Categories))"></select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label asp-for="CultivarToSearch" class="col-sm-3 col-form-label">Cultivar</label>
                     <div class="col-sm-9">
-                        <select asp-for="CultivarToSearch" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.Cultivars))"></select>                
+                        <select asp-for="CultivarToSearch" class="form-select form-select-sm"
+                            asp-items="@(new SelectList(Model.Cultivars))"></select>
+                    </div>
+                </div>  
+                <div class="form-group row">
+                    <label asp-for="SelectedGene" class="col-sm-5 col-form-label">Gene</label>
+                    <div class="col-sm-4">
+                        <select asp-for="SelectedGene" class="form-select form-select-sm"
+                            asp-items="@(new SelectList(Model.GeneList))"></select>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="CategoryToSearch" class="col-sm-5 col-form-label">Accession Category</label>
-                    <div class="col-sm-7">
-                        <select asp-for="CategoryToSearch" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.Categories))"></select>                
+                    <label asp-for="SelectedBackgroundGenotype" class="col-sm-5 col-form-label">Background
+                        Genotype</label>
+                    <div class="col-sm-5">
+                        <select asp-for="SelectedBackgroundGenotype" class="form-select form-select-sm"
+                            asp-items="@(new SelectList(Model.BackgroundGenotypeList))"></select>
                     </div>
-                </div>
+                </div>              
             </div>
             <div class="col-sm-6 border">@* Second column*@
                 <div class="form-group row">
+                    <label asp-for="SelectedTaxon" class="col-sm-3 col-form-label">Taxon</label>
+                    <div class="col-sm-9">
+                        <select asp-for="SelectedTaxon" class="form-select form-select-sm"
+                            asp-items="@(new SelectList(Model.Taxons, "Taxon", "Display"))"></select>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label asp-for="SelectedCountry" class="col-sm-5 col-form-label">Country</label>
                     <div class="col-sm-4">
-                        <select asp-for="SelectedCountry" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.Countries))"></select>                
+                        <select asp-for="SelectedCountry" class="form-select form-select-sm"
+                            asp-items="@(new SelectList(Model.Countries))"></select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label asp-for="SearchProvince" class="col-sm-5 col-form-label">Province/Department </label>
                     <div class="col-sm-4">
-                        <select asp-for="SearchProvince" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.ProvinceList))"></select>                
+                        <select asp-for="SearchProvince" class="form-select form-select-sm"
+                            asp-items="@(new SelectList(Model.ProvinceList))"></select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label asp-for="SearchCollectionSite" class="col-sm-3 col-form-label">Collection Site</label>
                     <div class="col-sm-6">
                         <input type="text" asp-for="SearchCollectionSite" class="form-control">
-                        (Enter all or part of the collection site, eg. Jipijapa, Nazca )
+                        (enter all or part of the collection site)
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label asp-for="SearchComments" class="col-sm-3 col-form-label">Notes (comments)</label>
+                    <label asp-for="SearchComments" class="col-sm-3 col-form-label">Notes</label>
                     <div class="col-sm-6">
                         <input type="text" asp-for="SearchComments" class="form-control">
-                        (keyword search e.g. drought, heat, salinity, nematode, etc.)
+                        (enter all or part)
                     </div>
                 </div>
                 <div class="form-group row">
                     <label asp-for="SelectedMatingSystem" class="col-sm-5 col-form-label">Mating System</label>
                     <div class="col-sm-4">
-                        <select asp-for="SelectedMatingSystem" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.MattingSystems))"></select>                
+                        <select asp-for="SelectedMatingSystem" class="form-select form-select-sm"
+                            asp-items="@(new SelectList(Model.MattingSystems))"></select>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label asp-for="SelectedGene" class="col-sm-5 col-form-label">Gene</label>
-                    <div class="col-sm-4">
-                        <select asp-for="SelectedGene" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.GeneList))"></select>                
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="SelectedBackgroundGenotype" class="col-sm-5 col-form-label">Background Genotype</label>
-                    <div class="col-sm-5">
-                        <select asp-for="SelectedBackgroundGenotype" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.BackgroundGenotypeList))"></select>                
-                    </div>
-                </div>
-            </div>            
+                
+            </div>
         </div>
         <div class="text-center">
-            <input type="submit" value="Search" class="btn btn-primary"></input> 
+            <input type="submit" value="Search" class="btn btn-primary"></input>
         </div>
     </div>
 
 </form>
 
-@if(Model.accessions.Any())
+@if (Model.accessions.Any())
 {
     <hr>
     <div class="col-sm-12 container row" style="min-height: 100%; height: 100%;">
@@ -132,16 +145,20 @@
             <h5>Total: @Model.accessions.Count</h5>
             <div>
                 @foreach (var acc in Model.accessions)
-                {                   
-                        <a target="resultFrame" asp-action="detail" asp-controller="Accession" asp-route-frame="yes" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a><br>
+                {
+                    <a target="resultFrame" asp-action="detail" asp-controller="Accession" asp-route-frame="yes"
+                asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a>
+
+                    <br>
                 }
             </div>
         </div>
         <div class="col-sm-10 border embed-responsive iframe-container">
-           <iframe width="100%" height="100%" class="embed-responsive-item" title="Results View of from selected Accession" name="resultFrame"></iframe>          
+            <iframe width="100%" height="100%" class="embed-responsive-item" title="Results View of from selected Accession"
+                name="resultFrame"></iframe>
         </div>
-        
+
     </div>
-    
-    
+
+
 }

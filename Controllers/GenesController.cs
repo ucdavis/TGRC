@@ -34,7 +34,7 @@ public class GenesController : Controller
         }
         var model = await GeneSearchViewModel.Create(_context, vm);
         return View(model);
-    }
+    }  
 
     
 }

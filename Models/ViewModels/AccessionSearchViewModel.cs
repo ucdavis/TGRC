@@ -47,6 +47,7 @@ namespace TGRC.Models
 
         public AccessionSearchViewModel() {
             Search = false;
+            StatusToSearch = "Active";
         }
         
         public static async Task<AccessionSearchViewModel> Create(TGRCContext _context, AccessionSearchViewModel vm)
@@ -97,7 +98,7 @@ namespace TGRC.Models
                 }
                 if(!string.IsNullOrWhiteSpace(vm.SelectedTaxon))
                 {
-                    accToFind = accToFind.Where(a => a.Taxon2 == vm.SelectedTaxon);
+                    accToFind = accToFind.Where(a => a.Taxon2 == vm.SelectedTaxon || a.Taxon == vm.SelectedTaxon);
                 }
                 if(!string.IsNullOrWhiteSpace(vm.CultivarToSearch))
                 {
@@ -121,7 +122,7 @@ namespace TGRC.Models
                 }
                 if(!string.IsNullOrWhiteSpace(vm.SearchComments))
                 {
-                    accToFind = accToFind.Where(a => EF.Functions.Like(a.Comments, "%" + vm.SearchComments + "%"));
+                    accToFind = accToFind.Where(a => EF.Functions.Like(a.Comments, "%" + vm.SearchComments + "%") || EF.Functions.Like(a.CollectionNotes, "%" + vm.SearchComments + "%") || EF.Functions.Like(a.Traits, "%" + vm.SearchComments + "%"));
                 }
                 if(!string.IsNullOrWhiteSpace(vm.SelectedMatingSystem))
                 {
@@ -139,7 +140,7 @@ namespace TGRC.Models
                 
                 var viewModel = new AccessionSearchViewModel
                 {
-                    accessions = await accToFind.ToListAsync(),
+                    accessions = await accToFind.OrderBy(a => a.AccessionNum).ToListAsync(),
                     Taxons = taxa,
                     Cultivars = cultivars,
                     Categories = cat,
