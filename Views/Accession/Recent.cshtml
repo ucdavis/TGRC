@@ -1,15 +1,15 @@
-@model TGRC.Models.AccessionClusterViewModel
+@model TGRC.Models.AccessionRecentViewModel
 
 
-<h3>Clusters</h3>
+<h3>Acquisitions by Year</h3>
 
-<form asp-action="Cluster" method="post">
+<form asp-action="Recent" method="post">
     <input type="hidden" id="Search" name="Search" value="True">    
     <div class="container col-sm-12 collapse show" id="SearchCollapse">        
         <div class="form-group row">
-            <label asp-for="SelectedCluster" class="col-sm-3 col-form-label">Cluster</label>
-            <div class="col-sm-4">
-                        <select asp-for="SelectedCluster" class="form-select form-select-sm" asp-items="@(new SelectList(Model.Clusters))"></select>
+            <label asp-for="SelectedYear" class="col-sm-1 col-form-label">Year</label>
+            <div class="col-sm-2">
+                        <select asp-for="SelectedYear" class="form-select form-select-sm" asp-items="@(new SelectList(Model.AccessionYears))"></select>
                     </div>
         </div>
         <div class="text-center">

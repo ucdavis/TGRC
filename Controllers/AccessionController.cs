@@ -49,5 +49,16 @@ public class AccessionController : Controller
         return View(model);
     }
 
+    public async Task<IActionResult> Recent(AccessionRecentViewModel vm)
+    {
+        if(!vm.Search)
+        {
+            var freshModel = await AccessionRecentViewModel.Create(_context, null);
+            return View(freshModel);
+        }
+        var model = await AccessionRecentViewModel.Create(_context, vm);
+        return View(model);
+    }
+
     
 }
