@@ -60,5 +60,16 @@ public class AccessionController : Controller
         return View(model);
     }
 
+    public async Task<IActionResult> Frequent(AccessionFrequentViewModel vm)
+    {
+        if(!vm.Search)
+        {
+            var freshModel = await AccessionFrequentViewModel.Create(_context, null);
+            return View(freshModel);
+        }
+        var model = await AccessionFrequentViewModel.Create(_context, vm);
+        return View(model);
+    }
+
     
 }

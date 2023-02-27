@@ -1,0 +1,46 @@
+@model TGRC.Models.AccessionFrequentViewModel
+
+
+<h3>Acquisitions by Year</h3>
+
+<form asp-action="Frequent" method="post">
+    <input type="hidden" id="Search" name="Search" value="True">    
+    <div class="container col-sm-12 collapse show" id="SearchCollapse">        
+        <div class="form-group row">
+            <label asp-for="SelectedYear" class="col-sm-1 col-form-label">Year</label>
+            <div class="col-sm-2">
+                        <select asp-for="SelectedYear" class="form-select form-select-sm" asp-items="@(new SelectList(Model.ShipYears))"></select>
+                    </div>
+        </div>
+        <div class="text-center">
+            <input type="submit" value="Search" class="btn btn-primary"></input>
+        </div>
+    </div>
+</form>
+
+@if (Model.accessions.Any())
+{
+    <hr>
+    <h5>Top 20 requested Accessions for selected year</h5>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Accession</th>
+                <th># Shipped</th>
+                <th>Taxon</th>
+                <th>Reference</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var acc in Model.accessions)
+            {
+                <tr>
+                    <td><a asp-action="detail" asp-controller="Accession" asp-route-frame="no" asp-route-id="@acc.SampleNum">@acc.SampleNum</a></td>
+                    <td>@acc.RequestedCount</td>
+                    <td>@acc.Taxon</td>
+                    <td>@acc.Reference</td>
+                </tr>                
+            }
+        </tbody>
+    </table>
+}
