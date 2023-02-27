@@ -17,6 +17,7 @@ namespace TGRC.Models
         }
 
         public virtual DbSet<Accession> Accessions { get; set; }
+        public virtual DbSet<RequestSummary> RequstSummaries { get; set; }
         public virtual DbSet<AccessionCategoriesInAccession> AccessionCategoriesInAccessions { get; set; }
         public virtual DbSet<AccessionCategories> AccessionCategories { get; set; }
         public virtual DbSet<AccessionCluster> AccessionClusters { get; set; }
@@ -39,6 +40,8 @@ namespace TGRC.Models
         public virtual DbSet<PhenoInGene> PhenoInGenes { get; set; }
         public virtual DbSet<PhenotypicCategory> PhenotypicCategories { get; set; }
         public virtual DbSet<Taxa> Taxa { get; set; }
+        public virtual DbSet<Request> Requests { get; set; }
+        public virtual DbSet<AccessionInRequests> AccessionsInRequest { get; set; }
 
 
          public static ILoggerFactory GetLoggerFactory()
@@ -147,6 +150,11 @@ namespace TGRC.Models
                 entity.Property(e => e.VegetationType).HasMaxLength(20);
 
                 entity.HasMany(e => e.Donors);
+            });
+
+            modelBuilder.Entity<AccessionInRequests>(entity =>
+            {
+                entity.HasKey(e => new {e.RequestNum, e.SampleNum});
             });
 
             modelBuilder.Entity<AccessionCategoriesInAccession>(entity =>
