@@ -61,15 +61,23 @@ public class AccessionController : Controller
     }
 
     public async Task<IActionResult> Frequent(AccessionFrequentViewModel vm)
-    {
-        if(!vm.Search)
-        {
-            var freshModel = await AccessionFrequentViewModel.Create(_context, null);
-            return View(freshModel);
-        }
+    {        
         var model = await AccessionFrequentViewModel.Create(_context, vm);
         return View(model);
     }
 
+    public async Task<IActionResult> Maps (AccessionMapViewModel vm)
+    {
+        var model = await AccessionMapViewModel.Create(_context, vm);
+        return View(model);
+
+    }
+
+    public async Task<IActionResult> ProvinceListForCountry (string id)
+    {
+        var model = await _context.Accessions.Where(a => a.Country==id && a.ProvinceOrDepartment != null).Select(a=> a.ProvinceOrDepartment).Distinct().OrderBy(a=>a).ToListAsync();
+        model.Insert(0,"[Any]");
+        return Json(model);
+    }    
     
 }
