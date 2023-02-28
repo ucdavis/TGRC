@@ -74,17 +74,17 @@
 {
     <hr>
     <div class="col-sm-12 container row" style="min-height: 100%; height: 100%;">
-        <div class="col-sm-2 border">
+        <div class="col-sm-3 border">
             <h3>Results</h3>
             <h5>Total: @Model.image.Count</h5>
             <div>
                 @foreach (var image in Model.image)
                 {                   
-                        <a target="resultFrame" asp-action="detail" asp-controller="Images" asp-route-frame="yes" asp-route-id="@image.File">@image.File</a><br>
+                        <a target="resultFrame" asp-action="detail" asp-controller="Images" asp-route-frame="yes" asp-route-id="@image.File"><img src="http://tgrc-app.ucdavis.edu/images/thumbnails/@image.File"></a><br>
                 }
             </div>
         </div>
-        <div class="col-sm-10 border embed-responsive iframe-container">
+        <div class="col-sm-9 border embed-responsive iframe-container">
            <iframe width="100%" height="100%" class="embed-responsive-item" title="Results View of from selected Gene" name="resultFrame"></iframe>          
         </div>
         
