@@ -94,7 +94,7 @@ namespace TGRC.Models
                 }
                 if(!string.IsNullOrWhiteSpace(vm.OtherIdSearch))
                 {
-                    accToFind = accToFind.Where(a => EF.Functions.Like(a.OtherId, "%" + vm.OtherIdSearch + "%"));
+                    accToFind = accToFind.Where(a => EF.Functions.Like(a.OtherId, "%" + vm.OtherIdSearch + "%") || EF.Functions.Like(a.CollectionNum, "%" + vm.OtherIdSearch + "%"));
                 }
                 if(!string.IsNullOrWhiteSpace(vm.SelectedTaxon))
                 {
@@ -162,7 +162,8 @@ namespace TGRC.Models
                     SearchComments = vm.SearchComments,
                     SelectedMatingSystem = vm.SelectedMatingSystem,
                     SelectedGene = vm.SelectedGene,
-                    SelectedBackgroundGenotype = vm.SelectedBackgroundGenotype
+                    SelectedBackgroundGenotype = vm.SelectedBackgroundGenotype,
+                    Search = true,
                 };  
                 return viewModel;
 
@@ -178,7 +179,8 @@ namespace TGRC.Models
                 ProvinceList = provinces,
                 MattingSystems = matingList,    
                 BackgroundGenotypeList = genotypeList,
-                GeneList = geneList
+                GeneList = geneList,
+                Search = false,
             };           
 
             return freshModel;
