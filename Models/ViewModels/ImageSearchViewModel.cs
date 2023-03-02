@@ -115,6 +115,7 @@ namespace TGRC.Models
                     ContributorList = contrib,
                     SelectedContributor = vm.SelectedContributor,
                     CaptionSearchString = vm.CaptionSearchString,
+                    Search = true
                 };  
                 return viewModel;
 
@@ -129,6 +130,7 @@ namespace TGRC.Models
                 Taxons = taxa,
                 AccessionCategories = cat,
                 ContributorList = contrib,
+                Search = false
             };           
 
             return freshModel;

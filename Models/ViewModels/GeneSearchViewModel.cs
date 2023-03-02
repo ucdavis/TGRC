@@ -111,7 +111,8 @@ namespace TGRC.Models
                     SelectedMutant = vm.SelectedMutant,
                     SelectedChromosome = vm.SelectedChromosome,
                     SelectedPhenotypeCategory = vm.SelectedPhenotypeCategory,
-                    PhenotypeToSearch = vm.PhenotypeToSearch,                    
+                    PhenotypeToSearch = vm.PhenotypeToSearch,   
+                    Search = true,                 
                 };  
                 return viewModel;
 
@@ -127,6 +128,7 @@ namespace TGRC.Models
                 MutantList = mutantList,
                 ChromosomeList = chromosomeList,
                 PhenotypeCategoryList = phenoCat,
+                Search = false
             };           
 
             return freshModel;

@@ -1,0 +1,238 @@
+@model TGRC.Models.AccessionMapViewModel
+
+<h2> Display Maps of Wild Species Collection Sites</h2>
+
+<form method="post" asp-action="Maps">
+    <input type="hidden" name="Search" id="Search" value="true">
+<table>
+    <tr>
+        <th>Country</th>
+        <th>Province</th>
+        <th>Status</th>
+    </tr>
+    <tr>
+        <td><select asp-for="CountrySelected" class="form-select form-select-sm">
+                    <option value="[Any]">[Any]</option> 
+                    <option value="Chile">Chile</option> 
+                    <option value="Colombia">Colombia</option> 
+                    <option value="Ecuador">Ecuador</option> 
+                    <option value="Peru">Peru</option>   
+            </select>
+        </td>
+        <td><select asp-for="ProvinceSelected" class="form-select form-select-sm" asp-items="@(new SelectList(Model.ProvinceList))"></select></td>
+        <td><select asp-for="StatusSelected" class="form-select form-select-sm">
+                <option value="[Any">[Any]</option>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+                <option value="Unavailable">Unavailable</option>
+        </select></td>
+    </tr>
+</table>
+
+<div class="container col-sm-12 row ">
+    <div class="col-sm-9 embed-responsive">
+        @if(Model.MarkerCount > 0)
+        {
+            <text>Plotting @Model.MarkerCount point(s)...click on a point reference for details.</text>
+        }
+        <div id="map" class="embed-responsive-item embed-responsive-4by3" style="min-height: 800px; min-width: 600px">
+        </div>
+    </div>
+    <div class="col-sm-3 ">
+        @for (var index = 0; index < @Model.Species.Count(); index++)
+        {
+            <div><input type="checkbox" asp-for="@Model.Species[index].IsChecked" class="form-check-input" /> 
+            <label class="form-check-label" asp-for="@Model.Species[index].IsChecked">
+                <img src="@Model.Species[index].Icon"> @Model.Species[index].Name
+                </label>
+            <input type="hidden" asp-for="@Model.Species[index].Name" />
+            <input type="hidden" asp-for="@Model.Species[index].Icon" />
+            </div>            
+        }  
+        </ul>
+        <br>
+        <input type="submit" value="Create Map & Spredsheet">
+        <br>
+        <img src="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=*|000000|FFFFFF"> = Two or more species at the same site
+    </div>
+</div>
+</form>
+@if(Model.accessions.Any())
+{
+<div class="container col-sm-8 text-center">
+    <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#tableCollapse" aria-expanded="false" aria-controls="tableCollapse">
+        Show Table
+    </button> 
+</div>
+<div class="col-sm-12 container collapse" id="tableCollapse">
+    <table class="table datatable">
+        <thead>
+            <th>Accession</th>
+            <th>Status</th>
+            <th>Lat</th>
+            <th>Long</th>
+            <th>Elevation</th>        
+            <th>Collection Site</th>
+            <th>Site details</th>
+            <th>Province/Department</th>
+            <th>Country</th>
+            <th>Coll. No.</th>
+            <th>Coll. Date (mm/dd/yyyy)</th>
+            <th>Pop. Size</th>
+            <th>Sample Size</th>
+            <th>Coll. notes</th>
+        </thead>    
+        <tbody>
+            @foreach (var acc in Model.accessions)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="detail" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a><br>
+                    </td>
+                    <td>@acc.Status</td>
+                    <td>@acc.LatDec</td>
+                    <td>@acc.LonDec</td>
+                    <td>@acc.Elevation</td>
+                    <td><div class="scrollableCell">@acc.CollectionSite</div></td>
+                    <td><div class="scrollableCell">@acc.SiteDetails</div></td>
+                    <td>@acc.ProvinceOrDepartment</td>
+                    <td>@acc.Country</td>
+                    <td>@acc.CollectionNum</td>
+                    <td>@acc.CollectionDateCombined</td>
+                    <td>@acc.PopulationSize</td>
+                    <td>@acc.SampleSize</td>
+                    <td><div class="scrollableCell">@acc.CollectionNotes</div></td>
+                </tr>                
+            }
+        </tbody>
+    </table>
+</div>
+}
+
+
+@section Scripts {
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.APIKey&callback=initMap" defer></script>
+    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>   
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.4/css/buttons.dataTables.min.css" />
+    <script src="https://cdn.datatables.net/buttons/2.3.4/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.html5.min.js"></script>
+    
+   
+    <script type="text/Javascript">       
+        var locations = [@Html.Raw(Model.Markers)]
+
+        function getPin(taxon)
+        {
+            switch (taxon) {
+                case 'S. arcanum':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=A|FF0000|000000";
+                case 'S. cheesmaniae':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=C|FFF000|FF0000";
+                case 'S. chilense':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=C|00FF99|000000";
+                case 'S. chmielewskii':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=C|E6E6E6|FF0000";
+                case 'S. corneliomulleri':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=C|87CEEB|000000";
+                case 'S. galapagense':
+                    return "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=G|FF0000|000000";
+                case 'S. habrochaites':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=H|FFF000|FF0000";
+                case 'S. huaylasense':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=H|00FF99|000000";                     
+                case 'S. juglandifolium':
+                    return "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=J|FF0000|000000";
+                case 'S. lycopersicoides':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=L|FFF000|FF0000";
+                case 'S. lycopersicum':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=L|E5FFE5|000000|";
+                case 'S. lycopersicum var. cerasiforme':
+                    return   "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=C|E5FFE5|000000|";
+                case 'S. neorickii':
+                    return  "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=N|FF0000|000000";
+                case 'S. ochranthum':
+                    return  "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=O|FF0000|000000";
+                case 'S. pennellii':
+                    return  "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=P|FFF000|FF0000";
+                case 'S. peruvianum':
+                    return  "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=P|00FF99|000000" ;
+                case 'S. pimpinellifolium':
+                    return  "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=P|E6E6E6|FF0000";
+                case 'S. sitiens':
+                    return "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=S|FF0000|000000" ;
+                case 'multi':
+                    return "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=*|000000|FFFFFF";
+                default:
+                    return "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";            
+            }
+        }
+
+        $( document ).ready(function() {           
+            
+             $('.datatable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [ 'csvHtml5'],
+                "paging": false,
+            });
+           
+           var infowindow = new google.maps.InfoWindow;
+
+            var marker, i;
+            var bounds = new google.maps.LatLngBounds();
+
+            for (i = 0; i < locations.length; i++) {  
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                    map: map,
+                    icon: getPin(locations[i][3])
+                });
+                bounds.extend(marker.position);
+
+                google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                    return function() {
+                        infowindow.setContent('Accessions: ' + locations[i][0]);
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+            }
+            map.fitBounds(bounds);
+
+            $("#CountrySelected").change(function() {
+               var country = $("#CountrySelected").val();
+               if(country != "[Any]") 
+               {
+                    $.ajax({  
+                    type: "get",  
+                    url: "/Accession/ProvinceListForCountry/" + country,  
+                    //data: { stateId: $('#ddlState').val() },  
+                    datatype: "json",  
+                    traditional: true,  
+                    success: function (data) {  
+                        var provinces = "";  
+                        for (var i = 0; i < data.length; i++)  
+                        {  
+                            provinces = provinces + '<option value=' + data[i] + '>' + data[i] + '</option>';  
+                        }                      
+                        $('#ProvinceSelected').html(provinces);  
+                    }  
+                    });  
+               }
+            });     
+        });  
+        let map;
+
+        function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: 0, lng: 180 },
+            zoom: 10,
+            streetViewControl: false,
+        });
+        }
+
+        window.initMap = initMap;  
+    </script>
+    
+    
+}

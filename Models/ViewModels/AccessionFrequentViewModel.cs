@@ -30,7 +30,7 @@ namespace TGRC.Models
         {  
            var yearList = await _context.Requests.Where(r => r.ShippingDate != null).Select(r => r.ShippingDate.Value.Year).Distinct().OrderByDescending(a=>a).ToListAsync();
           
-            if(vm == null)
+            if(vm.SelectedYear == 0)
             {
                 var freshModel = new AccessionFrequentViewModel
                 {                  

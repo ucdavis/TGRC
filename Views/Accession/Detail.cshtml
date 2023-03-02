@@ -406,7 +406,7 @@
             <p class="bolded"><asp:label id="lblMap" runat="server" Visible="false" Text="Google Map:" /></p>
             <div id="map" style="width: 600px; height: 450px;" runat="server" visible="true"></div>  
         </div>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4TCJI-Gh6lmCjfJ2FvHg2Z_VL9gJ5Jqc&callback=initMap&v=weekly" defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.APIKey&callback=initMap&v=weekly" defer></script>        
     }
 </div>
 

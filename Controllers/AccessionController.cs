@@ -8,10 +8,12 @@ namespace TGRC.Controllers;
 public class AccessionController : Controller
 {
     private readonly TGRCContext _context;
+    private readonly IConfiguration _config;
 
-    public AccessionController(TGRCContext context)
+    public AccessionController(TGRCContext context, IConfiguration config)
     {       
         _context = context;
+        _config = config;
     }
 
     public async Task<IActionResult> Detail(string id, string frame = "no")
@@ -24,6 +26,7 @@ public class AccessionController : Controller
             .Include(a => a.Images).ThenInclude(i => i.Image)
             .Where(a => a.AccessionNum == id).FirstOrDefaultAsync();
         ViewBag.Frame = frame;
+        ViewBag.APIKey = _config["googleMapAPIKey"];
         return View(model);
     }
 
@@ -61,15 +64,24 @@ public class AccessionController : Controller
     }
 
     public async Task<IActionResult> Frequent(AccessionFrequentViewModel vm)
-    {
-        if(!vm.Search)
-        {
-            var freshModel = await AccessionFrequentViewModel.Create(_context, null);
-            return View(freshModel);
-        }
+    {        
         var model = await AccessionFrequentViewModel.Create(_context, vm);
         return View(model);
     }
 
+    public async Task<IActionResult> Maps (AccessionMapViewModel vm)
+    {
+        var model = await AccessionMapViewModel.Create(_context, vm);
+        ViewBag.APIKey = _config["googleMapAPIKey"];
+        return View(model);
+
+    }
+
+    public async Task<IActionResult> ProvinceListForCountry (string id)
+    {
+        var model = await _context.Accessions.Where(a => a.Country==id && a.ProvinceOrDepartment != null).Select(a=> a.ProvinceOrDepartment).Distinct().OrderBy(a=>a).ToListAsync();
+        model.Insert(0,"[Any]");
+        return Json(model);
+    }    
     
 }
