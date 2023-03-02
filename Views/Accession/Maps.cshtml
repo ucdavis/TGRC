@@ -29,8 +29,8 @@
     </tr>
 </table>
 
-<div class="container col-sm-12 row border">
-    <div class="col-sm-9 border">
+<div class="container col-sm-12 row ">
+    <div class="col-sm-9 ">
         @if(Model.MarkerCount > 0)
         {
             <text>Plotting @Model.MarkerCount point(s)...click on a point reference for details.</text>
@@ -38,7 +38,7 @@
         <div id="map" style="width: 900px; height: 800px;">
         </div>
     </div>
-    <div class="col-sm-3 border">
+    <div class="col-sm-3 ">
         @for (var index = 0; index < @Model.Species.Count(); index++)
         {
             <div><input type="checkbox" asp-for="@Model.Species[index].IsChecked" class="form-check-input" /> 
@@ -46,6 +46,7 @@
                 <img src="@Model.Species[index].Icon"> @Model.Species[index].Name
                 </label>
             <input type="hidden" asp-for="@Model.Species[index].Name" />
+            <input type="hidden" asp-for="@Model.Species[index].Icon" />
             </div>            
         }  
         </ul>
@@ -58,7 +59,12 @@
 </form>
 @if(Model.accessions.Any())
 {
-<div class="col-sm-12 container">
+<div class="container col-sm-8 text-center">
+    <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#tableCollapse" aria-expanded="false" aria-controls="tableCollapse">
+        Show Table
+    </button> 
+</div>
+<div class="col-sm-12 container collapse" id="tableCollapse">
     <table class="table datatable">
         <thead>
             <th>Accession</th>
@@ -106,7 +112,7 @@
 
 @section Scripts {
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4TCJI-Gh6lmCjfJ2FvHg2Z_VL9gJ5Jqc&callback=initMap" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.APIKey&callback=initMap" defer></script>
     <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>   
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.4/css/buttons.dataTables.min.css" />

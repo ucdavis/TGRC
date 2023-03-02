@@ -8,10 +8,12 @@ namespace TGRC.Controllers;
 public class AccessionController : Controller
 {
     private readonly TGRCContext _context;
+    private readonly IConfiguration _config;
 
-    public AccessionController(TGRCContext context)
+    public AccessionController(TGRCContext context, IConfiguration config)
     {       
         _context = context;
+        _config = config;
     }
 
     public async Task<IActionResult> Detail(string id, string frame = "no")
@@ -24,6 +26,7 @@ public class AccessionController : Controller
             .Include(a => a.Images).ThenInclude(i => i.Image)
             .Where(a => a.AccessionNum == id).FirstOrDefaultAsync();
         ViewBag.Frame = frame;
+        ViewBag.APIKey = _config["googleMapAPIKey"];
         return View(model);
     }
 
@@ -69,6 +72,7 @@ public class AccessionController : Controller
     public async Task<IActionResult> Maps (AccessionMapViewModel vm)
     {
         var model = await AccessionMapViewModel.Create(_context, vm);
+        ViewBag.APIKey = _config["googleMapAPIKey"];
         return View(model);
 
     }
