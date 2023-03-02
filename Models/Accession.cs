@@ -155,8 +155,26 @@ namespace TGRC.Models
         public string CollectionDateCombined {
             get 
             {
-                return $"{CollectionMonth}-{CollectionDate}-{CollectionYear}";
+                if(!string.IsNullOrWhiteSpace(CollectionMonth) && !string.IsNullOrWhiteSpace(CollectionDate) && !string.IsNullOrWhiteSpace(CollectionYear))
+                {
+                    return $"{CollectionMonth}-{CollectionDate}-{CollectionYear}";
+                }
+                if(!string.IsNullOrWhiteSpace(CollectionMonth) && !string.IsNullOrWhiteSpace(CollectionYear))
+                {
+                    return $"{CollectionMonth}-{CollectionYear}";
+                }
+                if(!string.IsNullOrWhiteSpace(CollectionYear))
+                {
+                    return $"{CollectionYear}";
+                }
+                return "";
             }
+        }
+
+        public string Title {
+             get {
+                return $"{AccessionNum} ({Taxon2})";
+             }
         }
 
         

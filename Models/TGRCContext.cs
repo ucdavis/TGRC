@@ -17,6 +17,7 @@ namespace TGRC.Models
         }
 
         public virtual DbSet<Accession> Accessions { get; set; }
+        public virtual DbSet<Species> Species { get; set; }
         public virtual DbSet<RequestSummary> RequstSummaries { get; set; }
         public virtual DbSet<AccessionCategoriesInAccession> AccessionCategoriesInAccessions { get; set; }
         public virtual DbSet<AccessionCategories> AccessionCategories { get; set; }
