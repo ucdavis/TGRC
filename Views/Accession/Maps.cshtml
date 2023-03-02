@@ -30,12 +30,12 @@
 </table>
 
 <div class="container col-sm-12 row ">
-    <div class="col-sm-9 ">
+    <div class="col-sm-9 embed-responsive">
         @if(Model.MarkerCount > 0)
         {
             <text>Plotting @Model.MarkerCount point(s)...click on a point reference for details.</text>
         }
-        <div id="map" style="width: 900px; height: 800px;">
+        <div id="map" class="embed-responsive-item embed-responsive-4by3" style="min-height: 800px; min-width: 600px">
         </div>
     </div>
     <div class="col-sm-3 ">
