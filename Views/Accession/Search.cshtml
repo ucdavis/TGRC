@@ -117,7 +117,7 @@
                     <label asp-for="SearchComments" class="col-sm-3 col-form-label">Notes</label>
                     <div class="col-sm-6">
                         <input type="text" asp-for="SearchComments" class="form-control">
-                        (enter all or part)
+                        (enter text to search in collection notes and comments fields)
                     </div>
                 </div>
                 <div class="form-group row">
@@ -131,7 +131,8 @@
             </div>
         </div>
         <div class="text-center">
-            <input type="submit" value="Search" class="btn btn-primary"></input>
+            <input type="submit" value="Search" class="btn btn-primary"></input> | 
+            <a asp-action="Search" class="btn btn-dark">Clear Search</a>
         </div>
     </div>
 

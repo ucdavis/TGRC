@@ -51,7 +51,8 @@
         }  
         </ul>
         <br>
-        <input type="submit" value="Create Map & Spredsheet">
+        <input type="submit" value="Create Map & Spreadsheet"> | 
+            <a asp-action="Maps" class="btn btn-dark">Clear Map/Search</a>
         <br>
         <img src="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=*|000000|FFFFFF"> = Two or more species at the same site
     </div>
@@ -69,15 +70,15 @@
         <thead>
             <th>Accession</th>
             <th>Status</th>
-            <th>Lat</th>
-            <th>Long</th>
-            <th>Elevation</th>        
+            <th>Coll. No.</th>
+            <th>Coll. Date (m-d-y)</th>
             <th>Collection Site</th>
             <th>Site details</th>
             <th>Province/Department</th>
             <th>Country</th>
-            <th>Coll. No.</th>
-            <th>Coll. Date (mm/dd/yyyy)</th>
+            <th>Elevation (m)</th> 
+            <th>Lat</th>
+            <th>Long</th>
             <th>Pop. Size</th>
             <th>Sample Size</th>
             <th>Coll. notes</th>
@@ -90,18 +91,18 @@
                         <a asp-action="detail" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a><br>
                     </td>
                     <td>@acc.Status</td>
-                    <td>@acc.LatDec</td>
-                    <td>@acc.LonDec</td>
-                    <td>@acc.Elevation</td>
-                    <td><div class="scrollableCell">@acc.CollectionSite</div></td>
-                    <td><div class="scrollableCell">@acc.SiteDetails</div></td>
-                    <td>@acc.ProvinceOrDepartment</td>
-                    <td>@acc.Country</td>
                     <td>@acc.CollectionNum</td>
                     <td>@acc.CollectionDateCombined</td>
+                    <td><div class="scrollableCell" style="min-width: 150px;">@acc.CollectionSite</div></td>
+                    <td><div class="scrollableCell" style="min-width: 150px;">@acc.SiteDetails</div></td>
+                    <td>@acc.ProvinceOrDepartment</td>
+                    <td>@acc.Country</td>
+                    <td>@acc.Elevation</td>
+                    <td>@acc.LatDec</td>
+                    <td>@acc.LonDec</td>
                     <td>@acc.PopulationSize</td>
                     <td>@acc.SampleSize</td>
-                    <td><div class="scrollableCell">@acc.CollectionNotes</div></td>
+                    <td><div class="scrollableCell" style="min-width: 200px;">@acc.CollectionNotes</div></td>
                 </tr>                
             }
         </tbody>
@@ -192,7 +193,12 @@
 
                 google.maps.event.addListener(marker, 'click', (function(marker, i) {
                     return function() {
-                        infowindow.setContent('Accessions: ' + locations[i][0]);
+                        if(locations[i][0].includes(",")){
+                            infowindow.setContent('Accessions: ' + locations[i][0]);
+                        } else {
+                            infowindow.setContent('Accession: ' + locations[i][0]);
+                        }
+                        
                         infowindow.open(map, marker);
                     }
                 })(marker, i));
