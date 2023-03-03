@@ -352,7 +352,7 @@
         <div class="form-group row">
             <label asp-for="Mta" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <a href="https://tgrc-mvc.ucdavis.edu/MTA/@Model.Mta" class="form-control-plaintext">@Model.Mta</a>
+                <a href="https://tgrc-mvc.plantsciences.ucdavis.edu/MTA/@Model.Mta" class="form-control-plaintext">@Model.Mta</a>
             </div>
         </div>
     }
@@ -388,11 +388,11 @@
                     {
                         if (imageI == imageCount)
                         {
-                            <a href="https://tgrc-mvc.ucdavis.edu/images/@image.Image.File">@image.Image.File</a>                            
+                            <a target="_blank" href="https://tgrc-mvc.plantsciences.ucdavis.edu/images/@image.Image.File"><img src="https://tgrc-mvc.plantsciences.ucdavis.edu/images/thumbnails/@image.Image.File"></a>                            
                         }
                         else
                         {
-                            <a href="https://tgrc-mvc.ucdavis.edu/images/@image.Image.File">@image.Image.File</a>;
+                            <a target="_blank" href="https://tgrc-mvc.plantsciences.ucdavis.edu/images/@image.Image.File"><img src="https://tgrc-mvc.plantsciences.ucdavis.edu/images/thumbnails/@image.Image.File"></a>;
                         }
                         imageI += 1;
                     }
