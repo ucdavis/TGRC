@@ -19,19 +19,20 @@ namespace TGRC.Models
             get{
                 if(!AccessionNum.Contains(","))
                 {
-                    return $"<a target=\"_blank\" href=\"/Accession/Detail/{AccessionNum}\">{AccessionNum}</a>({Taxon2}";
+                    return $"<a target=\"_blank\" href=\"/Accession/Detail/{AccessionNum}\">{AccessionNum}</a>({Taxon2})";
                 }
                 var numbers = AccessionNum.Split(",");
                 var taxons = Taxon2.Split(",");
                 StringBuilder links = new StringBuilder();
                 for(var i = 0; i < numbers.Count(); i++)
                 {
-                    links.Append($"<a target=\"_blank\" href=\"/Accession/Detail/{numbers[i].Trim()}\">{numbers[i].Trim()}</a>({taxons[i]}");
-                }
-                // foreach(var num in numbers)
-                // {
-                //     links.Append($"<a target=\"_blank\" href=\"/Accession/Detail/{num.Trim()}\">{num.Trim()}</a>({Taxon2}");
-                // }
+                    if(i < numbers.Count() - 1){
+                        links.Append($"<a target=\"_blank\" href=\"/Accession/Detail/{numbers[i].Trim()}\">{numbers[i].Trim()}</a>({taxons[i]}),");
+                    } else {
+                        links.Append($"<a target=\"_blank\" href=\"/Accession/Detail/{numbers[i].Trim()}\">{numbers[i].Trim()}</a>({taxons[i]})");
+                    }
+                    
+                }                
                 return links.ToString();
             }
         }
