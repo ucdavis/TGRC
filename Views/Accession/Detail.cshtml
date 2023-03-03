@@ -261,8 +261,11 @@
     {
         <div class="form-group row">
             <label asp-for="Traits" class="col-sm-3 col-form-label"></label>
-            <div class="col-sm-9">
+            @* <div class="col-sm-9">
                 <input type="text" asp-for="Traits" readonly class="form-control-plaintext">
+            </div> *@
+            <div class="col-sm-9">
+                <textarea class="form-control-plaintext" readonly asp-for="Traits"></textarea>
             </div>
         </div>
     }
