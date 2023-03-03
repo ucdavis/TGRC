@@ -39,7 +39,7 @@ namespace TGRC.Models
            geneList.Insert(0,"");
            var phenoCat = await _context.PhenotypicCategories.Distinct().OrderBy(a =>a.PhenotypicCategory1).ToListAsync();
            phenoCat.Insert(0, new PhenotypicCategory { PhenotypicCategory1 = "" });
-           var accList = await _context.Accessions.Select(a=>a.AccessionNum).OrderBy(a=>a).ToListAsync();
+           var accList = await _context.Accessions.Where(a => a.Images.Any()).Select(a=>a.AccessionNum).OrderBy(a=>a).ToListAsync();
            accList.Insert(0,"");
            var taxa = await _context.Taxa.OrderByDescending(t => t.L).ThenBy(t => t.Taxon).ToListAsync();
            taxa.Insert(0, new Taxa { Taxon = "", CompleteName = "", Synonym = "", L="z"});
