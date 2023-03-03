@@ -30,14 +30,6 @@
 </table>
 
 <div class="container col-sm-12 row ">
-    <div class="col-sm-9 embed-responsive">
-        @if(Model.MarkerCount > 0)
-        {
-            <text>Plotting @Model.MarkerCount point(s)...click on a point reference for details.</text>
-        }
-        <div id="map" class="embed-responsive-item embed-responsive-4by3" style="min-height: 800px; min-width: 600px">
-        </div>
-    </div>
     <div class="col-sm-3 ">
         @for (var index = 0; index < @Model.Species.Count(); index++)
         {
@@ -56,6 +48,14 @@
         <br>
         <img src="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=*|000000|FFFFFF"> = Two or more species at the same site
     </div>
+    <div class="col-sm-9 embed-responsive">
+        @if(Model.MarkerCount > 0)
+        {
+            <text>Plotting @Model.MarkerCount point(s)...click on a point reference for details.</text>
+        }
+        <div id="map" class="embed-responsive-item embed-responsive-4by3" style="min-height: 800px; min-width: 600px">
+        </div>
+    </div>    
 </div>
 </form>
 @if(Model.accessions.Any())
