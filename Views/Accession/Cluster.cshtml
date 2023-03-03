@@ -1,13 +1,13 @@
 @model TGRC.Models.AccessionClusterViewModel
 
 
-<h3>Clusters</h3>
+<h3>Core Collections and Mapping Populations</h3>
 
 <form asp-action="Cluster" method="post">
     <input type="hidden" id="Search" name="Search" value="True">    
     <div class="container col-sm-12 collapse show" id="SearchCollapse">        
         <div class="form-group row">
-            <label asp-for="SelectedCluster" class="col-sm-3 col-form-label">Cluster</label>
+            <label asp-for="SelectedCluster" class="col-sm-3 col-form-label">Choose an accession group</label>
             <div class="col-sm-4">
                         <select asp-for="SelectedCluster" class="form-select form-select-sm" asp-items="@(new SelectList(Model.Clusters))"></select>
                     </div>
