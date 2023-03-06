@@ -20,6 +20,8 @@ namespace TGRC.Models
         public string B { get; set; }
         public short? Chk { get; set; }
         public int? Chkthumb { get; set; }
+
+        public ICollection<ColleaguesInImage>   Contributors { get; set; }
        
     }
 }
