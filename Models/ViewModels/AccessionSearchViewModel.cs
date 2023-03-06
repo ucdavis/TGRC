@@ -76,7 +76,8 @@ namespace TGRC.Models
                 
                 if(!string.IsNullOrWhiteSpace(vm.AccessionNumberToSearch))
                 {
-                    accToFind = accToFind.Where(a => EF.Functions.Like(a.AccessionNum, "%" + vm.AccessionNumberToSearch + "%"));
+                    var accPad = padAccessionSearch(vm.AccessionNumberToSearch);
+                    accToFind = accToFind.Where(a => EF.Functions.Like(a.AccessionNum, "%" + vm.AccessionNumberToSearch + "%") || EF.Functions.Like(a.AccessionNum, "%" + accPad + "%"));
                 }     
                 if(!string.IsNullOrWhiteSpace(vm.StatusToSearch))
                 {
@@ -184,6 +185,48 @@ namespace TGRC.Models
             };           
 
             return freshModel;
+        }
+
+        public static string padAccessionSearch(string search)
+        {
+            var newSearch = "IgnoreThisSearch";
+            if(search.IndexOf("la", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                int a;
+                if(int.TryParse(search.Replace("LA","").Replace("La","").Replace("la","").Replace("lA",""), out a))
+                {
+                    newSearch = "LA" + a.ToString("D4");
+                    return newSearch;
+                }                
+            }
+            if(search.Contains("2-"))
+            {
+                int b;
+                if(int.TryParse(search.Replace("2-",""), out b))
+                {
+                    newSearch = "2-" + b.ToString("D3");
+                    return newSearch;
+                }
+            }
+            if(search.Contains("3-"))
+            {
+                int b;
+                if(int.TryParse(search.Replace("3-",""), out b))
+                {
+                    newSearch = "3-" + b.ToString("D3");
+                    return newSearch;
+                }
+            }
+             if(search.IndexOf("delta", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                int a;
+                if(int.TryParse(search.Replace("DELTA","").Replace("Delta","").Replace("delta","").Replace("-",""), out a))
+                {
+                    newSearch = "delta-" + a.ToString("D2");
+                    return newSearch;
+                }                
+            }
+            return newSearch;
         }
 
         
