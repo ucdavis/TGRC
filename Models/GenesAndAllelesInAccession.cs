@@ -14,5 +14,6 @@ namespace TGRC.Models
         public DateTime? DateModified { get; set; }
 
         public Accession Accession { get; set; }
+        public ICollection<PhenoInGene> Phenotypes { get; set; }
     }
 }
