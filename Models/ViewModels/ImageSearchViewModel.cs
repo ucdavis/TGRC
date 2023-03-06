@@ -50,26 +50,24 @@ namespace TGRC.Models
                               
             if(vm != null)
             {
-                bool genesSearched = false;
+                
                 bool accSearched = false;
                 bool imageSearch = false;
-                var geneAlleleImages = _context.GenesAndAllelesInImages.Include(g=> g.Image).AsQueryable(); 
                 var accNumList = _context.Accessions.AsQueryable();  
                 var imageSearchList = _context.Images.AsQueryable();    
                 var foundImage = new List<Image>(); 
-                var geneImage = new List<Image>(); 
                 var accImages = new List<Image>();    
                 var imageImages = new List<Image>();    
                    
                 if(!string.IsNullOrWhiteSpace(vm.SelectedGene))
                 {
-                    geneAlleleImages = geneAlleleImages.Where(i => i.Gene == vm.SelectedGene);
-                    genesSearched = true;
+                    accNumList = accNumList.Where(a => a.Genes.Any(g => g.Gene == vm.SelectedGene));
+                    accSearched = true;
                 }
                 if(!string.IsNullOrWhiteSpace(vm.SelectedPhenotypeCategory))
                 {
-                    geneAlleleImages = geneAlleleImages.Where(i => i.GeneAndAlleleDetails.PhenoTypeDetails.PhenotypicalCategory == vm.SelectedPhenotypeCategory);
-                    genesSearched = true;
+                    accNumList = accNumList.Where(a => a.Genes.Any(g => g.Phenotypes.Any(p => p.PhenotypicalCategory == vm.SelectedPhenotypeCategory)));
+                    accSearched = true;
                 }
                 if(!string.IsNullOrWhiteSpace(vm.SelectedAccession))
                 {
@@ -98,10 +96,7 @@ namespace TGRC.Models
                     imageSearchList = imageSearchList.Where(i => EF.Functions.Like(i.Caption, "%" + vm.CaptionSearchString + "%" ));
                     imageSearch = true;
                 }
-                if(genesSearched)
-                {
-                    geneImage = await geneAlleleImages.Select(g => g.Image).ToListAsync();
-                }
+                
                 if(accSearched)
                 {
                     var accNumbers = await accNumList.Select(a => a.AccessionNum).ToListAsync();
@@ -112,34 +107,15 @@ namespace TGRC.Models
                     imageImages = await imageSearchList.ToListAsync();
                 }
 
-                if(genesSearched && accSearched && imageSearch)
-                {
-                    foundImage = geneImage.Intersect(accImages).Intersect(imageImages).ToList();
-                } else if(genesSearched && accSearched)
-                {
-                    foundImage = geneImage.Intersect(accImages).ToList();
-                } else if(accSearched && imageSearch)
+                if(accSearched && imageSearch)
                 {
                     foundImage = accImages.Intersect(imageImages).ToList();
-                } else if(genesSearched)
-                {
-                    foundImage = geneImage;
-                } else if(accSearched)
-                {
-                    foundImage = accImages;
-                } else if(imageSearch)
-                {
-                    foundImage = imageImages;
+                } else if(accSearched) {
+                    foundImage = accImages.ToList();
                 } else {
-                    foundImage = await imageSearchList.ToListAsync();
+                    foundImage = imageImages.ToList();
                 }
 
-                
-                
-
-
-
-                 
                 
                 var viewModel = new ImageSearchViewModel
                 {
