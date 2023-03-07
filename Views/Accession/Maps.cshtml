@@ -1,33 +1,40 @@
 @model TGRC.Models.AccessionMapViewModel
 
 <h2> Display Maps of Wild Species Collection Sites</h2>
+<br>
 
 <form method="post" asp-action="Maps">
     <input type="hidden" name="Search" id="Search" value="true">
-<table>
-    <tr>
-        <th>Country</th>
-        <th>Province</th>
-        <th>Status</th>
-    </tr>
-    <tr>
-        <td><select asp-for="CountrySelected" class="form-select form-select-sm">
-                    <option value="[Any]">[Any]</option> 
-                    <option value="Chile">Chile</option> 
-                    <option value="Colombia">Colombia</option> 
-                    <option value="Ecuador">Ecuador</option> 
-                    <option value="Peru">Peru</option>   
-            </select>
-        </td>
-        <td><select asp-for="ProvinceSelected" class="form-select form-select-sm" asp-items="@(new SelectList(Model.ProvinceList))"></select></td>
-        <td><select asp-for="StatusSelected" class="form-select form-select-sm">
-                <option value="[Any">[Any]</option>
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-                <option value="Unavailable">Unavailable</option>
-        </select></td>
-    </tr>
-</table>
+    <div class="row col-sm-12">
+        <div class="col-sm-6 align-top">
+            <table>
+                <tr>
+                    <th>Country</th>
+                    <th>Province</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td><select asp-for="CountrySelected" class="form-select form-select-sm">
+                                <option value="[Any]">[Any]</option> 
+                                <option value="Chile">Chile</option> 
+                                <option value="Colombia">Colombia</option> 
+                                <option value="Ecuador">Ecuador</option> 
+                                <option value="Peru">Peru</option>   
+                        </select>
+                    </td>
+                    <td><select asp-for="ProvinceSelected" class="form-select form-select-sm" asp-items="@(new SelectList(Model.ProvinceList))"></select></td>
+                    <td><select asp-for="StatusSelected" class="form-select form-select-sm">
+                            <option value="[Any">[Any]</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                            <option value="Unavailable">Unavailable</option>
+                    </select></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-sm-6 d-flex align-items-end"><input type="submit" class="btn btn-primary" value="Create Map & Spreadsheet"> | 
+            <a asp-action="Maps" class="btn btn-dark">Clear Map/Search</a></div>
+    </div>
 
 <div class="container col-sm-12 row ">
     <div class="col-sm-3 ">
@@ -43,8 +50,7 @@
         }  
         </ul>
         <br>
-        <input type="submit" value="Create Map & Spreadsheet"> | 
-            <a asp-action="Maps" class="btn btn-dark">Clear Map/Search</a>
+        
         <br>
         <img src="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=*|000000|FFFFFF"> = Two or more species at the same site
     </div>
