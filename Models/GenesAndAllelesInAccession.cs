@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TGRC.Models
 {
@@ -14,6 +15,8 @@ namespace TGRC.Models
         public DateTime? DateModified { get; set; }
 
         public Accession Accession { get; set; }
+
+        [ForeignKey("Gene,Allele")]
         public ICollection<PhenoInGene> Phenotypes { get; set; }
     }
 }
