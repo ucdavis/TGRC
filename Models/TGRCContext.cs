@@ -410,6 +410,7 @@ namespace TGRC.Models
                 entity.Property(e => e.Gene).HasMaxLength(8);
 
                 entity.Property(e => e.Isogenicity).HasMaxLength(20);
+                entity.HasMany(e => e.Phenotypes).WithOne(p => p.GeneInAccession).HasForeignKey(p => new {p.Allele, p.Gene}).HasPrincipalKey(g => new {g.Allele, g.Gene});
             });
 
             modelBuilder.Entity<GenesAndAllelesInImage>(entity =>
