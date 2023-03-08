@@ -22,7 +22,7 @@
 {
     <hr>
     <div class="col-sm-12 container row" style="min-height: 100%; height: 100%;">
-        <div class="col-sm-2 border">
+        <div class="col-sm-2 border" id="navigationResults">
             <h3>Results</h3>
             <h5>Total: @Model.accessions.Count</h5>
             <div>
@@ -39,8 +39,19 @@
             <iframe width="100%" height="100%" class="embed-responsive-item" title="Results View of from selected Accession"
                 name="resultFrame"></iframe>
         </div>
-
     </div>
+}
 
-
+@section Scripts {
+    <script type="text/Javascript">       
+        $( document ).ready(function() {
+           $("div#navigationResults a").each(function ()
+            {
+                $(this).bind("click", function ()
+                {
+                    $(this).css("color", "black");
+                });
+            });        
+        });  
+    </script>    
 }
