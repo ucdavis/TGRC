@@ -71,10 +71,10 @@
         {
             <div class="col-12 container row imageRow">
                 <div class="col">
-                    <a asp-action="Image" asp-controller="Images" asp-route-id="@image.Image.File"><img src="https://tgrc-app.ucdavis.edu/Images/thumbnails/@image.Image.File"></a>
+                    <a href="https://tgrc-mvc.plantsciences.ucdavis.edu/images/@image.Image.File"><img src="https://tgrc-app.ucdavis.edu/Images/thumbnails/@image.Image.File"></a>
                 </div>
                 <div class="col">
-                    <a asp-action="Image" asp-controller="Images" asp-route-id="@image.Image.File">@image.Image.File</a>
+                    <a href="https://tgrc-mvc.plantsciences.ucdavis.edu/images/@image.Image.File">@image.Image.File</a>
                 </div>
                 <div class="col-8"> - @image.Image.Caption</div>               
             </div>
