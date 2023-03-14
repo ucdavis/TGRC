@@ -2,6 +2,8 @@
 
 
 <h3>Accession Search</h3>
+<form asp-action="search" method="post">
+        <input type="hidden" id="Search" name="Search" value="True">
     <div class="container col-sm-8 text-center multi-collapse collapse hide">
         <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse"
             aria-expanded="false" aria-controls="SearchCollapse">
@@ -13,22 +15,16 @@
             <h6>Please enter your search criteria below. All fields are optional; searches are case insensitive; partial
                 text values are allowed; multiple criteria are linked by 'AND'.</h6>
         </div>
-        <div class="row col-sm-12 border">
-            <form asp-action="Simple">
-                <input type="hidden" id="Search" name="Search" value="True">
+        <div class="row col-sm-12 border">            
                 <div class="form-group row">
-                    <label for="SearchTerm" class="col-sm-2 col-form-label">Simnple Search</label>
+                    <label asp-for="SimpleSearchTerm" class="col-sm-2 col-form-label">Simple Search</label>
                     <div class="col-sm-6">
-                        <input type="text" name="SearchTerm" id="SearchTerm" class="form-control">
+                        <input type="text" asp-for="SimpleSearchTerm" class="form-control">
                         (Search for accession number, cultivar name, or other identifier.)
                     </div>
-                    <div class="col-sm-2"><input type="submit" value="Search" class="btn btn-primary"></div>
+                    <div class="col-sm-2"><button name="SubmitButton" value="simple" class="btn btn-primary">Search</button></div>
                 </div>
-            </form>
         </div>
-        <form asp-action="search" method="post">
-        <input type="hidden" id="Search" name="Search" value="True">
-        
         <div class="row">
             <div><h2>Advanced Search</h2></div>
             <div class="col-sm-6 border">@* First column*@
@@ -145,15 +141,15 @@
             </div>
         </div>
         <div class="text-center">
-            <input type="submit" value="Search" class="btn btn-primary"></input> | 
+            <button name="SubmitButton" value="advanced" class="btn btn-primary">Search</button> | 
             <a asp-action="Search" class="btn btn-dark">Clear Search</a> |
             <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse"
                 aria-expanded="false" aria-controls="SearchCollapse">
                 Hide/Show Search
             </button>
-        </div>
-        </form>
+        </div>        
     </div>
+    </form>
 
 
 
