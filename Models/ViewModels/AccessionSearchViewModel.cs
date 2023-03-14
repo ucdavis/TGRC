@@ -77,7 +77,7 @@ namespace TGRC.Models
             {
                 var accToFind = _context.Accessions.AsQueryable();
 
-                if(!string.IsNullOrWhiteSpace(vm.SimpleSearchTerm))
+                if(vm.SubmitButton == "Simple")
                 {
                     var accPad = AccessionSearchViewModel.padAccessionSearch(vm.SimpleSearchTerm);
                     var accFuzzy = fuzzySearch(vm.SimpleSearchTerm);
