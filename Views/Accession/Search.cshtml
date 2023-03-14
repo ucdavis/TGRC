@@ -1,7 +1,7 @@
 @model TGRC.Models.AccessionSearchViewModel
 
 
-<h3>Accession Search</h3>
+<h1>Accession Search</h1>
 <form asp-action="search" method="post">
         <input type="hidden" id="Search" name="Search" value="True">
     <div class="container col-sm-8 text-center multi-collapse collapse hide">
@@ -17,17 +17,17 @@
         </div>
         <div class="row col-sm-12 border">            
                 <div class="form-group row">
-                    <label asp-for="SimpleSearchTerm" class="col-sm-2 col-form-label">Simple Search</label>
+                    <label asp-for="SimpleSearchTerm" class="col-sm-3 col-form-label"><h2>Simple Search</h2></label>
                     <div class="col-sm-6">
                         <input type="text" asp-for="SimpleSearchTerm" class="form-control">
                         (Search for accession number, cultivar name, or other identifier.)
                     </div>
-                    <div class="col-sm-2"><button name="SubmitButton" value="simple" class="btn btn-primary">Search</button></div>
+                    <div class="col-sm-2"><button name="SubmitButton" value="Simple" class="btn btn-primary">Search</button></div>
                 </div>
         </div>
-        <div class="row">
+        <div class="row border">
             <div><h2>Advanced Search</h2></div>
-            <div class="col-sm-6 border">@* First column*@
+            <div class="col-sm-6">@* First column*@
                 <div class="form-group row">
                     <label asp-for="AccessionNumberToSearch" class="col-sm-4 col-form-label">Accession Number</label>
                     <div class="col-sm-7">
@@ -94,7 +94,7 @@
                     </div>
                 </div>              
             </div>
-            <div class="col-sm-6 border">@* Second column*@
+            <div class="col-sm-6">@* Second column*@
                 <div class="form-group row">
                     <label asp-for="SelectedTaxon" class="col-sm-3 col-form-label">Taxon</label>
                     <div class="col-sm-9">
@@ -141,7 +141,7 @@
             </div>
         </div>
         <div class="text-center">
-            <button name="SubmitButton" value="advanced" class="btn btn-primary">Search</button> | 
+            <button name="SubmitButton" value="Advanced" class="btn btn-primary">Search</button> | 
             <a asp-action="Search" class="btn btn-dark">Clear Search</a> |
             <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse"
                 aria-expanded="false" aria-controls="SearchCollapse">
