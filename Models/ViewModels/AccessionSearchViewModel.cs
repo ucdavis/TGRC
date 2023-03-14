@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace TGRC.Models
 {   
@@ -19,6 +20,8 @@ namespace TGRC.Models
         public List<Accession> accessions { get; set; }
 
         public bool Search { get; set; }
+        public string SimpleSearchTerm { get; set; }
+        public string SubmitButton { get; set; }
         
         public string AccessionNumberToSearch { get; set; }
 
@@ -73,69 +76,88 @@ namespace TGRC.Models
             if(vm != null)
             {
                 var accToFind = _context.Accessions.AsQueryable();
+
+                if(!string.IsNullOrWhiteSpace(vm.SimpleSearchTerm))
+                {
+                    var accPad = AccessionSearchViewModel.padAccessionSearch(vm.SimpleSearchTerm);
+                    var accFuzzy = fuzzySearch(vm.SimpleSearchTerm);
+                    accToFind = accToFind.Where(a => EF.Functions.Like(a.AccessionNum, "%" + vm.SimpleSearchTerm + "%") 
+                        || EF.Functions.Like(a.AccessionNum, "%" + accPad + "%")
+                        || EF.Functions.Like(a.AccessionNum, "%" + accFuzzy + "%")
+                        || EF.Functions.Like(a.OtherId, "%" + vm.SimpleSearchTerm + "%") 
+                        || EF.Functions.Like(a.OtherId, "%" + accPad + "%")
+                        || EF.Functions.Like(a.OtherId, "%" + accFuzzy + "%")
+                        || EF.Functions.Like(a.CultivarName, "%" + vm.SimpleSearchTerm + "%") 
+                        || EF.Functions.Like(a.CultivarName, "%" + accPad + "%")
+                        || EF.Functions.Like(a.CultivarName, "%" + accFuzzy + "%")
+                        || EF.Functions.Like(a.Reference, "%" + vm.SimpleSearchTerm + "%") 
+                        || EF.Functions.Like(a.Reference, "%" + accPad + "%")
+                        || EF.Functions.Like(a.Reference, "%" + accFuzzy + "%"));
+                } else {
                 
-                if(!string.IsNullOrWhiteSpace(vm.AccessionNumberToSearch))
-                {
-                    var accPad = padAccessionSearch(vm.AccessionNumberToSearch);
-                    accToFind = accToFind.Where(a => EF.Functions.Like(a.AccessionNum, "%" + vm.AccessionNumberToSearch + "%") || EF.Functions.Like(a.AccessionNum, "%" + accPad + "%"));
-                }     
-                if(!string.IsNullOrWhiteSpace(vm.StatusToSearch))
-                {
-                    accToFind = accToFind.Where(a => a.Status == vm.StatusToSearch);
-                }
-                if(!string.IsNullOrWhiteSpace(vm.InspectedSearch))
-                {
-                    if(vm.InspectedSearch == "Yes")
+                    if(!string.IsNullOrWhiteSpace(vm.AccessionNumberToSearch))
                     {
-                        accToFind = accToFind.Where(a => a.Inspected);
-                    } else {
-                        accToFind = accToFind.Where(a => !a.Inspected);
+                        var accPad = padAccessionSearch(vm.AccessionNumberToSearch);
+                        accToFind = accToFind.Where(a => EF.Functions.Like(a.AccessionNum, "%" + vm.AccessionNumberToSearch + "%") || EF.Functions.Like(a.AccessionNum, "%" + accPad + "%"));
+                    }     
+                    if(!string.IsNullOrWhiteSpace(vm.StatusToSearch))
+                    {
+                        accToFind = accToFind.Where(a => a.Status == vm.StatusToSearch);
                     }
-                    
-                }
-                if(!string.IsNullOrWhiteSpace(vm.OtherIdSearch))
-                {
-                    accToFind = accToFind.Where(a => EF.Functions.Like(a.OtherId, "%" + vm.OtherIdSearch + "%") || EF.Functions.Like(a.CollectionNum, "%" + vm.OtherIdSearch + "%"));
-                }
-                if(!string.IsNullOrWhiteSpace(vm.SelectedTaxon))
-                {
-                    accToFind = accToFind.Where(a => a.Taxon2 == vm.SelectedTaxon || a.Taxon == vm.SelectedTaxon);
-                }
-                if(!string.IsNullOrWhiteSpace(vm.CultivarToSearch))
-                {
-                    accToFind = accToFind.Where(a => a.CultivarName == vm.CultivarToSearch);
-                }
-                if(!string.IsNullOrWhiteSpace(vm.CategoryToSearch))
-                {
-                    accToFind = accToFind.Where(a => a.Categories.Any(c => c.AccessionCategory == vm.CategoryToSearch));
-                }
-                if(!string.IsNullOrWhiteSpace(vm.SelectedCountry))
-                {
-                    accToFind = accToFind.Where(a => a.Country == vm.SelectedCountry);
-                }
-                if(!string.IsNullOrWhiteSpace(vm.SearchProvince))
-                {
-                    accToFind = accToFind.Where(a => a.ProvinceOrDepartment == vm.SearchProvince);
-                }
-                if(!string.IsNullOrWhiteSpace(vm.SearchCollectionSite))
-                {
-                    accToFind = accToFind.Where(a => EF.Functions.Like(a.CollectionSite, "%" + vm.SearchCollectionSite + "%"));
-                }
-                if(!string.IsNullOrWhiteSpace(vm.SearchComments))
-                {
-                    accToFind = accToFind.Where(a => EF.Functions.Like(a.Comments, "%" + vm.SearchComments + "%") || EF.Functions.Like(a.CollectionNotes, "%" + vm.SearchComments + "%") || EF.Functions.Like(a.Traits, "%" + vm.SearchComments + "%"));
-                }
-                if(!string.IsNullOrWhiteSpace(vm.SelectedMatingSystem))
-                {
-                    accToFind = accToFind.Where(a => a.MatingSystem == vm.SelectedMatingSystem);
-                }
-                if(!string.IsNullOrWhiteSpace(vm.SelectedGene))
-                {
-                    accToFind = accToFind.Where(a => a.Genes.Any(g => g.Gene == vm.SelectedGene));
-                }
-                if(!string.IsNullOrWhiteSpace(vm.SelectedBackgroundGenotype))
-                {
-                    accToFind = accToFind.Where(a => a.SourceOfAccession == vm.SelectedBackgroundGenotype);
+                    if(!string.IsNullOrWhiteSpace(vm.InspectedSearch))
+                    {
+                        if(vm.InspectedSearch == "Yes")
+                        {
+                            accToFind = accToFind.Where(a => a.Inspected);
+                        } else {
+                            accToFind = accToFind.Where(a => !a.Inspected);
+                        }
+                        
+                    }
+                    if(!string.IsNullOrWhiteSpace(vm.OtherIdSearch))
+                    {
+                        accToFind = accToFind.Where(a => EF.Functions.Like(a.OtherId, "%" + vm.OtherIdSearch + "%") || EF.Functions.Like(a.CollectionNum, "%" + vm.OtherIdSearch + "%"));
+                    }
+                    if(!string.IsNullOrWhiteSpace(vm.SelectedTaxon))
+                    {
+                        accToFind = accToFind.Where(a => a.Taxon2 == vm.SelectedTaxon || a.Taxon == vm.SelectedTaxon);
+                    }
+                    if(!string.IsNullOrWhiteSpace(vm.CultivarToSearch))
+                    {
+                        accToFind = accToFind.Where(a => a.CultivarName == vm.CultivarToSearch);
+                    }
+                    if(!string.IsNullOrWhiteSpace(vm.CategoryToSearch))
+                    {
+                        accToFind = accToFind.Where(a => a.Categories.Any(c => c.AccessionCategory == vm.CategoryToSearch));
+                    }
+                    if(!string.IsNullOrWhiteSpace(vm.SelectedCountry))
+                    {
+                        accToFind = accToFind.Where(a => a.Country == vm.SelectedCountry);
+                    }
+                    if(!string.IsNullOrWhiteSpace(vm.SearchProvince))
+                    {
+                        accToFind = accToFind.Where(a => a.ProvinceOrDepartment == vm.SearchProvince);
+                    }
+                    if(!string.IsNullOrWhiteSpace(vm.SearchCollectionSite))
+                    {
+                        accToFind = accToFind.Where(a => EF.Functions.Like(a.CollectionSite, "%" + vm.SearchCollectionSite + "%"));
+                    }
+                    if(!string.IsNullOrWhiteSpace(vm.SearchComments))
+                    {
+                        accToFind = accToFind.Where(a => EF.Functions.Like(a.Comments, "%" + vm.SearchComments + "%") || EF.Functions.Like(a.CollectionNotes, "%" + vm.SearchComments + "%") || EF.Functions.Like(a.Traits, "%" + vm.SearchComments + "%"));
+                    }
+                    if(!string.IsNullOrWhiteSpace(vm.SelectedMatingSystem))
+                    {
+                        accToFind = accToFind.Where(a => a.MatingSystem == vm.SelectedMatingSystem);
+                    }
+                    if(!string.IsNullOrWhiteSpace(vm.SelectedGene))
+                    {
+                        accToFind = accToFind.Where(a => a.Genes.Any(g => g.Gene == vm.SelectedGene));
+                    }
+                    if(!string.IsNullOrWhiteSpace(vm.SelectedBackgroundGenotype))
+                    {
+                        accToFind = accToFind.Where(a => a.SourceOfAccession == vm.SelectedBackgroundGenotype);
+                    }
                 }
                 
                 
@@ -164,6 +186,7 @@ namespace TGRC.Models
                     SelectedMatingSystem = vm.SelectedMatingSystem,
                     SelectedGene = vm.SelectedGene,
                     SelectedBackgroundGenotype = vm.SelectedBackgroundGenotype,
+                    SimpleSearchTerm = vm.SimpleSearchTerm,
                     Search = true,
                 };  
                 return viewModel;
@@ -227,6 +250,15 @@ namespace TGRC.Models
                 }                
             }
             return newSearch;
+        }
+
+        private static string fuzzySearch(string search)
+        {
+            if(search.IndexOf("-", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return search.Replace("-","%");
+            }
+            return Regex.Replace(search, "(?<=[A-Za-z])(?=[0-9])","%");
         }
 
         

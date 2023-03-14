@@ -5,12 +5,13 @@
     
 <form asp-action="search" method="post">
     <input type="hidden" id="Search" name="Search" value="True">
-    <div class="container col-sm-8 text-center">
-        <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#SearchCollapse" aria-expanded="false" aria-controls="SearchCollapse">
+    <div class="container col-sm-8 text-center multi-collapse collapse hide">
+        <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse"
+            aria-expanded="false" aria-controls="SearchCollapse">
             Hide/Show Search
-        </button> 
-    </div>
-    <div class="container col-sm-12 collapse show" id="SearchCollapse">
+        </button>
+    </div> 
+    <div class="container col-sm-12 collapse show multi-collapse" id="SearchCollapse">
         <div class="row col-sm-12">
             <h6>Please enter your search criteria below. All fields are optional; searches are case insensitive; partial text values are allowed; multiple criteria are linked by 'AND'.</h6>
         </div>
@@ -65,7 +66,11 @@
         </div>
         <div class="text-center">
             <input type="submit" value="Search" class="btn btn-primary"></input> | 
-            <a asp-action="Search" class="btn btn-dark">Clear Search</a> 
+            <a asp-action="Search" class="btn btn-dark">Clear Search</a> |
+            <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse"
+                aria-expanded="false" aria-controls="SearchCollapse">
+                Hide/Show Search
+            </button>
         </div>
     </div>
 
