@@ -81,7 +81,7 @@ namespace TGRC.Models
                 {
                     var accPad = AccessionSearchViewModel.padAccessionSearch(vm.SimpleSearchTerm);
                     var accFuzzy = fuzzySearch(vm.SimpleSearchTerm);
-                    accToFind = accToFind.Where(a => EF.Functions.Like(a.AccessionNum, "%" + vm.SimpleSearchTerm + "%") 
+                    accToFind = accToFind.Where(a => a.Status == "Active" && (EF.Functions.Like(a.AccessionNum, "%" + vm.SimpleSearchTerm + "%") 
                         || EF.Functions.Like(a.AccessionNum, "%" + accPad + "%")
                         || EF.Functions.Like(a.AccessionNum, "%" + accFuzzy + "%")
                         || EF.Functions.Like(a.OtherId, "%" + vm.SimpleSearchTerm + "%") 
@@ -92,7 +92,7 @@ namespace TGRC.Models
                         || EF.Functions.Like(a.CultivarName, "%" + accFuzzy + "%")
                         || EF.Functions.Like(a.Reference, "%" + vm.SimpleSearchTerm + "%") 
                         || EF.Functions.Like(a.Reference, "%" + accPad + "%")
-                        || EF.Functions.Like(a.Reference, "%" + accFuzzy + "%"));
+                        || EF.Functions.Like(a.Reference, "%" + accFuzzy + "%")));
                 } else {
                 
                     if(!string.IsNullOrWhiteSpace(vm.AccessionNumberToSearch))
