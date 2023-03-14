@@ -1,0 +1,92 @@
+@model TGRC.Models.AccessionSimpleViewModel
+
+
+<h3>Simple Accession Search</h3>
+
+
+
+
+<form asp-action="simple" method="post">
+    <input type="hidden" id="Search" name="Search" value="True">
+    <div class="container col-sm-8 text-center">
+        <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#SearchCollapse"
+            aria-expanded="false" aria-controls="SearchCollapse">
+            Hide/Show Search
+        </button>
+    </div>
+    <div class="container col-sm-12 collapse show" id="SearchCollapse">
+        <div class="card" >
+            <div class="card-body">
+                <h5 class="card-title">Search Alternative</h5>
+                <p class="card-text">Can also visit the <a asp-action="Search" class="btn btn-success">Advanced Search</a> page</p>
+            </div>
+        </div>
+        <div class="row col-sm-12">
+            <h6>Please enter your search criteria below. Searches are case insensitive; partial text values are allowed.</h6>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 border">@* First column*@
+                <div class="form-group row">
+                    <label asp-for="SearchTerm" class="col-sm-2 col-form-label">Search Term</label>
+                    <div class="col-sm-7">
+                        <input type="text" asp-for="SearchTerm" class="form-control">
+                        (Search for accession number, cultivar name, or other identifier.)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <input type="submit" value="Search" class="btn btn-primary"></input> | 
+            <a asp-action="Search" class="btn btn-dark">Clear Search</a>
+        </div>
+    </div>
+
+</form>
+
+@if (Model.accessions.Any())
+{
+    <hr>
+    <div class="col-sm-12 container row" style="min-height: 100%; height: 100%;" >
+        <div class="col-sm-2 border" id="navigationResults">
+            <h3>Results</h3>
+            <h5>Total: @Model.accessions.Count</h5>
+            <div>
+                @foreach (var acc in Model.accessions)
+                {
+                    <a target="resultFrame" asp-action="detail" asp-controller="Accession" asp-route-frame="yes"
+                asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a>
+
+                    <br>
+                }
+            </div>
+        </div>
+        <div class="col-sm-10 border embed-responsive iframe-container">
+            <iframe width="100%" height="100%" class="embed-responsive-item" title="Results View of from selected Accession"
+                name="resultFrame"></iframe>
+        </div>
+
+    </div>
+
+
+} else if(@Model.Search)
+{
+    <hr>
+    <div>
+        <h5>No results found.</h5>
+    </div>
+}
+
+
+@section Scripts {
+    <script type="text/Javascript">       
+        $( document ).ready(function() {
+           $("div#navigationResults a").each(function ()
+            {
+                $(this).bind("click", function ()
+                {
+                    $(this).css("color", "black");
+                });
+            });        
+        });  
+    </script>    
+}
