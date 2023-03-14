@@ -22,9 +22,9 @@ namespace TGRC.Models
         public virtual DbSet<AccessionCategoriesInAccession> AccessionCategoriesInAccessions { get; set; }
         public virtual DbSet<AccessionCategories> AccessionCategories { get; set; }
         public virtual DbSet<AccessionCluster> AccessionClusters { get; set; }
-        public virtual DbSet<AccessionStatus> AccessionStatuses { get; set; }
+        //public virtual DbSet<AccessionStatus> AccessionStatuses { get; set; }
         public virtual DbSet<AccessionsInImage> AccessionsInImages { get; set; }
-        public virtual DbSet<CategoriesInImage> CategoriesInImages { get; set; }
+        //public virtual DbSet<CategoriesInImage> CategoriesInImages { get; set; }
         public virtual DbSet<Colleague> Colleagues { get; set; }
         public virtual DbSet<ColleaguesInImage> ColleaguesInImages { get; set; }
         public virtual DbSet<CulturalRecommendation> CulturalRecommendations { get; set; }
@@ -35,7 +35,7 @@ namespace TGRC.Models
         public virtual DbSet<GenesAndAllelesInAccession> GenesAndAllelesInAccessions { get; set; }
         public virtual DbSet<GenesAndAllelesInImage> GenesAndAllelesInImages { get; set; }
         public virtual DbSet<Image> Images { get; set; }
-        public virtual DbSet<IsogenicityType> IsogenicityTypes { get; set; }
+        //public virtual DbSet<IsogenicityType> IsogenicityTypes { get; set; }
         public virtual DbSet<MatingSystem> MatingSystems { get; set; }
         public virtual DbSet<MutantType> MutantTypes { get; set; }
         public virtual DbSet<PhenoInGene> PhenoInGenes { get; set; }
@@ -195,18 +195,18 @@ namespace TGRC.Models
                 entity.Property(e => e.ClusterName).HasMaxLength(60);
             });
 
-            modelBuilder.Entity<AccessionStatus>(entity =>
-            {
-                entity.HasKey(e => e.Status);
+            // modelBuilder.Entity<AccessionStatus>(entity =>
+            // {
+            //     entity.HasKey(e => e.Status);
 
-                entity.ToTable("AccessionStatus");
+            //     entity.ToTable("AccessionStatus");
 
-                entity.Property(e => e.Status)
-                    .HasMaxLength(255)
-                    .HasColumnName("AccessionStatus");
+            //     entity.Property(e => e.Status)
+            //         .HasMaxLength(255)
+            //         .HasColumnName("AccessionStatus");
 
-                entity.Property(e => e.Definition).HasMaxLength(255);
-            });
+            //     entity.Property(e => e.Definition).HasMaxLength(255);
+            // });
 
             modelBuilder.Entity<AccessionsInImage>(entity =>
             {
@@ -217,12 +217,12 @@ namespace TGRC.Models
                 entity.Property(e => e.DateModified).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<CategoriesInImage>(entity =>
-            {
-                entity.HasKey(e => new {e.ImageNum, e.Category });
+            // modelBuilder.Entity<CategoriesInImage>(entity =>
+            // {
+            //     entity.HasKey(e => new {e.ImageNum, e.Category });
 
-                entity.Property(e => e.Category).HasMaxLength(50);
-            });
+            //     entity.Property(e => e.Category).HasMaxLength(50);
+            // });
 
             modelBuilder.Entity<Colleague>(entity =>
             {               
@@ -455,18 +455,18 @@ namespace TGRC.Models
                 entity.Property(e => e.SlideNum).HasMaxLength(16);
             });
 
-            modelBuilder.Entity<IsogenicityType>(entity =>
-            {
-                entity.HasKey(e => e.Isogenicity);
+            // modelBuilder.Entity<IsogenicityType>(entity =>
+            // {
+            //     entity.HasKey(e => e.Isogenicity);
 
-                entity.ToTable("IsogenicityType");
+            //     entity.ToTable("IsogenicityType");
 
-                entity.Property(e => e.IsogMeaning)
-                    .HasMaxLength(50)
-                    .HasColumnName("Isog-meaning");
+            //     entity.Property(e => e.IsogMeaning)
+            //         .HasMaxLength(50)
+            //         .HasColumnName("Isog-meaning");
 
-                entity.Property(e => e.Isogenicity).HasMaxLength(50);
-            });
+            //     entity.Property(e => e.Isogenicity).HasMaxLength(50);
+            // });
 
             modelBuilder.Entity<MatingSystem>(entity =>
             {

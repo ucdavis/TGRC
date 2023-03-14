@@ -1,7 +1,10 @@
 @model TGRC.Models.AccessionSearchViewModel
 
 
-<h3>Accession Search</h3>
+<h3>Advanced Accession Search</h3>
+
+
+
 
 <form asp-action="search" method="post">
     <input type="hidden" id="Search" name="Search" value="True">
@@ -12,6 +15,12 @@
         </button>
     </div>
     <div class="container col-sm-12 collapse show" id="SearchCollapse">
+        <div class="card" >
+            <div class="card-body">
+                <h5 class="card-title">Search Alternative</h5>
+                <p class="card-text">Can also visit the <a asp-action="Simple" class="btn btn-success">Simple Search</a> page</p>
+            </div>
+        </div>
         <div class="row col-sm-12">
             <h6>Please enter your search criteria below. All fields are optional; searches are case insensitive; partial
                 text values are allowed; multiple criteria are linked by 'AND'.</h6>
@@ -46,7 +55,7 @@
                 <div class="form-group row">
                     <label asp-for="InspectedSearch" class="col-sm-7 col-form-label">Inspected for International
                         Shipment?</label>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <select asp-for="InspectedSearch" class="form-select">
                             <option value=""></option>
                             <option value="Yes">Yes</option>

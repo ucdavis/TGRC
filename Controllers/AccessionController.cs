@@ -83,5 +83,16 @@ public class AccessionController : Controller
         model.Insert(0,"[Any]");
         return Json(model);
     }    
+
+    public async Task<IActionResult> Simple (AccessionSimpleViewModel vm)
+    {
+        if(!vm.Search)
+        {
+            var freshModel = await AccessionSimpleViewModel.Create(_context, null);
+            return View(freshModel);
+        }
+        var model = await AccessionSimpleViewModel.Create(_context, vm);
+        return View(model);
+    }
     
 }
