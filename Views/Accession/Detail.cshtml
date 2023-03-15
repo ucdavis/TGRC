@@ -391,11 +391,11 @@
                     {
                         if (imageI == imageCount)
                         {
-                            <a target="_blank" href="@($"{image.Image.Location}/{image.Image.File}")"><img src="@($"{image.Image.Location}/thumbnails/{image.Image.File}")"></a>                            
+                            <a target="_blank" href="@($"{image.Image.Location}{image.Image.File}")"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>                            
                         }
                         else
                         {
-                            <a target="_blank" href="@($"{image.Image.Location}/{image.Image.File}")"><img src="@($"{image.Image.Location}/thumbnails/{image.Image.File}")"></a>;
+                            <a target="_blank" href="@($"{image.Image.Location}{image.Image.File}")"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>;
                         }
                         imageI += 1;
                     }
