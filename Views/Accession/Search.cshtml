@@ -31,14 +31,14 @@
                 <div class="form-group row">
                     <label asp-for="AccessionNumberToSearch" class="col-sm-4 col-form-label">Accession Number</label>
                     <div class="col-sm-7">
-                        <input type="text" asp-for="AccessionNumberToSearch" class="form-control">
+                        <input type="text" asp-for="AccessionNumberToSearch" class="form-control advSearchField">
                         (enter all or part of the accession number)
                     </div>
                 </div>
                 <div class="form-group row">
                     <label asp-for="OtherIdSearch" class="col-sm-4 col-form-label">Other Identifier</label>
                     <div class="col-sm-7">
-                        <input type="text" asp-for="OtherIdSearch" class="form-control">
+                        <input type="text" asp-for="OtherIdSearch" class="form-control advSearchField">
                         (e.g. PI 126443, SAL3179, IL 3-3)
                     </div>
                 </div>
@@ -119,14 +119,14 @@
                 <div class="form-group row">
                     <label asp-for="SearchCollectionSite" class="col-sm-3 col-form-label">Collection Site</label>
                     <div class="col-sm-8">
-                        <input type="text" asp-for="SearchCollectionSite" class="form-control">
+                        <input type="text" asp-for="SearchCollectionSite" class="form-control advSearchField">
                         (enter all or part of the collection site)
                     </div>
                 </div>
                 <div class="form-group row">
                     <label asp-for="SearchComments" class="col-sm-3 col-form-label">Notes</label>
                     <div class="col-sm-8">
-                        <input type="text" asp-for="SearchComments" class="form-control">
+                        <input type="text" asp-for="SearchComments" class="form-control advSearchField">
                         (search collection notes, traits, comments)
                     </div>
                 </div>
@@ -141,7 +141,7 @@
             </div>
         </div>
         <div class="text-center">
-            <button name="SubmitButton" value="Advanced" class="btn btn-primary">Search</button> | 
+            <button name="SubmitButton" value="Advanced" class="btn btn-primary advSearchButton">Search</button> | 
             <a asp-action="Search" class="btn btn-dark">Clear Search</a> |
             <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse"
                 aria-expanded="false" aria-controls="SearchCollapse">
@@ -196,7 +196,15 @@
                 {
                     $(this).css("color", "black");
                 });
-            });        
+            });  
+            $(".advSearchField").keypress(function(event){
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if(keycode == '13'){
+                    event.stopPropagation();
+                    event.preventDefault();
+                    $(".advSearchButton").click();
+                }
+            });
         });  
     </script>    
 }

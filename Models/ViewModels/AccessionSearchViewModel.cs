@@ -77,7 +77,7 @@ namespace TGRC.Models
             {
                 var accToFind = _context.Accessions.AsQueryable();
 
-                if(vm.SubmitButton == "Simple")
+                if(vm.SubmitButton == "Simple" && !string.IsNullOrWhiteSpace(vm.SimpleSearchTerm))
                 {
                     var accPad = AccessionSearchViewModel.padAccessionSearch(vm.SimpleSearchTerm);
                     var accFuzzy = fuzzySearch(vm.SimpleSearchTerm);
@@ -213,6 +213,10 @@ namespace TGRC.Models
         public static string padAccessionSearch(string search)
         {
             var newSearch = "IgnoreThisSearch";
+            if(search == null)
+            {
+                return newSearch;
+            }
             if(search.IndexOf("la", StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 int a;
@@ -254,6 +258,10 @@ namespace TGRC.Models
 
         private static string fuzzySearch(string search)
         {
+            if(search == null)
+            {
+                return "%";
+            }
             if(search.IndexOf("-", StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 return search.Replace("-","%");
