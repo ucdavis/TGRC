@@ -163,7 +163,7 @@
             <div>
                 @foreach (var acc in Model.accessions)
                 {
-                    <a target="resultFrame" asp-action="detail" asp-controller="Accession" asp-route-frame="yes"
+                    <a class="searchA" target="resultFrame" asp-action="detail" asp-controller="Accession" 
                 asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a>
 
                     <br>
@@ -172,7 +172,7 @@
         </div>
         <div class="col-sm-10 border embed-responsive iframe-container">
             <iframe width="100%" height="100%" class="embed-responsive-item" title="Results View of from selected Accession"
-                name="resultFrame"></iframe>
+                name="resultFrame" id="resultFrame"></iframe>
         </div>
 
     </div>
@@ -203,6 +203,14 @@
                     event.stopPropagation();
                     event.preventDefault();
                     $(".advSearchButton").click();
+                }
+            });
+            $(".searchA").click(function(e){
+                if(!e.ctrlKey && !e.shiftKey){
+                    e.preventDefault();
+                    var link = $(this).attr("href") + "?frame=yes";
+                    $("#resultFrame").attr("src", link);
+                    
                 }
             });
         });  

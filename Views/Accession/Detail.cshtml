@@ -17,7 +17,6 @@
     var cultureCount = @Model.Cultures.Count;
     var geneI = 1;
     var geneCount = @Model.Genes.Count;
-    var imageI = 1;
     var imageCount = @Model.Images.Count;
 }
 
@@ -369,11 +368,21 @@
                     {
                         if (geneI == geneCount)
                         {
-                            <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Gene</a>
+                            if(ViewBag.Frame == "yes")
+                            {
+                                <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene" asp-route-frame="yes">@gene.Gene</a>
+                            } else {
+                                <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Gene</a>
+                            }
                         }
                         else
                         {
-                            <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Gene</a><span>; </span>
+                            if(ViewBag.Frame == "yes")
+                            {
+                                <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene" asp-route-frame="yes">@gene.Gene</a><span>; </span>
+                            } else {
+                                <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Gene</a><span>; </span>
+                            }
                         }
                         geneI += 1;
                     }
@@ -389,15 +398,12 @@
                 <span class="form-control-plaintext">
                     @foreach (var image in Model.Images)
                     {
-                        if (imageI == imageCount)
+                        if(ViewBag.Frame == "yes")
                         {
-                            <a target="_blank" href="@($"{image.Image.Location}{image.Image.File}")"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>                            
-                        }
-                        else
-                        {
-                            <a target="_blank" href="@($"{image.Image.Location}{image.Image.File}")"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>;
-                        }
-                        imageI += 1;
+                            <a target="resultFrame" asp-route-frame="yes" asp-action="detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>
+                        } else {
+                            <a asp-action="Detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>
+                        }                                 
                     }
                 </span>
             </div>

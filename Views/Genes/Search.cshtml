@@ -97,12 +97,12 @@
             <div>
                 @foreach (var gene in Model.genes)
                 {                   
-                        <a target="resultFrame" asp-action="detail" asp-controller="Genes" asp-route-frame="yes" asp-route-id="@gene.Gene1">@gene.Gene1</a><br>
+                        <a class="searchA" target="resultFrame" asp-action="detail" asp-controller="Genes" asp-route-id="@gene.Gene1">@gene.Gene1</a><br>
                 }
             </div>
         </div>
         <div class="col-sm-10 border embed-responsive iframe-container">
-           <iframe width="100%" height="100%" class="embed-responsive-item" title="Results View of from selected Gene" name="resultFrame"></iframe>          
+           <iframe width="100%" height="100%" class="embed-responsive-item" title="Results View of from selected Gene" name="resultFrame" id="resultFrame"></iframe>          
         </div>
         
     </div>
@@ -136,7 +136,15 @@
                 {
                     $(this).css("color", "black");
                 });
-            });               
+            }); 
+            $(".searchA").click(function(e){
+                if(!e.ctrlKey && !e.shiftKey){
+                    e.preventDefault();
+                    var link = $(this).attr("href") + "?frame=yes";
+                    $("#resultFrame").attr("src", link);
+                    
+                }
+            });              
         });  
     </script>
     
