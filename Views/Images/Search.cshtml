@@ -86,12 +86,12 @@
             <div>
                 @foreach (var image in Model.image)
                 {                   
-                        <a target="resultFrame" asp-action="detail" asp-controller="Images" asp-route-frame="yes" asp-route-id="@image.File"><img src="@($"{image.Location}thumbnails/{image.File}")"></a><br>
+                        <a class="searchA" target="resultFrame" asp-action="detail" asp-controller="Images" asp-route-id="@image.File"><img src="@($"{image.Location}thumbnails/{image.File}")"></a><br>
                 }
             </div>
         </div>
         <div class="col-sm-9 border embed-responsive iframe-container">
-           <iframe width="100%" height="100%" class="embed-responsive-item" title="Results View of from selected Gene" name="resultFrame"></iframe>          
+           <iframe width="100%" height="100%" class="embed-responsive-item" title="Results View of from selected Gene" name="resultFrame" id="resultFrame"></iframe>          
         </div>        
     </div>
 }else if(Model.Search)
@@ -100,4 +100,25 @@
     <div>
         <h5>No results found.</h5>
     </div>
+}
+
+
+@section Scripts {
+    
+    
+    
+    <script type="text/Javascript">       
+        $( document ).ready(function() {            
+            $(".searchA").click(function(e){
+                if(!e.ctrlKey && !e.shiftKey){
+                    e.preventDefault();
+                    var link = $(this).attr("href") + "?frame=yes";
+                    $("#resultFrame").attr("src", link);
+                    
+                }
+            });              
+        });  
+    </script>
+    
+    
 }

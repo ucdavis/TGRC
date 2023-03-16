@@ -61,7 +61,12 @@
         @foreach (var acc in Model.GeneAccessions)
         {
             <div class="col-2">
-                <a asp-action="detail" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a>
+                @if(ViewBag.Frame == "yes")
+                {
+                    <a asp-route-frame="yes" asp-action="detail" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a>
+                } else {
+                    <a asp-action="detail" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a>
+                }   
             </div>
         }
     </div>
@@ -71,10 +76,20 @@
         {
             <div class="col-12 container row imageRow">
                 <div class="col">
-                    <a href="@($"{image.Image.Location}{image.Image.File}")"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>
+                    @if(ViewBag.Frame == "yes")
+                    {
+                        <a asp-route-frame="yes" asp-action="detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>
+                    } else {
+                        <a asp-action="detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>
+                    }                       
                 </div>
                 <div class="col">
-                    <a href="@($"{image.Image.Location}{image.Image.File}")">@image.Image.File</a>
+                    @if(ViewBag.Frame == "yes")
+                    {
+                        <a asp-route-frame="yes" asp-action="detail" asp-controller="Images" asp-route-id="@image.Image.File">@image.Image.File</a>
+                    } else {
+                        <a asp-action="detail" asp-controller="Images" asp-route-id="@image.Image.File">@image.Image.File</a>
+                    }   
                 </div>
                 <div class="col-8"> - @image.Image.Caption</div>               
             </div>
