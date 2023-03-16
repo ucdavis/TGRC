@@ -82,16 +82,8 @@
                     } else {
                         <a asp-action="detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>
                     }                       
-                </div>
-                <div class="col">
-                    @if(ViewBag.Frame == "yes")
-                    {
-                        <a asp-route-frame="yes" asp-action="detail" asp-controller="Images" asp-route-id="@image.Image.File">@image.Image.File</a>
-                    } else {
-                        <a asp-action="detail" asp-controller="Images" asp-route-id="@image.Image.File">@image.Image.File</a>
-                    }   
-                </div>
-                <div class="col-8"> - @image.Image.Caption</div>               
+                </div>                
+                <div class="col-8"> @image.Image.Caption</div>               
             </div>
         }
     </div>
