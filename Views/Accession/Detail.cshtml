@@ -74,7 +74,13 @@
     @if (Model.Donors.Count > 0)
     {
         <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Donor(s)</label>
+            <label class="col-sm-3 col-form-label">
+                @if(Model.Donors.Count > 1){
+                    <span>Donors</span>
+                } else {
+                    <span>Donor</span>
+                }
+            </label>
             <div class="col-sm-9">
                 <span class="form-control-plaintext">
                     @foreach (var donor in Model.Donors)
@@ -289,7 +295,13 @@
     @if (Model.Cultures.Count > 0)
     {
         <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Horticultural Recommendations</label>
+            <label class="col-sm-3 col-form-label">
+                @if(Model.Cultures.Count > 1){
+                    <span>Horticultural Recommendations</span>
+                } else {
+                    <span>Horticultural Recommendation</span>
+                }
+            </label>
             <div class="col-sm-9">
                 <span class="form-control-plaintext">
                     @foreach (var cult in Model.Cultures)
@@ -321,7 +333,13 @@
     @if (Model.Categories.Count > 0)
     {
         <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Categories</label>
+            <label class="col-sm-3 col-form-label">
+                @if(Model.Categories.Count > 1){
+                    <span>Categories</span>
+                } else {
+                    <span>Category</span>
+                }
+            </label>
             <div class="col-sm-9">
                 <span class="form-control-plaintext">
                     @foreach (var cat in Model.Categories)
@@ -361,7 +379,13 @@
     @if (Model.Genes.Count > 0)
     {
         <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Genes</label>
+            <label class="col-sm-3 col-form-label">
+                @if(Model.Genes.Count > 1){
+                    <span>Genes</span>
+                } else {
+                    <span>Gene</span>
+                }
+            </label>
             <div class="col-sm-9">
                 <span class="form-control-plaintext">
                     @foreach (var gene in Model.Genes)
@@ -393,7 +417,13 @@
     @if (Model.Images.Count > 0)
     {
         <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Images</label>
+            <label class="col-sm-3 col-form-label">
+                @if(Model.Images.Count > 1){
+                    <span>Images</span>
+                } else {
+                    <span>Image</span>
+                }
+            </label>
             <div class="col-sm-9">
                 <span class="form-control-plaintext">
                     @foreach (var image in Model.Images)
