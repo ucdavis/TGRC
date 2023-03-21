@@ -23,7 +23,7 @@ public class AccessionController : Controller
             .Include(a => a.Categories)
             .Include(a => a.Cultures).ThenInclude(c => c.Recommendation)
             .Include(a => a.Genes)
-            .Include(a => a.Images).ThenInclude(i => i.Image)
+            .Include(a => a.Images.Where(a => a.Image.Web != 0)).ThenInclude(i => i.Image)
             .Where(a => a.AccessionNum == id).FirstOrDefaultAsync();
         ViewBag.Frame = frame;
         ViewBag.APIKey = _config["googleMapAPIKey"];
