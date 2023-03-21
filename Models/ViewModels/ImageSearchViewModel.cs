@@ -119,7 +119,7 @@ namespace TGRC.Models
                 
                 var viewModel = new ImageSearchViewModel
                 {
-                    image = foundImage.Where(i => i.Web != 0 ).ToList(),                    
+                    image = foundImage.Where(i => i.Web != 0 ).Distinct().ToList(),                    
                     SelectedGene = vm.SelectedGene,
                     SelectedPhenotypeCategory = vm.SelectedPhenotypeCategory,
                     GeneList = geneList,
