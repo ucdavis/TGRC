@@ -9,6 +9,16 @@ namespace TGRC.Models
         public string Gene { get; set; }
         public string Allele { get; set; }
         public DateTime? DateModified { get; set; }
+
+        public string Display { 
+            get {
+                if(Allele == "--")
+                {
+                    return Gene;
+                }
+                return $"{Gene}^{Allele}";                
+            }
+        }
         
         public Image Image { get; set; }
         public GenesAndAllele GeneAndAlleleDetails { get; set; }
