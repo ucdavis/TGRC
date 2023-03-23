@@ -428,15 +428,17 @@
             </label>
             <div class="col-sm-9">
                 <span class="form-control-plaintext">
+                    <ul class="list-group list-group-horizontal form-control-plaintext">
                     @foreach (var image in Model.Images)
                     {
                         if(ViewBag.Frame == "yes")
                         {
-                            <a target="resultFrame" asp-route-frame="yes" asp-action="detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>
+                             <li class="list-group-item"><a target="resultFrame" asp-route-frame="yes" asp-action="detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a></li>
                         } else {
-                            <a asp-action="Detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>
+                             <li class="list-group-item"><a asp-action="Detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a></li>
                         }                                 
                     }
+                    </ul>
                 </span>
             </div>
         </div>
