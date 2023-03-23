@@ -31,9 +31,9 @@
                 {
                     @if(ViewBag.Frame == "yes")
                     {
-                        <li class="list-group-item"><a asp-route-frame="yes" asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Gene^@gene.Allele</a></li>
+                        <li class="list-group-item"><a asp-route-frame="yes" asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Display</a></li>
                     } else {
-                        <li class="list-group-item"><a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Gene^@gene.Allele</a></li>
+                        <li class="list-group-item"><a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Display</a></li>
                     }                    
                 }
             </ul>
