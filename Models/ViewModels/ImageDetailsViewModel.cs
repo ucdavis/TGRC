@@ -16,7 +16,7 @@ namespace TGRC.Models
 
         public List<AccessionsInImage> accession { get; set; }
 
-        public List<GenesAndAllelesInAccession> genes { get; set; }
+        public List<GenesAndAllelesInImage> genes { get; set; }
         public List<Colleague> colleagues { get; set; }
         public string taxon { get; set; }       
         
@@ -29,7 +29,7 @@ namespace TGRC.Models
             {
                 image = imageEntry,
                 accession = acc,
-                genes = await _context.GenesAndAllelesInAccessions.Where(g => acc.Select(a => a.AccessionNum).Distinct().ToList().Contains(g.AccessionNum)).ToListAsync(),
+                genes = await _context.GenesAndAllelesInImages.Where(g => g.ImageNum == imageEntry.ImageNum).Distinct().ToListAsync(),
                 taxon = await _context.Accessions.Where(a => a.AccessionNum == acc.First().AccessionNum).Select(a => a.Taxon2).FirstOrDefaultAsync(),
                 colleagues = await _context.Colleagues.Where(c => c.Images.Any(i => i.ImageNum == imageEntry.ImageNum)).ToListAsync(),
             };           
