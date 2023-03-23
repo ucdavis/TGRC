@@ -7,7 +7,7 @@
     }
 }
 
-<h2>Image Information</h2>
+<h2>Image Details</h2>
 
 <div>
     <div class="form-group row">
@@ -24,7 +24,7 @@
     </div>
     @if(Model.genes.Any()){
     <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Gene (format:gene^allele)</label>
+        <label class="col-sm-3 col-form-label">Gene</label>
         <div class="col-sm-9">
             <ul class="list-group list-group-horizontal form-control-plaintext">
                 @foreach (var gene in Model.genes)
@@ -73,13 +73,11 @@
                 <span>Contributor</span>
             }
             </label>
-        <div class="col-sm-9">
-            <ul class="list-group list-group-horizontal form-control-plaintext">
+        <div class="col-sm-9">            
                 @foreach (var col in Model.colleagues)
                 {
-                    <li class="list-group-item">@col.DisplayName</li>  
+                    <span>@col.DisplayName &nbsp;&nbsp;</span>
                 }
-            </ul>
         </div>
     </div>
     }
