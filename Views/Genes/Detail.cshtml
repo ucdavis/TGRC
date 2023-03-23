@@ -1,4 +1,4 @@
-@model TGRC.Models.Gene
+@model TGRC.Models.GeneDetailsViewModel
 
 @{
     if(ViewBag.Frame == "yes")
@@ -20,15 +20,15 @@
         </thead>
         <tbody>
             <tr>
-                <td>@Model.Gene1</td>
-                <td>@Model.LocusName</td>
-                <td>@Model.Chromosome</td>
-                <td>@Model.Arm</td>
-                <td>@Model.MarkerType</td>
+                <td>@Model.gene.Gene1</td>
+                <td>@Model.gene.LocusName</td>
+                <td>@Model.gene.Chromosome</td>
+                <td>@Model.gene.Arm</td>
+                <td>@Model.gene.MarkerType</td>
             </tr>
         </tbody>
     </table>
-    @if(Model.Alleles.Any()){
+    @if(Model.alleles.Any()){
     <table class="table">
         <thead>
             <th>Allele</th>
@@ -41,7 +41,7 @@
             <th>Description</th>
         </thead>
         <tbody>
-            @foreach (var allele in Model.Alleles)
+            @foreach (var allele in Model.alleles)
             {
                 <tr>
                     <td>@allele.Allele</td>
@@ -59,10 +59,10 @@
     } else {
         <h4>No Alleles found.</h4>
     }
-    @if(Model.GeneAccessions.Any()){
+    @if(Model.accessions.Any()){
     <div class="col-10 border container row">
         <h5>Accessions with this gene (only Active accessions shown)</h5>
-        @foreach (var acc in Model.GeneAccessions)
+        @foreach (var acc in Model.accessions)
         {
             <div class="col-2">
                 @if(ViewBag.Frame == "yes")
@@ -77,10 +77,10 @@
     } else {
         <h4>No active Accessions found with this gene</h4>
     }
-    @if(Model.GeneImages.Any()){
+    @if(Model.images.Any()){
     <div class="col-12 border">
         <h5>Image Links</h5>
-        @foreach (var image in Model.GeneImages)
+        @foreach (var image in Model.images)
         {
             <div class="col-12 container row imageRow">
                 <div class="col">
