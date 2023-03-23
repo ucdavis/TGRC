@@ -388,28 +388,30 @@
             </label>
             <div class="col-sm-9">
                 <span class="form-control-plaintext">
+                    <ul class="list-group list-group-horizontal form-control-plaintext">
                     @foreach (var gene in Model.Genes)
                     {
                         if (geneI == geneCount)
                         {
                             if(ViewBag.Frame == "yes")
                             {
-                                <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene" asp-route-frame="yes">@gene.Display</a>
+                                <li class="list-group-item"><a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene" asp-route-frame="yes">@gene.Display</a></li>
                             } else {
-                                <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Display</a>
+                                <li class="list-group-item"><a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Display</a></li>
                             }
                         }
                         else
                         {
                             if(ViewBag.Frame == "yes")
                             {
-                                <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene" asp-route-frame="yes">@gene.Display</a><span>; </span>
+                                <li class="list-group-item"><a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene" asp-route-frame="yes">@gene.Display</a>; </li>
                             } else {
-                                <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Display</a><span>; </span>
+                                <li class="list-group-item"><a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Display</a>; </li>
                             }
                         }
                         geneI += 1;
                     }
+                    </ul>
                 </span>
             </div>
         </div>
