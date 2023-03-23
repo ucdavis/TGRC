@@ -22,6 +22,7 @@
             <input type="text" asp-for="taxon" readonly class="form-control-plaintext">
         </div>
     </div>
+    @if(Model.genes.Any()){
     <div class="form-group row">
         <label class="col-sm-3 col-form-label">Gene (format:gene^allele)</label>
         <div class="col-sm-9">
@@ -38,8 +39,16 @@
             </ul>
         </div>
     </div>
+    }
+    @if(Model.accession.Any()){
     <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Accession(s)</label>
+        <label class="col-sm-3 col-form-label">
+            @if(Model.accession.Count > 1){
+                <span>Accessions</span>
+            } else {
+                <span>Accession</span>
+            }
+        </label>
         <div class="col-sm-9">
             <ul class="list-group list-group-horizontal form-control-plaintext">
                 @foreach (var acc in Model.accession)
@@ -54,6 +63,26 @@
             </ul>
         </div>
     </div>
+    }
+    @if(Model.colleagues.Any()){
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label">
+            @if(Model.colleagues.Count > 1){
+                <span>Contributors</span>
+            } else {
+                <span>Contributor</span>
+            }
+            </label>
+        <div class="col-sm-9">
+            <ul class="list-group list-group-horizontal form-control-plaintext">
+                @foreach (var col in Model.colleagues)
+                {
+                    <li class="list-group-item">@col.DisplayName</li>  
+                }
+            </ul>
+        </div>
+    </div>
+    }
     <div>
         <a target="_blank" href="@($"{Model.image.Location}{Model.image.File}")"><img src="@($"{Model.image.Location}thumbnails/{Model.image.File}")"></a> (click for full size image)
     </div>

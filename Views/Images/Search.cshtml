@@ -86,7 +86,7 @@
             <div>
                 @foreach (var image in Model.image)
                 {                   
-                        <a class="searchA" target="resultFrame" asp-action="detail" asp-controller="Images" asp-route-id="@image.File"><img src="@($"{image.Location}thumbnails/{image.File}")"></a><br>
+                        <a class="searchA" target="resultFrame" asp-action="detail" asp-controller="Images" asp-route-id="@image.File"><img src="@($"{image.Location}thumbnails/{image.File}")"></a><br><br>
                 }
             </div>
         </div>

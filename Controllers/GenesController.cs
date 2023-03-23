@@ -19,7 +19,7 @@ public class GenesController : Controller
         var model = await _context.Genes
             .Include(g => g.Alleles).ThenInclude(a => a.PhenoTypeDetails).ThenInclude(d => d.Category)
             .Include(g => g.GeneAccessions.Where(a => a.Accession.Status == "Active"))
-            .Include(g => g.GeneImages).ThenInclude(i => i.Image)
+            .Include(g => g.GeneImages.Where(g => g.Image.Web != 0)).ThenInclude(i => i.Image)
             .Where(g => g.Gene1==id).FirstOrDefaultAsync();
         ViewBag.Frame = frame;
         return View(model);

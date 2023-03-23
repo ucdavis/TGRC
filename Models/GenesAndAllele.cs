@@ -16,6 +16,16 @@ namespace TGRC.Models
         public string PhenotypeCombo { get; set; }
         public DateTime? DateModified { get; set; }
 
+        public string Display { 
+            get {
+                if(Allele == "--")
+                {
+                    return Gene;
+                }
+                return $"{Gene}^{Allele}";                
+            }
+        }
+
         [ForeignKey("Gene, Allele")]
         public PhenoInGene  PhenoTypeDetails { get; set; }
 

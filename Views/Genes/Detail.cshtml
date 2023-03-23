@@ -28,6 +28,7 @@
             </tr>
         </tbody>
     </table>
+    @if(Model.Alleles.Any()){
     <table class="table">
         <thead>
             <th>Allele</th>
@@ -52,10 +53,13 @@
                     <td>@allele.PhenoTypeDetails.PrimaryPhenotype</td>
                     <td>@allele.PhenoTypeDetails.Category.Description</td>
                 </tr>
-
-            }
+            }            
         </tbody>
     </table>
+    } else {
+        <h4>No Alleles found.</h4>
+    }
+    @if(Model.GeneAccessions.Any()){
     <div class="col-10 border container row">
         <h5>Accessions with this gene (only Active accessions shown)</h5>
         @foreach (var acc in Model.GeneAccessions)
@@ -70,6 +74,10 @@
             </div>
         }
     </div>
+    } else {
+        <h4>No active Accessions found with this gene</h4>
+    }
+    @if(Model.GeneImages.Any()){
     <div class="col-12 border">
         <h5>Image Links</h5>
         @foreach (var image in Model.GeneImages)
@@ -87,4 +95,5 @@
             </div>
         }
     </div>
+    }
 </div>
