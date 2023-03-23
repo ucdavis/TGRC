@@ -394,18 +394,18 @@
                         {
                             if(ViewBag.Frame == "yes")
                             {
-                                <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene" asp-route-frame="yes">@gene.Gene</a>
+                                <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene" asp-route-frame="yes">@gene.Display</a>
                             } else {
-                                <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Gene</a>
+                                <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Display</a>
                             }
                         }
                         else
                         {
                             if(ViewBag.Frame == "yes")
                             {
-                                <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene" asp-route-frame="yes">@gene.Gene</a><span>; </span>
+                                <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene" asp-route-frame="yes">@gene.Display</a><span>; </span>
                             } else {
-                                <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Gene</a><span>; </span>
+                                <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Display</a><span>; </span>
                             }
                         }
                         geneI += 1;

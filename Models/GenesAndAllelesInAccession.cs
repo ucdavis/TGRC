@@ -14,6 +14,16 @@ namespace TGRC.Models
         public string Background { get; set; }
         public DateTime? DateModified { get; set; }
 
+        public string Display { 
+            get {
+                if(Allele == "--")
+                {
+                    return Gene;
+                }
+                return $"{Gene}^{Allele}";                
+            }
+        }
+
         public Accession Accession { get; set; }
 
         [ForeignKey("Gene,Allele")]
