@@ -37,7 +37,7 @@
             <th>Source</th>
             <th>Notes</th>
             <th>Phenotype</th>
-            <th>Primary Description</th>
+            <th>Category/Primary</th>
         </thead>
         <tbody>
             @foreach (var allele in Model.alleles)
@@ -52,13 +52,12 @@
                     <td>
                         <table class="table">                          
                             @if(allele.PhenoTypeDetails.Any()){
-                                @foreach (var pheno in allele.PhenoTypeDetails)
+                                @foreach (var pheno in allele.PhenoTypeDetails.OrderByDescending(p => p.PrimaryPhenotype).ThenBy(p => p.PhenotypicalCategory))
                                 {
-                                    <tr>
-                                        <td>@pheno.PrimaryPhenotype</td>
+                                    <tr>                                       
                                         <td>@pheno.Category.Description</td>
+                                        <td>@pheno.PrimaryPhenotype</td>
                                     </tr> 
-                                    
                                 }
                             }
                         </table>
