@@ -14,10 +14,7 @@
     var categoryI = 1;
     var categoryCount = @Model.Categories.Count;
     var cultureI = 1;
-    var cultureCount = @Model.Cultures.Count;
-    var geneI = 1;
-    var geneCount = @Model.Genes.Count;
-    var imageCount = @Model.Images.Count;
+    var cultureCount = @Model.Cultures.Count;    
 }
 
 <h2>Accession Details</h2>
@@ -387,31 +384,20 @@
                 }
             </label>
             <div class="col-sm-9">
-                <span class="form-control-plaintext">
-                    <ul class="list-group list-group-horizontal form-control-plaintext">
-                    @foreach (var gene in Model.Genes)
-                    {
-                        if (geneI == geneCount)
-                        {
-                            if(ViewBag.Frame == "yes")
-                            {
-                                <li class="list-group-item"><a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene" asp-route-frame="yes">@gene.Display</a></li>
-                            } else {
-                                <li class="list-group-item"><a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Display</a></li>
-                            }
+                <span class="form-control-plaintext">                   
+                    <div class="col-12 border container row">                             
+                       @foreach (var gene in Model.Genes)
+                        {              
+                            <div class="col-6 col-sm-4 col-md-3 col-lg-2 border">
+                                @if(ViewBag.Frame == "yes")
+                                {
+                                    <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene" asp-route-frame="yes">@gene.Display</a>
+                                } else {
+                                    <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Display</a>
+                                }   
+                            </div>     
                         }
-                        else
-                        {
-                            if(ViewBag.Frame == "yes")
-                            {
-                                <li class="list-group-item"><a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene" asp-route-frame="yes">@gene.Display</a>; </li>
-                            } else {
-                                <li class="list-group-item"><a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Display</a>; </li>
-                            }
-                        }
-                        geneI += 1;
-                    }
-                    </ul>
+                    </div>
                 </span>
             </div>
         </div>
@@ -428,17 +414,19 @@
             </label>
             <div class="col-sm-9">
                 <span class="form-control-plaintext">
-                    <ul class="list-group list-group-horizontal form-control-plaintext">
-                    @foreach (var image in Model.Images)
-                    {
-                        if(ViewBag.Frame == "yes")
-                        {
-                             <li class="list-group-item"><a target="resultFrame" asp-route-frame="yes" asp-action="detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a></li>
-                        } else {
-                             <li class="list-group-item"><a asp-action="Detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a></li>
-                        }                                 
-                    }
-                    </ul>
+                    <div class="col-12 border container row">                             
+                        @foreach (var image in Model.Images)
+                        {              
+                            <div class="col-6 col-sm-4 col-md-3 col-lg-2 border">
+                                @if(ViewBag.Frame == "yes")
+                                {
+                                    <a target="resultFrame" asp-route-frame="yes" asp-action="detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>
+                                } else {
+                                    <a asp-action="Detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>
+                                }   
+                            </div>     
+                        }
+                    </div>
                 </span>
             </div>
         </div>

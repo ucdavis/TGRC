@@ -69,7 +69,7 @@ namespace TGRC.Models
                 }
                 if(!string.IsNullOrWhiteSpace(vm.SelectedPhenotypeCategory))
                 {
-                    geneAlleleImages = geneAlleleImages.Where(i => i.GeneAndAlleleDetails.PhenoTypeDetails.PhenotypicalCategory == vm.SelectedPhenotypeCategory);
+                    geneAlleleImages = geneAlleleImages.Where(i => i.GeneAndAlleleDetails.PhenoTypeDetails.Any(p => p.PhenotypicalCategory == vm.SelectedPhenotypeCategory));
                     genesSearched = true;
                 }
                 if(!string.IsNullOrWhiteSpace(vm.SelectedAccession))

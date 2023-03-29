@@ -15,6 +15,7 @@ namespace TGRC.Models
         [ForeignKey("PhenotypicalCategory")]
         public PhenotypicCategory Category { get; set; }
 
-        public GenesAndAllelesInAccession GeneInAccession { get; set; }
+        // [ForeignKey("Gene, Allele")]
+        // public GenesAndAllelesInAccession GeneInAccession { get; set; }
     }
 }

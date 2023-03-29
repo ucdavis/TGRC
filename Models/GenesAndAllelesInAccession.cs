@@ -26,7 +26,7 @@ namespace TGRC.Models
 
         public Accession Accession { get; set; }
 
-        [ForeignKey("Gene,Allele")]
-        public ICollection<PhenoInGene> Phenotypes { get; set; }
+        // [ForeignKey("Gene,Allele")]
+        // public ICollection<PhenoInGene> Phenotypes { get; set; }
     }
 }
