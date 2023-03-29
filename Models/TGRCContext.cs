@@ -394,6 +394,7 @@ namespace TGRC.Models
                 entity.Property(e => e.PhenotypeCombo).HasMaxLength(50);
 
                 entity.Property(e => e.SynonymsOfAllele).HasMaxLength(50);
+                entity.HasMany(e => e.PhenoTypeDetails);
             });
 
             modelBuilder.Entity<GenesAndAllelesInAccession>(entity =>
@@ -410,7 +411,7 @@ namespace TGRC.Models
                 entity.Property(e => e.Gene).HasMaxLength(8);
 
                 entity.Property(e => e.Isogenicity).HasMaxLength(20);
-                entity.HasMany(e => e.Phenotypes).WithOne(p => p.GeneInAccession).HasForeignKey(p => new {p.Allele, p.Gene}).HasPrincipalKey(g => new {g.Allele, g.Gene});
+                //entity.HasMany(e => e.Phenotypes).WithOne(p => p.GeneInAccession).HasForeignKey(p => new {p.Allele, p.Gene}).HasPrincipalKey(g => new {g.Allele, g.Gene});
             });
 
             modelBuilder.Entity<GenesAndAllelesInImage>(entity =>
@@ -491,7 +492,7 @@ namespace TGRC.Models
 
             modelBuilder.Entity<PhenoInGene>(entity =>
             {
-                entity.HasKey(e => new {e.Gene, e.Allele});
+                entity.HasKey(e => new {e.Gene, e.Allele, e.PhenotypicalCategory, e.PrimaryPhenotype});
 
                 entity.Property(e => e.Allele).HasMaxLength(50);
 

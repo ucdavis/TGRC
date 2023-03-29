@@ -38,8 +38,7 @@
             <th>Source</th>
             <th>Notes</th>
             <th>Phenotype</th>
-            <th>Primary</th>
-            <th>Description</th>
+            <th>Primary Description</th>
         </thead>
         <tbody>
             @foreach (var allele in Model.alleles)
@@ -51,8 +50,21 @@
                     <td>@allele.MutantType</td>
                     <td>@allele.Notes</td>
                     <td>@allele.Phenotype</td>
-                    <td>@allele.PhenoTypeDetails.PrimaryPhenotype</td>
-                    <td>@allele.PhenoTypeDetails.Category.Description</td>
+                    <td>
+                        <table class="table">                          
+                            @if(allele.PhenoTypeDetails.Any()){
+                                @foreach (var pheno in allele.PhenoTypeDetails)
+                                {
+                                    <tr>
+                                        <td>@pheno.PrimaryPhenotype</td>
+                                        <td>@pheno.Category.Description</td>
+                                    </tr> 
+                                    
+                                }
+                            }
+                        </table>
+
+                    </td>   
                 </tr>
             }            
         </tbody>

@@ -27,7 +27,7 @@ namespace TGRC.Models
         }
 
         [ForeignKey("Gene, Allele")]
-        public PhenoInGene  PhenoTypeDetails { get; set; }
+        public ICollection<PhenoInGene>  PhenoTypeDetails { get; set; }
 
        [ForeignKey("MutantType")]
         public MutantType MutantTypeTranslation { get; set; }

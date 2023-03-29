@@ -84,7 +84,7 @@ namespace TGRC.Models
                 }
                 if(!string.IsNullOrWhiteSpace(vm.SelectedPhenotypeCategory))
                 {
-                    geneToFind = geneToFind.Where(g => g.Alleles.Any(a => a.PhenoTypeDetails.PhenotypicalCategory == vm.SelectedPhenotypeCategory));
+                    geneToFind = geneToFind.Where(g => g.Alleles.Any(a => a.PhenoTypeDetails.Any(p => p.PhenotypicalCategory == vm.SelectedPhenotypeCategory)));
                 }
                 if(!string.IsNullOrWhiteSpace(vm.PhenotypeKeyword))
                 {
