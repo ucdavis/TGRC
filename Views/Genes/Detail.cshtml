@@ -5,6 +5,7 @@
     {
         Layout = "_LayoutFrame";
     }
+    var imageCount = 0;
 }
 
 <h2>Gene Details</h2>
@@ -60,40 +61,36 @@
         <h4>No Alleles found.</h4>
     }
     @if(Model.accessions.Any()){
-    <div class="col-10 border container row">
-        <h5>Accessions with this gene (only Active accessions shown)</h5>
-        <ul class="list-group list-group-horizontal form-control-plaintext">
+    <div class="col-12 border container row">
+        <h5>Accessions with this gene (only Active accessions shown)</h5>        
         @foreach (var acc in Model.accessions)
         {
-            <div class="col-2">
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 border">
                 @if(ViewBag.Frame == "yes")
                 {
-                    <li class="list-group-item"><a asp-route-frame="yes" asp-action="detail" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a></li>
+                    <a asp-route-frame="yes" asp-action="detail" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a>
                 } else {
-                    <li class="list-group-item"><a asp-action="detail" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a></li>
+                    <a asp-action="detail" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a>
                 }   
             </div>
-        }</ul>
+        }
     </div>
     } else {
         <h4>No active Accessions found with this gene</h4>
     }
     @if(Model.images.Any()){
-    <div class="col-12 border">
-        <h5>Image Links</h5>
+    <div class="col-12 border container row">
+        <h5>Image Links</h5>        
         @foreach (var image in Model.images)
-        {
-            <div class="col-12 container row imageRow">
-                <div class="col">
-                    @if(ViewBag.Frame == "yes")
-                    {
-                        <a asp-route-frame="yes" asp-action="detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>
-                    } else {
-                        <a asp-action="detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>
-                    }                       
-                </div>                
-                <div class="col-8"> @image.Image.Caption</div>               
-            </div>
+        {              
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 border">
+                @if(ViewBag.Frame == "yes")
+                {
+                    <a asp-route-frame="yes" asp-action="detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>
+                } else {
+                    <a asp-action="detail" asp-controller="Images" asp-route-id="@image.Image.File"><img src="@($"{image.Image.Location}thumbnails/{image.Image.File}")"></a>
+                }   
+            </div>     
         }
     </div>
     }

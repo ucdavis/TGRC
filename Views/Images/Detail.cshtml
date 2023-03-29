@@ -25,20 +25,20 @@
     @if(Model.genes.Any()){
     <div class="form-group row">
         <label class="col-sm-3 col-form-label">Gene</label>
-        <div class="col-sm-9">
-            <ul class="list-group list-group-horizontal form-control-plaintext">
-                @foreach (var gene in Model.genes)
-                {
+        <div class="col-sm-9 container row">                   
+            @foreach (var gene in Model.genes)
+            {              
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2 border">
                     @if(ViewBag.Frame == "yes")
                     {
-                        <li class="list-group-item"><a asp-route-frame="yes" asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Display</a></li>
+                        <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene" asp-route-frame="yes">@gene.Display</a>
                     } else {
-                        <li class="list-group-item"><a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Display</a></li>
-                    }                    
-                }
-            </ul>
+                        <a asp-action="Detail" asp-controller="Genes" asp-route-id="@gene.Gene">@gene.Display</a>
+                    }   
+                </div>     
+            }
         </div>
-    </div>
+    </div><br>
     }
     @if(Model.accession.Any()){
     <div class="form-group row">
@@ -49,18 +49,18 @@
                 <span>Accession</span>
             }
         </label>
-        <div class="col-sm-9">
-            <ul class="list-group list-group-horizontal form-control-plaintext">
-                @foreach (var acc in Model.accession)
-                {
-                     @if(ViewBag.Frame == "yes")
+        <div class="col-sm-9 container row">
+            @foreach (var acc in Model.accession)
+            {
+                <div class="col-6 col-sm-4 col-md-3 col-lg-2 border">
+                    @if(ViewBag.Frame == "yes")
                     {
-                        <li class="list-group-item"><a asp-route-frame="yes" asp-action="Detail" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a></li>
+                        <a asp-route-frame="yes" asp-action="detail" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a>
                     } else {
-                        <li class="list-group-item"><a asp-action="Detail" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a></li>
-                    }    
-                }
-            </ul>
+                        <a asp-action="detail" asp-controller="Accession" asp-route-id="@acc.AccessionNum">@acc.AccessionNum</a>
+                    }   
+                </div>
+            }
         </div>
     </div>
     }
@@ -73,11 +73,13 @@
                 <span>Contributor</span>
             }
             </label>
-        <div class="col-sm-9">            
+        <div class="col-sm-9"> 
+            <span class="form-control-plaintext">        
                 @foreach (var col in Model.colleagues)
                 {
                     <span>@col.DisplayName &nbsp;&nbsp;</span>
                 }
+            </span>   
         </div>
     </div>
     }
