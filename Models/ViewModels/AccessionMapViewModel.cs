@@ -81,13 +81,14 @@ namespace TGRC.Models
                     LonDec = g.Key.LonDec.Value,
                     AccessionNum = string.Join(", ", g.Select(a => a.AccessionNum)), 
                     Taxon2 = string.Join(", ", g.Select(a => a.Taxon2)),
+                    Reference = string.Join(", ", g.Select(a => a.Reference.Replace("'","&#39").Replace(",","&#44"))),
                     Title = string.Join(", ", g.Select(a => $"{a.AccessionNum}({a.Taxon2})")),
                     Icon = g.All(a => a.Taxon2 == g.First().Taxon2) ? g.First().Taxon2 : "multi" 
                     }).ToList();
                 
                 vm.MarkerCount = vm.accessions.Count();
                 StringBuilder marker = new StringBuilder();  
-                groupList.ForEach(a =>  marker.Append($"['{a.LinkText}', {a.LatDec}, {a.LonDec}, '{a.Icon}'],"));  
+                groupList.ForEach(a =>  marker.Append($"['{a.LinkText}', {a.LatDec}, {a.LonDec}, '{a.Icon}','{a.Reference}'],"));  
                 if(marker.Length > 2)
                 {
                     marker.Remove(marker.Length - 1,1);
