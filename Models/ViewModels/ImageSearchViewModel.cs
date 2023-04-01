@@ -19,8 +19,7 @@ namespace TGRC.Models
         public List<string> GeneList { get; set; }
         public string SelectedPhenotypeCategory { get; set; }
         public List<PhenotypicCategory> PhenotypeCategoryList { get; set; }
-        public string SelectedAccession { get; set; }
-        public List<string> AccessionList { get; set; }
+        public string AccessionSearchString { get; set; }        
         public string SelectedTaxon { get; set; }
         public List<Taxa> Taxons { get; set; }
         public string AccessionCategoryToSearch { get; set; }
@@ -38,9 +37,7 @@ namespace TGRC.Models
            var geneList = await _context.GenesAndAllelesInImages.Select(a => a.Gene).Distinct().OrderBy(a=>a).ToListAsync();
            geneList.Insert(0,"");
            var phenoCat = await _context.PhenotypicCategories.Distinct().OrderBy(a =>a.PhenotypicCategory1).ToListAsync();
-           phenoCat.Insert(0, new PhenotypicCategory { PhenotypicCategory1 = "" });
-           var accList = await _context.AccessionsInImages.Where(a => a.AccessionNum != null).Select(a=>a.AccessionNum).Distinct().OrderBy(a=>a).ToListAsync();
-           accList.Insert(0,"");
+           phenoCat.Insert(0, new PhenotypicCategory { PhenotypicCategory1 = "" });           
            var taxa = await _context.Taxa.OrderByDescending(t => t.L).ThenBy(t => t.Taxon).ToListAsync();
            taxa.Insert(0, new Taxa { Taxon = "", CompleteName = "", Synonym = "", L="z"});
            var cat = await _context.AccessionCategories.Select(c => c.AccessionCategory).Distinct().ToListAsync();
@@ -72,9 +69,9 @@ namespace TGRC.Models
                     geneAlleleImages = geneAlleleImages.Where(i => i.GeneAndAlleleDetails.PhenoTypeDetails.Any(p => p.PhenotypicalCategory == vm.SelectedPhenotypeCategory));
                     genesSearched = true;
                 }
-                if(!string.IsNullOrWhiteSpace(vm.SelectedAccession))
+                if(!string.IsNullOrWhiteSpace(vm.AccessionSearchString))
                 {
-                    accNumList = accNumList.Where(a => a.AccessionNum == vm.SelectedAccession);
+                    accNumList = accNumList.Where(a => EF.Functions.Like(a.AccessionNum, "%" + vm.AccessionSearchString + "%"));
                     accSearched = true;
                 }
                 if(!string.IsNullOrWhiteSpace(vm.SelectedTaxon))
@@ -147,8 +144,7 @@ namespace TGRC.Models
                     SelectedPhenotypeCategory = vm.SelectedPhenotypeCategory,
                     GeneList = geneList,
                     PhenotypeCategoryList = phenoCat,
-                    AccessionList = accList,     
-                    SelectedAccession = vm.SelectedAccession,  
+                    AccessionSearchString = vm.AccessionSearchString,  
                     Taxons = taxa,
                     SelectedTaxon = vm.SelectedTaxon,
                     AccessionCategories = cat,
@@ -167,7 +163,6 @@ namespace TGRC.Models
                 image = new List<Image>(),
                 GeneList = geneList,
                 PhenotypeCategoryList = phenoCat,
-                AccessionList = accList,
                 Taxons = taxa,
                 AccessionCategories = cat,
                 ContributorList = contrib,

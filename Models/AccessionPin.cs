@@ -15,21 +15,23 @@ namespace TGRC.Models
 
         public string Title {get; set;}
         public string Icon { get; set; }
+        public string Reference { get; set; }
         public string LinkText { 
             get{
                 if(!AccessionNum.Contains(","))
                 {
-                    return $"<a target=\"_blank\" href=\"/Accession/Detail/{AccessionNum}\">{AccessionNum}</a>({Taxon2})";
+                    return $"<a target=\"_blank\" href=\"/Accession/Detail/{AccessionNum}\">{AccessionNum}</a> {Taxon2} <br>{Reference}";
                 }
                 var numbers = AccessionNum.Split(",");
                 var taxons = Taxon2.Split(",");
+                var refText = Reference.Split(",");
                 StringBuilder links = new StringBuilder();
                 for(var i = 0; i < numbers.Count(); i++)
                 {
                     if(i < numbers.Count() - 1){
-                        links.Append($"<a target=\"_blank\" href=\"/Accession/Detail/{numbers[i].Trim()}\">{numbers[i].Trim()}</a>({taxons[i]}),");
+                        links.Append($"<a target=\"_blank\" href=\"/Accession/Detail/{numbers[i].Trim()}\">{numbers[i].Trim()}</a> {taxons[i]} <br>");
                     } else {
-                        links.Append($"<a target=\"_blank\" href=\"/Accession/Detail/{numbers[i].Trim()}\">{numbers[i].Trim()}</a>({taxons[i]})");
+                        links.Append($"<a target=\"_blank\" href=\"/Accession/Detail/{numbers[i].Trim()}\">{numbers[i].Trim()}</a> {taxons[i]} <br>{refText[i]}");
                     }
                     
                 }                

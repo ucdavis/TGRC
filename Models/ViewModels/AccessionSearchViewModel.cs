@@ -46,6 +46,8 @@ namespace TGRC.Models
         public List<string> GeneList { get; set; }
         public string SelectedBackgroundGenotype { get; set; }
         public List<string> BackgroundGenotypeList { get; set; }
+        public List<Colleague> DonorList { get; set; }
+        public int SelectedDonor { get; set; }
         
 
         public AccessionSearchViewModel() {
@@ -71,6 +73,8 @@ namespace TGRC.Models
            geneList.Insert(0,"");
            var genotypeList = await _context.Accessions.Where(a => a.SourceOfAccession != null).Select(a => a.SourceOfAccession).Distinct().OrderBy(a=>a).ToListAsync();
            genotypeList.Insert(0,"");
+           var donorList = await _context.DonorsInAccessions.Include(d => d.Colleague).Select(d => new Colleague { ColleagueNum = d.ColleagueNum, FirstName = d.Colleague.FirstName, MiddleInitial = d.Colleague.MiddleInitial, LastName = d.Colleague.LastName}).Distinct().OrderBy(d => d.LastName).ThenBy(d => d.FirstName).ToListAsync();
+           donorList.Insert(0, new Colleague { ColleagueNum = 0, FirstName = "", MiddleInitial = "", LastName = ""});
 
                               
             if(vm != null)
@@ -158,6 +162,11 @@ namespace TGRC.Models
                     {
                         accToFind = accToFind.Where(a => a.SourceOfAccession == vm.SelectedBackgroundGenotype);
                     }
+                    if(vm.SelectedDonor != 0)
+                    {
+                        var accByDonor = await _context.DonorsInAccessions.Where(d => d.ColleagueNum == vm.SelectedDonor).Select(d => d.AccessionNum).ToListAsync();
+                        accToFind = accToFind.Where(a => accByDonor.Contains(a.AccessionNum));
+                    }
                 }
                 
                 
@@ -188,6 +197,8 @@ namespace TGRC.Models
                     SelectedBackgroundGenotype = vm.SelectedBackgroundGenotype,
                     SimpleSearchTerm = vm.SimpleSearchTerm,
                     Search = true,
+                    DonorList = donorList,
+                    SelectedDonor = vm.SelectedDonor,
                 };  
                 return viewModel;
 
@@ -205,6 +216,7 @@ namespace TGRC.Models
                 BackgroundGenotypeList = genotypeList,
                 GeneList = geneList,
                 Search = false,
+                DonorList = donorList,
             };           
 
             return freshModel;
