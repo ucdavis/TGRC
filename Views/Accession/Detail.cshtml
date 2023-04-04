@@ -1,4 +1,4 @@
-@model TGRC.Models.Accession
+@model TGRC.Models.AccessionDetailsViewModel
 
 @{
     if(ViewBag.Frame == "yes")
@@ -10,69 +10,69 @@
 
 @{
     var donorI = 1;
-    var donorCount = @Model.Donors.Count;
+    var donorCount = @Model.accession.Donors.Count;
     var categoryI = 1;
-    var categoryCount = @Model.Categories.Count;
+    var categoryCount = @Model.accession.Categories.Count;
     var cultureI = 1;
-    var cultureCount = @Model.Cultures.Count;    
+    var cultureCount = @Model.accession.Cultures.Count;    
 }
 
 <h2>Accession Details</h2>
 
 <div>
     <div class="form-group row">
-        <label asp-for="AccessionNum" class="col-sm-3 col-form-label"></label>
+        <label asp-for="accession.AccessionNum" class="col-sm-3 col-form-label"></label>
         <div class="col-sm-9">
-            <input type="text" asp-for="AccessionNum" readonly class="form-control-plaintext">
+            <input type="text" asp-for="accession.AccessionNum" readonly class="form-control-plaintext">
         </div>
     </div>
     <div class="form-group row">
-        <label asp-for="Status" class="col-sm-3 col-form-label"></label>
+        <label asp-for="accession.Status" class="col-sm-3 col-form-label"></label>
         <div class="col-sm-9">
-            <input type="text" asp-for="Status" readonly class="form-control-plaintext">
+            <input type="text" asp-for="accession.Status" readonly class="form-control-plaintext">
         </div>
     </div>
     <div class="form-group row">
-        <label asp-for="Inspected" class="col-sm-3 col-form-label"></label>
+        <label asp-for="accession.Inspected" class="col-sm-3 col-form-label"></label>
         <div class="col-sm-9">
-            <input type="text" value="@(Model.Inspected ?  "Yes" : "No" )" readonly class="form-control-plaintext">
+            <input type="text" value="@(Model.accession.Inspected ?  "Yes" : "No" )" readonly class="form-control-plaintext">
         </div>
     </div>
-    @if (!String.IsNullOrWhiteSpace(Model.OtherId))
+    @if (!String.IsNullOrWhiteSpace(Model.accession.OtherId))
     {
         <div class="form-group row">
-            <label asp-for="OtherId" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.OtherId" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="OtherId" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.OtherId" readonly class="form-control-plaintext">
             </div>
         </div>
     }
     <div class="form-group row">
-        <label asp-for="Taxon2" class="col-sm-3 col-form-label"></label>
+        <label asp-for="accession.Taxon2" class="col-sm-3 col-form-label"></label>
         <div class="col-sm-9">
-            <input type="text" asp-for="Taxon2" readonly class="form-control-plaintext">
+            <input type="text" asp-for="accession.Taxon2" readonly class="form-control-plaintext">
         </div>
     </div>
     <div class="form-group row">
-        <label asp-for="Taxon" class="col-sm-3 col-form-label"></label>
+        <label asp-for="accession.Taxon" class="col-sm-3 col-form-label"></label>
         <div class="col-sm-9">
-            <input type="text" asp-for="Taxon" readonly class="form-control-plaintext">
+            <input type="text" asp-for="accession.Taxon" readonly class="form-control-plaintext">
         </div>
     </div>
-    @if(!String.IsNullOrEmpty(Model.CultivarName))
+    @if(!String.IsNullOrEmpty(Model.accession.CultivarName))
     {
         <div class="form-group row">
-            <label asp-for="CultivarName" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.CultivarName" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="CultivarName" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.CultivarName" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if (Model.Donors.Count > 0)
+    @if (Model.accession.Donors.Count > 0)
     {
         <div class="form-group row">
             <label class="col-sm-3 col-form-label">
-                @if(Model.Donors.Count > 1){
+                @if(Model.accession.Donors.Count > 1){
                     <span>Donors</span>
                 } else {
                     <span>Donor</span>
@@ -80,7 +80,7 @@
             </label>
             <div class="col-sm-9">
                 <span class="form-control-plaintext">
-                    @foreach (var donor in Model.Donors)
+                    @foreach (var donor in Model.accession.Donors)
                     {
                         if (donorI == donorCount)
                         {
@@ -96,204 +96,204 @@
             </div>
         </div>
     }
-    @if(!String.IsNullOrWhiteSpace(Model.SourceOfAccession))
+    @if(!String.IsNullOrWhiteSpace(Model.accession.SourceOfAccession))
     {
         <div class="form-group row">
-            <label asp-for="SourceOfAccession" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.SourceOfAccession" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="SourceOfAccession" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.SourceOfAccession" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if (!String.IsNullOrWhiteSpace(Model.CollectionNum))
+    @if (!String.IsNullOrWhiteSpace(Model.accession.CollectionNum))
     {
         <div class="form-group row">
-            <label asp-for="CollectionNum" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.CollectionNum" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="CollectionNum" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.CollectionNum" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if (!String.IsNullOrWhiteSpace(Model.SiteDetails))
+    @if (!String.IsNullOrWhiteSpace(Model.accession.SiteDetails))
     {
         <div class="form-group row">
-            <label asp-for="SiteDetails" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.SiteDetails" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="SiteDetails" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.SiteDetails" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if (!String.IsNullOrWhiteSpace(Model.CollectionSite))
+    @if (!String.IsNullOrWhiteSpace(Model.accession.CollectionSite))
     {
         <div class="form-group row">
-            <label asp-for="CollectionSite" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.CollectionSite" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="CollectionSite" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.CollectionSite" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if (!String.IsNullOrWhiteSpace(Model.ProvinceOrDepartment))
+    @if (!String.IsNullOrWhiteSpace(Model.accession.ProvinceOrDepartment))
     {
         <div class="form-group row">
-            <label asp-for="ProvinceOrDepartment" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.ProvinceOrDepartment" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="ProvinceOrDepartment" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.ProvinceOrDepartment" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if (!String.IsNullOrWhiteSpace(Model.Country))
+    @if (!String.IsNullOrWhiteSpace(Model.accession.Country))
     {
         <div class="form-group row">
-            <label asp-for="Country" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.Country" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="Country" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.Country" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if (Model.LatDeg != null || Model.LatDec != null || Model.LonDeg != null || Model.LonDec != null)
+    @if (Model.accession.LatDeg != null || Model.accession.LatDec != null || Model.accession.LonDeg != null || Model.accession.LonDec != null)
     {
         <div class="form-group row">
             <label class="col-sm-3 col-form-label">Latitude/longitude</label>
             <div class="col-sm-9">
-                Latitude: @Model.LatitudeCombined; Longitude: @Model.LongitudeCombined
+                Latitude: @Model.accession.LatitudeCombined; Longitude: @Model.accession.LongitudeCombined
             </div>
         </div>
     }
-    @if (!String.IsNullOrWhiteSpace(Model.LatLonSource))
+    @if (!String.IsNullOrWhiteSpace(Model.accession.LatLonSource))
     {
         <div class="form-group row">
-            <label asp-for="LatLonSource" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.LatLonSource" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="LatLonSource" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.LatLonSource" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if (!String.IsNullOrWhiteSpace(Model.Elevation))
+    @if (!String.IsNullOrWhiteSpace(Model.accession.Elevation))
     {
         <div class="form-group row">
-            <label asp-for="Elevation" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.Elevation" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="Elevation" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.Elevation" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if (!String.IsNullOrWhiteSpace(Model.CollectionDate) || !String.IsNullOrWhiteSpace(Model.CollectionMonth) ||
-    !String.IsNullOrEmpty(Model.CollectionYear))
+    @if (!String.IsNullOrWhiteSpace(Model.accession.CollectionDate) || !String.IsNullOrWhiteSpace(Model.accession.CollectionMonth) ||
+    !String.IsNullOrEmpty(Model.accession.CollectionYear))
     {
         <div class="form-group row">
-            <label asp-for="CollectionDateCombined" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.CollectionDateCombined" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="CollectionDateCombined" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.CollectionDateCombined" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if (!String.IsNullOrWhiteSpace(Model.PopulationSize))
+    @if (!String.IsNullOrWhiteSpace(Model.accession.PopulationSize))
     {
         <div class="form-group row">
-            <label asp-for="PopulationSize" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.PopulationSize" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="PopulationSize" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.PopulationSize" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if (!String.IsNullOrWhiteSpace(Model.SampleSize))
+    @if (!String.IsNullOrWhiteSpace(Model.accession.SampleSize))
     {
         <div class="form-group row">
-            <label asp-for="SampleSize" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.SampleSize" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="SampleSize" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.SampleSize" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if (!String.IsNullOrWhiteSpace(Model.Habitat))
+    @if (!String.IsNullOrWhiteSpace(Model.accession.Habitat))
     {
         <div class="form-group row">
-            <label asp-for="Habitat" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.Habitat" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="Habitat" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.Habitat" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if(!String.IsNullOrWhiteSpace(Model.AssociatedBiota))
+    @if(!String.IsNullOrWhiteSpace(Model.accession.AssociatedBiota))
     { 
         <div class="form-group row">
-            <label asp-for="AssociatedBiota" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.AssociatedBiota" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="AssociatedBiota" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.AssociatedBiota" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if(!String.IsNullOrWhiteSpace(Model.VegetationType))
+    @if(!String.IsNullOrWhiteSpace(Model.accession.VegetationType))
     {
         <div class="form-group row">
-            <label asp-for="VegetationType" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.VegetationType" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="VegetationType" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.VegetationType" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if (!String.IsNullOrWhiteSpace(Model.CollectionNotes))
+    @if (!String.IsNullOrWhiteSpace(Model.accession.CollectionNotes))
     {
         <div class="form-group row">
-            <label asp-for="CollectionNotes" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.CollectionNotes" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <textarea class="form-control-plaintext" readonly asp-for="CollectionNotes"></textarea>
+                <textarea class="form-control-plaintext" readonly asp-for="accession.CollectionNotes"></textarea>
             </div>
         </div>
     }
-    @if (!String.IsNullOrWhiteSpace(Model.MatingSystem))
+    @if (!String.IsNullOrWhiteSpace(Model.accession.MatingSystem))
     {
         <div class="form-group row">
-            <label asp-for="MatingSystem" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.MatingSystem" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="MatingSystem" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.MatingSystem" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if(!String.IsNullOrWhiteSpace(Model.ChromosomeNum) && Model.ChromosomeNum != "24")
+    @if(!String.IsNullOrWhiteSpace(Model.accession.ChromosomeNum) && Model.accession.ChromosomeNum != "24")
     {
         <div class="form-group row">
-            <label asp-for="ChromosomeNum" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.ChromosomeNum" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="ChromosomeNum" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.ChromosomeNum" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if(!String.IsNullOrWhiteSpace(Model.Traits))
+    @if(!String.IsNullOrWhiteSpace(Model.accession.Traits))
     {
         <div class="form-group row">
-            <label asp-for="Traits" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.Traits" class="col-sm-3 col-form-label"></label>
             @* <div class="col-sm-9">
-                <input type="text" asp-for="Traits" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.Traits" readonly class="form-control-plaintext">
             </div> *@
             <div class="col-sm-9">
-                <textarea class="form-control-plaintext" readonly asp-for="Traits"></textarea>
+                <textarea class="form-control-plaintext" readonly asp-for="accession.Traits"></textarea>
             </div>
         </div>
     }
-    @if(!String.IsNullOrWhiteSpace(Model.KaryotypicalVariations))
+    @if(!String.IsNullOrWhiteSpace(Model.accession.KaryotypicalVariations))
     {
         <div class="form-group row">
-            <label asp-for="KaryotypicalVariations" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.KaryotypicalVariations" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="KaryotypicalVariations" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.KaryotypicalVariations" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if(!String.IsNullOrWhiteSpace(Model.RelevantChromosome))
+    @if(!String.IsNullOrWhiteSpace(Model.accession.RelevantChromosome))
     {
         <div class="form-group row">
-            <label asp-for="RelevantChromosome" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.RelevantChromosome" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="RelevantChromosome" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.RelevantChromosome" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if (Model.Cultures.Count > 0)
+    @if (Model.accession.Cultures.Count > 0)
     {
         <div class="form-group row">
             <label class="col-sm-3 col-form-label">
-                @if(Model.Cultures.Count > 1){
+                @if(Model.accession.Cultures.Count > 1){
                     <span>Horticultural Recommendations</span>
                 } else {
                     <span>Horticultural Recommendation</span>
@@ -301,7 +301,7 @@
             </label>
             <div class="col-sm-9">
                 <span class="form-control-plaintext">
-                    @foreach (var cult in Model.Cultures)
+                    @foreach (var cult in Model.accession.Cultures)
                     {
                         if (cultureI == cultureCount)
                         {
@@ -317,21 +317,21 @@
             </div>
         </div>
     }
-    @if (!String.IsNullOrWhiteSpace(Model.Comments))
+    @if (!String.IsNullOrWhiteSpace(Model.accession.Comments))
     {
         <div class="form-group row">
-            <label asp-for="Comments" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.Comments" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <textarea class="form-control-plaintext" readonly asp-for="Comments"></textarea>
+                <textarea class="form-control-plaintext" readonly asp-for="accession.Comments"></textarea>
             </div>
         </div>
 
     }
-    @if (Model.Categories.Count > 0)
+    @if (Model.accession.Categories.Count > 0)
     {
         <div class="form-group row">
             <label class="col-sm-3 col-form-label">
-                @if(Model.Categories.Count > 1){
+                @if(Model.accession.Categories.Count > 1){
                     <span>Categories</span>
                 } else {
                     <span>Category</span>
@@ -339,7 +339,7 @@
             </label>
             <div class="col-sm-9">
                 <span class="form-control-plaintext">
-                    @foreach (var cat in Model.Categories)
+                    @foreach (var cat in Model.accession.Categories)
                     {
                         if (categoryI == categoryCount)
                         {
@@ -355,29 +355,29 @@
             </div>
         </div>
     }
-    @if(Model.AccessionYear.HasValue)
+    @if(Model.accession.AccessionYear.HasValue)
     {
         <div class="form-group row">
-            <label asp-for="AccessionYear" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.AccessionYear" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input type="text" asp-for="AccessionYear" readonly class="form-control-plaintext">
+                <input type="text" asp-for="accession.AccessionYear" readonly class="form-control-plaintext">
             </div>
         </div>
     }
-    @if(!String.IsNullOrWhiteSpace(Model.Mta))
+    @if(!String.IsNullOrWhiteSpace(Model.accession.Mta))
     {
         <div class="form-group row">
-            <label asp-for="Mta" class="col-sm-3 col-form-label"></label>
+            <label asp-for="accession.Mta" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <a href="https://tgrc-mvc.plantsciences.ucdavis.edu/MTA/@Model.Mta" class="form-control-plaintext">@Model.Mta</a>
+                <a href="https://tgrc-mvc.plantsciences.ucdavis.edu/MTA/@Model.accession.Mta" class="form-control-plaintext">@Model.accession.Mta</a>
             </div>
         </div>
     }
-    @if (Model.Genes.Count > 0)
+    @if (Model.accession.Genes.Count > 0)
     {
         <div class="form-group row">
             <label class="col-sm-3 col-form-label">
-                @if(Model.Genes.Count > 1){
+                @if(Model.accession.Genes.Count > 1){
                     <span>Genes</span>
                 } else {
                     <span>Gene</span>
@@ -386,7 +386,7 @@
             <div class="col-sm-9">
                 <span class="form-control-plaintext">                   
                     <div class="col-12 border container row">                             
-                       @foreach (var gene in Model.Genes)
+                       @foreach (var gene in Model.accession.Genes)
                         {              
                             <div class="col-6 col-sm-4 col-md-3 col-lg-2 border">
                                 @if(ViewBag.Frame == "yes")
@@ -402,11 +402,11 @@
             </div>
         </div>
     }
-    @if (Model.Images.Count > 0)
+    @if (Model.accession.Images.Count > 0)
     {
         <div class="form-group row">
             <label class="col-sm-3 col-form-label">
-                @if(Model.Images.Count > 1){
+                @if(Model.accession.Images.Count > 1){
                     <span>Images</span>
                 } else {
                     <span>Image</span>
@@ -415,7 +415,7 @@
             <div class="col-sm-9">
                 <span class="form-control-plaintext">
                     <div class="col-12 border container row">                             
-                        @foreach (var image in Model.Images)
+                        @foreach (var image in Model.accession.Images)
                         {              
                             <div class="col-6 col-sm-4 col-md-3 col-lg-2 border">
                                 @if(ViewBag.Frame == "yes")
@@ -431,7 +431,7 @@
             </div>
         </div>
     }
-    @if(Model.LatDec != null && Model.LonDeg != null)
+    @if((Model.accession.LatDec != null && Model.accession.LonDeg != null))
     {
         <div class="form-group text-center">
             <p class="bolded"><asp:label id="lblMap" runat="server" Visible="false" Text="Google Map:" /></p>
@@ -451,41 +451,80 @@
             this.setAttribute("style", "height:" + (this.scrollHeight) + "px;overflow-y:hidden;");
         });
 
-        @if(Model.LatDec != null && Model.LonDeg != null)
+        function getPin(Icon)
         {
-            <text>
-            $( document ).ready(function() {
-             var myLatlng = new google.maps.LatLng(@Model.LatDec,@Model.LonDec);
-             var mapinfo = "Accession: @Model.AccessionNum  <br /> longitude,latitude: @Model.LonDec , @Model.LatDec";
-
-             var marker = new google.maps.Marker({
-                position: myLatlng,
-                title:"@Model.AccessionNum"
-            });
-            marker.setMap(map);
-            const infoWindow = new google.maps.InfoWindow();
-
-            marker.addListener("click", () => {
-                infoWindow.close();
-                infoWindow.setContent(mapinfo);
-                infoWindow.open(marker.getMap(), marker);
-            });                       
-            });
-
-            let map;
-
-            function initMap() {
-                map = new google.maps.Map(document.getElementById("map"), {
-                    center: { lat: @Model.LatDec, lng: @Model.LonDec },
-                    zoom: 10,
-                });
+            switch (Icon) {
+                case 'related':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=|0000FF|000000";                             
+                default:
+                    return "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";            
             }
-
-            window.initMap = initMap;
-            </text>
-            
         }
 
+        
+        var locations = [@Html.Raw(Model.Markers)]
+        $( document ).ready(function() {  
+            @if((Model.accession.LatDec != null && Model.accession.LonDeg != null))
+            {
+                <text>
+                var infowindow = new google.maps.InfoWindow;
+                </text>
+            }
+           
+
+           var marker, i;
+            @if((Model.accession.LatDec != null && Model.accession.LonDeg != null))
+            {
+                <text>
+                var bounds = new google.maps.LatLngBounds();
+                </text>
+            }
+           
+
+           for (i = 0; i < locations.length; i++) {
+                @if((Model.accession.LatDec != null && Model.accession.LonDeg != null))
+                {
+                    <text>
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                        map: map,
+                        icon: getPin(locations[i][3])
+                    });
+                    bounds.extend(marker.position);
+                    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                        return function() {
+                            if(locations[i][0].includes(",")){
+                                infowindow.setContent(locations[i][0]);
+                            } else {
+                                infowindow.setContent(locations[i][0]);
+                            }
+                            
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, i));
+                    </text>
+                }  
+            }
+            @if((Model.accession.LatDec != null && Model.accession.LonDeg != null))
+            {
+                <text>
+                 map.fitBounds(bounds);     
+                </text>
+            }
+                       
+        }); 
+
+        let map;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 0, lng: 180 },
+                zoom: 10,
+                streetViewControl: false,
+            });
+        }
+
+        window.initMap = initMap; 
              
     </script>
     
