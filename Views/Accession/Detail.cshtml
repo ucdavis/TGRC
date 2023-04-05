@@ -455,7 +455,7 @@
         {
             switch (Icon) {
                 case 'related':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=|0000FF|000000";                             
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=|87CEEB|000000";                             
                 default:
                     return "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";            
             }
@@ -485,26 +485,35 @@
                 @if((Model.accession.LatDec != null && Model.accession.LonDeg != null))
                 {
                     <text>
-                    marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                        map: map,
-                        icon: getPin(locations[i][3])
-                    });
+                                      
+                    if(locations[i][3] == "primary")
+                    {                        
+                        marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                            map: map,                        
+                            icon: getPin(locations[i][3]),
+                            zIndex: 999999999,
+                        });                          
+                    } else
+                    {
+                         marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                            map: map,  
+                            icon: getPin(locations[i][3]),
+                            zIndex: i,                   
+                        });  
+                    }
                     bounds.extend(marker.position);
                     google.maps.event.addListener(marker, 'click', (function(marker, i) {
                         return function() {
-                            if(locations[i][0].includes(",")){
-                                infowindow.setContent(locations[i][0]);
-                            } else {
-                                infowindow.setContent(locations[i][0]);
-                            }
-                            
+                            infowindow.setContent(locations[i][0]);                            
                             infowindow.open(map, marker);
                         }
                     })(marker, i));
                     </text>
                 }  
-            }
+            }            
+            
             @if((Model.accession.LatDec != null && Model.accession.LonDeg != null))
             {
                 <text>
