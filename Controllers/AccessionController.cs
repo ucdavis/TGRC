@@ -17,14 +17,8 @@ public class AccessionController : Controller
     }
 
     public async Task<IActionResult> Detail(string id, string frame = "no")
-    {
-        var model = await _context.Accessions
-            .Include(a => a.Donors).ThenInclude(d => d.Colleague)
-            .Include(a => a.Categories)
-            .Include(a => a.Cultures).ThenInclude(c => c.Recommendation)
-            .Include(a => a.Genes)
-            .Include(a => a.Images.Where(a => a.Image.Web != 0)).ThenInclude(i => i.Image)
-            .Where(a => a.AccessionNum == id).FirstOrDefaultAsync();
+    {      
+        var model = await AccessionDetailsViewModel.Create(_context, id);
         ViewBag.Frame = frame;
         ViewBag.APIKey = _config["googleMapAPIKey"];
         return View(model);

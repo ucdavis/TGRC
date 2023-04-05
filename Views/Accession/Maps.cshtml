@@ -201,12 +201,7 @@
 
                 google.maps.event.addListener(marker, 'click', (function(marker, i) {
                     return function() {
-                        if(locations[i][0].includes(",")){
-                            infowindow.setContent(locations[i][0]);
-                        } else {
-                            infowindow.setContent(locations[i][0]);
-                        }
-                        
+                        infowindow.setContent(locations[i][0]);                        
                         infowindow.open(map, marker);
                     }
                 })(marker, i));
