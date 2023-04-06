@@ -48,6 +48,7 @@ namespace TGRC.Models
         public List<string> BackgroundGenotypeList { get; set; }
         public List<Colleague> DonorList { get; set; }
         public int SelectedDonor { get; set; }
+        public bool SimpleSearch { get; set; }
         
 
         public AccessionSearchViewModel() {
@@ -200,6 +201,12 @@ namespace TGRC.Models
                     DonorList = donorList,
                     SelectedDonor = vm.SelectedDonor,
                 };  
+                 if(vm.SubmitButton == "Simple" && !string.IsNullOrWhiteSpace(vm.SimpleSearchTerm))
+                {
+                    viewModel.SimpleSearch = true;
+                } else {
+                    viewModel.SimpleSearch = false;
+                }
                 return viewModel;
 
 
@@ -217,6 +224,7 @@ namespace TGRC.Models
                 GeneList = geneList,
                 Search = false,
                 DonorList = donorList,
+                SimpleSearch = true,
             };           
 
             return freshModel;
