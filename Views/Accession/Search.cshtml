@@ -4,18 +4,23 @@
 <h1>Accession Search</h1>
 <form asp-action="search" method="post">
         <input type="hidden" id="Search" name="Search" value="True">
-    <div class="container col-sm-8 text-center multi-collapse collapse hide">
-        <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse"
-            aria-expanded="false" aria-controls="SearchCollapse">
-            Hide/Show Search
-        </button>
-    </div>    
-    <div class="container col-sm-12 collapse show multi-collapse" id="SearchCollapse">
-        <div class="row col-sm-12">
-            <h6>Please enter your search criteria below. All fields are optional; searches are case insensitive; partial
-                text values are allowed; multiple criteria are linked by 'AND'.</h6>
-        </div>
-        <div class="row col-sm-12 border">            
+    
+    <ul class="nav nav-tabs nav-fill">
+        <li class="nav-item">
+            <a class="nav-link @(Model.SimpleSearch ? "active" : "")" onclick="toggleSearch('simple')" id="simpleLink">Simple Search</a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link @(!Model.SimpleSearch ? "active" : "")" onclick="toggleSearch('advanced')" id="advancedLink">Advanced Search</a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link" onclick="toggleSearch('search')">Hide Search</a>
+        </li>
+    </ul>  
+    <div class="col-12 collapse hide" id="OpenText">
+        Click 'Simple Search' or 'Advanced Search' to re-open.
+    </div>
+    <div class="container col-12 collapse show multi-collapse" id="SearchCollapse">       
+        <div class="row col-sm-12 border collapse @(Model.SimpleSearch ? "show" : "hide")" id="SimpleSearch">            
                 <div class="form-group row">
                     <label asp-for="SimpleSearchTerm" class="col-sm-3 col-form-label"><h2>Simple Search</h2></label>
                     <div class="col-sm-6">
@@ -25,136 +30,137 @@
                     <div class="col-sm-2"><button name="SubmitButton" value="Simple" class="btn btn-primary">Search</button></div>
                 </div>
         </div>
-        <div class="row border">
+        <div class="row col-sm-12 border collapse @(!Model.SimpleSearch ? "show" : "hide")" border" id="AdvancedSearch">
             <div><h2>Advanced Search</h2></div>
-            <div class="col-sm-6">@* First column*@
-                <div class="form-group row">
-                    <label asp-for="AccessionNumberToSearch" class="col-sm-4 col-form-label">Accession Number</label>
-                    <div class="col-sm-7">
-                        <input type="text" asp-for="AccessionNumberToSearch" class="form-control advSearchField">
-                        (enter all or part of the accession number)
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="OtherIdSearch" class="col-sm-4 col-form-label">Other Identifier</label>
-                    <div class="col-sm-7">
-                        <input type="text" asp-for="OtherIdSearch" class="form-control advSearchField">
-                        (e.g. PI 126443, SAL3179, IL 3-3)
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="StatusToSearch" class="col-sm-4 col-form-label">Status</label>
-                    <div class="col-sm-3">
-                        <select asp-for="StatusToSearch" class="form-select">
-                            <option value=""></option>
-                            <option value="Active">Active</option>
-                            <option value="Inactive">Inactive</option>
-                            <option value="Unavailable">Unavailable</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="InspectedSearch" class="col-sm-7 col-form-label">Inspected for International
-                        Shipment?</label>
-                    <div class="col-sm-3">
-                        <select asp-for="InspectedSearch" class="form-select">
-                            <option value=""></option>
-                            <option value="Yes">Yes</option>
-                            <option value="No">No</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="CategoryToSearch" class="col-sm-5 col-form-label">Accession Category</label>
-                    <div class="col-sm-7">
-                        <select asp-for="CategoryToSearch" class="form-select form-select-sm"
-                            asp-items="@(new SelectList(Model.Categories))"></select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="CultivarToSearch" class="col-sm-3 col-form-label">Cultivar</label>
-                    <div class="col-sm-9">
-                        <select asp-for="CultivarToSearch" class="form-select form-select-sm"
-                            asp-items="@(new SelectList(Model.Cultivars))"></select>
-                    </div>
-                </div>  
-                <div class="form-group row">
-                    <label asp-for="SelectedGene" class="col-sm-5 col-form-label">Gene</label>
-                    <div class="col-sm-4">
-                        <select asp-for="SelectedGene" class="form-select form-select-sm"
-                            asp-items="@(new SelectList(Model.GeneList))"></select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="SelectedBackgroundGenotype" class="col-sm-5 col-form-label">Background
-                        Genotype</label>
-                    <div class="col-sm-5">
-                        <select asp-for="SelectedBackgroundGenotype" class="form-select form-select-sm"
-                            asp-items="@(new SelectList(Model.BackgroundGenotypeList))"></select>
-                    </div>
-                </div>              
+             <div class="row col-sm-12 border">
+                <h6>Please enter your search criteria below. All fields are optional; searches are case insensitive; partial
+                    text values are allowed; multiple criteria are linked by 'AND'.</h6>
             </div>
-            <div class="col-sm-6">@* Second column*@
-                <div class="form-group row">
-                    <label asp-for="SelectedTaxon" class="col-sm-3 col-form-label">Taxon</label>
-                    <div class="col-sm-9">
-                        <select asp-for="SelectedTaxon" class="form-select form-select-sm"
-                            asp-items="@(new SelectList(Model.Taxons, "Taxon", "Display"))"></select>
+            <div class="row">
+                <div class="col-sm-6">@* First column*@
+                    <div class="form-group row">
+                        <label asp-for="AccessionNumberToSearch" class="col-sm-4 col-form-label">Accession Number</label>
+                        <div class="col-sm-7">
+                            <input type="text" asp-for="AccessionNumberToSearch" class="form-control advSearchField">
+                            (enter all or part of the accession number)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="OtherIdSearch" class="col-sm-4 col-form-label">Other Identifier</label>
+                        <div class="col-sm-7">
+                            <input type="text" asp-for="OtherIdSearch" class="form-control advSearchField">
+                            (e.g. PI 126443, SAL3179, IL 3-3)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="StatusToSearch" class="col-sm-4 col-form-label">Status</label>
+                        <div class="col-sm-4">
+                            <select asp-for="StatusToSearch" class="form-select">
+                                <option value=""></option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                                <option value="Unavailable">Unavailable</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="InspectedSearch" class="col-sm-7 col-form-label">Inspected for International
+                            Shipment?</label>
+                        <div class="col-sm-3">
+                            <select asp-for="InspectedSearch" class="form-select">
+                                <option value=""></option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="CategoryToSearch" class="col-sm-5 col-form-label">Accession Category</label>
+                        <div class="col-sm-7">
+                            <select asp-for="CategoryToSearch" class="form-select form-select-sm"
+                                asp-items="@(new SelectList(Model.Categories))"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="CultivarToSearch" class="col-sm-3 col-form-label">Cultivar</label>
+                        <div class="col-sm-9">
+                            <select asp-for="CultivarToSearch" class="form-select form-select-sm"
+                                asp-items="@(new SelectList(Model.Cultivars))"></select>
+                        </div>
+                    </div>  
+                    <div class="form-group row">
+                        <label asp-for="SelectedGene" class="col-sm-5 col-form-label">Gene</label>
+                        <div class="col-sm-4">
+                            <select asp-for="SelectedGene" class="form-select form-select-sm"
+                                asp-items="@(new SelectList(Model.GeneList))"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="SelectedBackgroundGenotype" class="col-sm-5 col-form-label">Background
+                            Genotype</label>
+                        <div class="col-sm-5">
+                            <select asp-for="SelectedBackgroundGenotype" class="form-select form-select-sm"
+                                asp-items="@(new SelectList(Model.BackgroundGenotypeList))"></select>
+                        </div>
+                    </div>              
+                </div>
+                <div class="col-sm-6">@* Second column*@
+                    <div class="form-group row">
+                        <label asp-for="SelectedTaxon" class="col-sm-3 col-form-label">Taxon</label>
+                        <div class="col-sm-9">
+                            <select asp-for="SelectedTaxon" class="form-select form-select-sm"
+                                asp-items="@(new SelectList(Model.Taxons, "Taxon", "Display"))"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="SelectedCountry" class="col-sm-5 col-form-label">Country</label>
+                        <div class="col-sm-4">
+                            <select asp-for="SelectedCountry" class="form-select form-select-sm"
+                                asp-items="@(new SelectList(Model.Countries))"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="SearchProvince" class="col-sm-5 col-form-label">Province/Department </label>
+                        <div class="col-sm-4">
+                            <select asp-for="SearchProvince" class="form-select form-select-sm"
+                                asp-items="@(new SelectList(Model.ProvinceList))"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="SearchCollectionSite" class="col-sm-3 col-form-label">Collection Site</label>
+                        <div class="col-sm-8">
+                            <input type="text" asp-for="SearchCollectionSite" class="form-control advSearchField">
+                            (enter all or part of the collection site)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="SearchComments" class="col-sm-3 col-form-label">Notes</label>
+                        <div class="col-sm-8">
+                            <input type="text" asp-for="SearchComments" class="form-control advSearchField">
+                            (search collection notes, traits, comments)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="SelectedMatingSystem" class="col-sm-5 col-form-label">Mating System</label>
+                        <div class="col-sm-4">
+                            <select asp-for="SelectedMatingSystem" class="form-select form-select-sm"
+                                asp-items="@(new SelectList(Model.MattingSystems))"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="SelectedDonor" class="col-sm-5 col-form-label">Donor</label>
+                        <div class="col-sm-4">
+                            <select asp-for="SelectedDonor" class="form-select form-select-sm"
+                                asp-items="@(new SelectList(Model.DonorList, "ColleagueNum","DisplayName"))"></select>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label asp-for="SelectedCountry" class="col-sm-5 col-form-label">Country</label>
-                    <div class="col-sm-4">
-                        <select asp-for="SelectedCountry" class="form-select form-select-sm"
-                            asp-items="@(new SelectList(Model.Countries))"></select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="SearchProvince" class="col-sm-5 col-form-label">Province/Department </label>
-                    <div class="col-sm-4">
-                        <select asp-for="SearchProvince" class="form-select form-select-sm"
-                            asp-items="@(new SelectList(Model.ProvinceList))"></select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="SearchCollectionSite" class="col-sm-3 col-form-label">Collection Site</label>
-                    <div class="col-sm-8">
-                        <input type="text" asp-for="SearchCollectionSite" class="form-control advSearchField">
-                        (enter all or part of the collection site)
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="SearchComments" class="col-sm-3 col-form-label">Notes</label>
-                    <div class="col-sm-8">
-                        <input type="text" asp-for="SearchComments" class="form-control advSearchField">
-                        (search collection notes, traits, comments)
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="SelectedMatingSystem" class="col-sm-5 col-form-label">Mating System</label>
-                    <div class="col-sm-4">
-                        <select asp-for="SelectedMatingSystem" class="form-select form-select-sm"
-                            asp-items="@(new SelectList(Model.MattingSystems))"></select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="SelectedDonor" class="col-sm-5 col-form-label">Donor</label>
-                    <div class="col-sm-4">
-                        <select asp-for="SelectedDonor" class="form-select form-select-sm"
-                            asp-items="@(new SelectList(Model.DonorList, "ColleagueNum","DisplayName"))"></select>
-                    </div>
-                </div>
-                
             </div>
+            <div class="text-center">
+                <button name="SubmitButton" value="Advanced" class="btn btn-primary advSearchButton">Search</button> | 
+                <a asp-action="Search" class="btn btn-dark">Clear Search</a> 
+            </div>   
         </div>
-        <div class="text-center">
-            <button name="SubmitButton" value="Advanced" class="btn btn-primary advSearchButton">Search</button> | 
-            <a asp-action="Search" class="btn btn-dark">Clear Search</a> |
-            <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse"
-                aria-expanded="false" aria-controls="SearchCollapse">
-                Hide/Show Search
-            </button>
-        </div>        
     </div>
     </form>
 
@@ -220,6 +226,39 @@
                     
                 }
             });
-        });  
+        }); 
+
+        function toggleSearch(show)
+        {
+            var simple = $("#SimpleSearch");
+            var advance = $("#AdvancedSearch");            
+            var all = $("#SearchCollapse");
+            var open = $("#OpenText");
+
+            all.show();
+            $("#simpleLink").removeClass("active");
+            $("#advancedLink").removeClass("active");
+            if(show =="simple")
+            {
+                simple.show();
+                advance.hide();
+                $("#simpleLink").addClass("active");
+                all.show();
+                open.hide();
+            } else if(show == "advanced")
+            {
+                simple.hide();
+                advance.show();
+                $("#advancedLink").addClass("active");
+                all.show();
+                open.hide();
+            } else
+            {
+                all.hide();
+                open.show();
+
+            }
+
+        } 
     </script>    
 }

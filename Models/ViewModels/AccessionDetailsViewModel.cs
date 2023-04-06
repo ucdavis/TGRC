@@ -27,7 +27,7 @@ namespace TGRC.Models
                 .Include(a => a.Genes)
                 .Include(a => a.Images.Where(a => a.Image.Web != 0)).ThenInclude(i => i.Image)
                 .Where(a => a.AccessionNum == id).FirstOrDefaultAsync();
-            var related = await _context.Accessions.Where(a => a.Taxon2 == acc.Taxon2 && a.LatDec.HasValue && a.LonDec.HasValue && a.Status == "Active").ToListAsync();
+            var related = await _context.Accessions.Where(a => a.LatDec.HasValue && a.LonDec.HasValue && ((a.Taxon2 == acc.Taxon2 && a.Status == "Active") || (a.AccessionNum == id))).ToListAsync();
             var groupList = related.GroupBy(a => new {a.LatDec, a.LonDec}).Select(g => new AccessionPin { 
                         LatDec = g.Key.LatDec.Value,
                         LonDec = g.Key.LonDec.Value,
