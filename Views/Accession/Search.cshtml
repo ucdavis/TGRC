@@ -12,9 +12,9 @@
         <li class="nav-item ">
             <a class="nav-link @(!Model.SimpleSearch ? "active" : "")" onclick="toggleSearch('advanced')" id="advancedLink">Advanced</a>
         </li>
-        <li class="nav-item ">
+        @* <li class="nav-item ">
             <a class="btn btn-info" onclick="toggleSearch('search')">Hide Search</a>
-        </li>
+        </li> *@
     </ul>  
     <div class="col-12 collapse hide" id="OpenText">
         Click 'Simple Search' or 'Advanced Search' to re-open.
@@ -33,6 +33,9 @@
              <div class="row col-sm-12 border">
                 <h6>Please enter your search criteria below. All fields are optional; searches are case insensitive; partial
                     text values are allowed; multiple criteria are linked by 'AND'.</h6>
+                    <div class="col-sm-3">
+                         <a class="btn btn-info" onclick="toggleSearch('search')">Hide Search</a>
+                    </div>                    
             </div>
             <div class="row">
                 <div class="col-sm-6">@* First column*@
