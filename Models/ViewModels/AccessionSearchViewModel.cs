@@ -90,14 +90,15 @@ namespace TGRC.Models
                         || EF.Functions.Like(a.AccessionNum, "%" + accPad + "%")
                         || EF.Functions.Like(a.AccessionNum, "%" + accFuzzy + "%")
                         || EF.Functions.Like(a.OtherId, "%" + vm.SimpleSearchTerm + "%") 
-                        || EF.Functions.Like(a.OtherId, "%" + accPad + "%")
                         || EF.Functions.Like(a.OtherId, "%" + accFuzzy + "%")
                         || EF.Functions.Like(a.CultivarName, "%" + vm.SimpleSearchTerm + "%") 
-                        || EF.Functions.Like(a.CultivarName, "%" + accPad + "%")
                         || EF.Functions.Like(a.CultivarName, "%" + accFuzzy + "%")
                         || EF.Functions.Like(a.Reference, "%" + vm.SimpleSearchTerm + "%") 
-                        || EF.Functions.Like(a.Reference, "%" + accPad + "%")
-                        || EF.Functions.Like(a.Reference, "%" + accFuzzy + "%")));
+                        || EF.Functions.Like(a.Reference, "%" + accFuzzy + "%")
+                        || EF.Functions.Like(a.Comments, "%" + vm.SimpleSearchTerm + "%") 
+                        || EF.Functions.Like(a.Comments, "%" + accFuzzy + "%")
+                        || EF.Functions.Like(a.Traits, "%" + vm.SimpleSearchTerm + "%") 
+                        || EF.Functions.Like(a.Traits, "%" + accFuzzy + "%")));
                 } else {
                 
                     if(!string.IsNullOrWhiteSpace(vm.AccessionNumberToSearch))
