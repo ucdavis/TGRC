@@ -24,14 +24,18 @@ public class AccessionController : Controller
         return View(model);
     }
 
-    public async Task<IActionResult> Search(AccessionSearchViewModel vm)
+    public async Task<IActionResult> Search(AccessionSearchViewModel vm, string search)
     {
         if(!vm.Search)
         {
             var freshModel = await AccessionSearchViewModel.Create(_context, null);
+            if(search == "advanced")
+            {
+                freshModel.SimpleSearch = false;
+            }
             return View(freshModel);
         }
-        var model = await AccessionSearchViewModel.Create(_context, vm);
+        var model = await AccessionSearchViewModel.Create(_context, vm);        
         return View(model);
     }
 
