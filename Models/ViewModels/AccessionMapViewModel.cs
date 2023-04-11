@@ -77,6 +77,10 @@ namespace TGRC.Models
                 }
                 if(vm.Elevations != null && vm.Elevations.Any())
                 {
+                    if(vm.Elevations.Last() == 3000)
+                    {
+                        vm.Elevations.Add(3500);
+                    }
                     accList = accList.Where(a => EF.Functions.IsNumeric(a.Elevation) && a.ElevationInteger >= vm.Elevations.First() && a.ElevationInteger <= (vm.Elevations.Last() + 499));                    
                 }
 
