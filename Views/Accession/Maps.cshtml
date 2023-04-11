@@ -12,9 +12,10 @@
                     <th>Country</th>
                     <th>Province</th>
                     <th>Status</th>
+                    <th>Elevation&dagger;</th>
                 </tr>
                 <tr>
-                    <td><select asp-for="CountrySelected" class="form-select form-select-sm">
+                    <td valign="top"><select asp-for="CountrySelected" class="form-select form-select-sm">
                                 <option value="[Any]">[Any]</option> 
                                 <option value="Chile">Chile</option> 
                                 <option value="Colombia">Colombia</option> 
@@ -22,18 +23,30 @@
                                 <option value="Peru">Peru</option>   
                         </select>
                     </td>
-                    <td><select asp-for="ProvinceSelected" class="form-select form-select-sm" asp-items="@(new SelectList(Model.ProvinceList))"></select></td>
-                    <td><select asp-for="StatusSelected" class="form-select form-select-sm">
+                    <td valign="top"><select asp-for="ProvinceSelected" class="form-select form-select-sm" asp-items="@(new SelectList(Model.ProvinceList))"></select></td>
+                    <td valign="top"><select asp-for="StatusSelected" class="form-select form-select-sm">
                             <option value="[Any]">[Any]</option>
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
                             <option value="Unavailable">Unavailable</option>
                     </select></td>
+                    <td valign="top">
+                        <select asp-for="Elevations" class="form-select form-select-sm" style="min-width: 100px;" multiple>
+                            <option value="0">0-499</option>
+                            <option value="500">500-999</option>
+                            <option value="1000">1000-1499</option>
+                            <option value="1500">1500-1999</option>
+                            <option value="2000">2000-2499</option>
+                            <option value="2500">2500-2999</option>
+                            <option value="3000">3000-3499</option>
+                            <option value="3500">3500-4000</option>
+                        </select>
+                    </td>                   
                 </tr>
             </table>
         </div>
-        <div class="col-sm-6 d-flex align-items-end"><input type="submit" class="btn btn-primary" value="Create Map & Spreadsheet"> | 
-            <a asp-action="Maps" class="btn btn-dark">Clear Map/Search</a></div>
+        <div class="col-sm-6 d-flex"><span class="align-top"><input type="submit" class="btn btn-primary" value="Create Map & Spreadsheet"> | 
+            <a asp-action="Maps" class="btn btn-dark">Clear Map/Search</a></span></div>
     </div>
 
 <div class="container col-sm-12 row ">
@@ -61,7 +74,10 @@
         }
         <div id="map" class="embed-responsive-item embed-responsive-4by3" style="min-height: 800px; min-width: 600px">
         </div>
-    </div>    
+    </div> 
+    <div>
+        <b>&dagger;</b> Leave blank to search all values. Click on first value, then hold "shift" on last desired value to select range. Press "ctrl"/"control" to select multiple items, or toggle any single item. Search will find all values between smallest and largest selected. 
+    </div>   
 </div>
 </form>
 @if(Model.accessions.Any())
