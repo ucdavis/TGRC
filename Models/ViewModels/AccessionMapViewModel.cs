@@ -30,6 +30,7 @@ namespace TGRC.Models
         public string Markers { get; set; }
         public int MarkerCount { get; set; }
         public List<CheckboxListString> Species { get; set; }
+        public List<int> Elevations { get; set; }
         
         
 
@@ -73,6 +74,10 @@ namespace TGRC.Models
                     var selectedSpecies = vm.Species.Where(s => s.IsChecked).Select(s => s.Name).ToList();
                     accList = accList.Where(a => selectedSpecies.Contains(a.Taxon2));
                     //accList = accList.Where(a => vm.Species.Where(s => s.IsChecked).Select(s => s.Name).Contains(a.Taxon2));
+                }
+                if(vm.Elevations.Any())
+                {
+                    accList = accList.Where(a => EF.Functions.IsNumeric(a.Elevation) && a.ElevationInteger >= vm.Elevations.First() && a.ElevationInteger <= (vm.Elevations.Last() + 499));                    
                 }
 
                 vm.accessions = await accList.ToListAsync(); 
