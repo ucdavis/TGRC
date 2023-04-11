@@ -75,7 +75,7 @@ namespace TGRC.Models
                     accList = accList.Where(a => selectedSpecies.Contains(a.Taxon2));
                     //accList = accList.Where(a => vm.Species.Where(s => s.IsChecked).Select(s => s.Name).Contains(a.Taxon2));
                 }
-                if(vm.Elevations.Any())
+                if(vm.Elevations != null && vm.Elevations.Any())
                 {
                     accList = accList.Where(a => EF.Functions.IsNumeric(a.Elevation) && a.ElevationInteger >= vm.Elevations.First() && a.ElevationInteger <= (vm.Elevations.Last() + 499));                    
                 }
