@@ -50,6 +50,8 @@ namespace TGRC.Models
         public string SampleSize { get; set; }
         public string Habitat { get; set; }
         public string Elevation { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public int ElevationInteger { get; set; }
         [Display(Name ="Associated Biota")]
         public string AssociatedBiota { get; set; }
         [Display(Name ="Vegetation Type")]
