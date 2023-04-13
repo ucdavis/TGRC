@@ -4,15 +4,15 @@
 <br>
 
 <form method="post" asp-action="Maps">
-    <input type="hidden" name="Search" id="Search" value="true">
-    <div class="row col-sm-12">
-        <div class="col-sm-6 align-top">
+    <input type="hidden" name="Search" id="Search" value="true">   
+    <div class="row col-sm-12">        
             <table>
                 <tr>
                     <th>Country</th>
                     <th>Province</th>
                     <th>Status</th>
-                    <th>Elevation (m)&dagger;</th>
+                    <th>Elevation (m)</th>
+                    <th></th>
                 </tr>
                 <tr>
                     <td valign="top"><select asp-for="CountrySelected" class="form-select form-select-sm">
@@ -29,23 +29,14 @@
                             <option value="Active">Active</option>
                             <option value="Inactive">Inactive</option>
                             <option value="Unavailable">Unavailable</option>
-                    </select></td>
-                    <td valign="top">
-                        <select asp-for="Elevations" class="form-select form-select-sm" style="min-width: 100px;" multiple>
-                            <option value="0">0-499</option>
-                            <option value="500">500-999</option>
-                            <option value="1000">1000-1499</option>
-                            <option value="1500">1500-1999</option>
-                            <option value="2000">2000-2499</option>
-                            <option value="2500">2500-2999</option>
-                            <option value="3000">3000+</option>
                         </select>
-                    </td>                   
+                    </td>
+                    <td valign="top">Min:<input type="number" asp-for="minElevation" style="width: 65px">
+                    Max:<input type="number" asp-for="maxElevation" style="width: 65px"></td>           
+                    <td valign="top"><input type="submit" class="btn btn-primary" value="Create Map/Table"> | 
+            <a asp-action="Maps" class="btn btn-dark">Clear</a></td>
                 </tr>
-            </table>
-        </div>
-        <div class="col-sm-6 d-flex"><span class="align-top"><input type="submit" class="btn btn-primary" value="Create Map & Spreadsheet"> | 
-            <a asp-action="Maps" class="btn btn-dark">Clear Map/Search</a></span></div>
+            </table>      
     </div>
 
 <div class="container col-sm-12 row ">

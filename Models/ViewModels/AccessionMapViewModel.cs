@@ -30,7 +30,9 @@ namespace TGRC.Models
         public string Markers { get; set; }
         public int MarkerCount { get; set; }
         public List<CheckboxListString> Species { get; set; }
-        public List<int> Elevations { get; set; }
+        
+        public int minElevation { get; set; }
+        public int maxElevation { get; set; }
         
         
 
@@ -75,15 +77,11 @@ namespace TGRC.Models
                     accList = accList.Where(a => selectedSpecies.Contains(a.Taxon2));
                     //accList = accList.Where(a => vm.Species.Where(s => s.IsChecked).Select(s => s.Name).Contains(a.Taxon2));
                 }
-                if(vm.Elevations != null && vm.Elevations.Any())
+                if(vm.minElevation != 0 || vm.maxElevation != 4000)
                 {
-                    if(vm.Elevations.Last() == 3000)
-                    {
-                        vm.Elevations.Add(3500);
-                    }
-                    accList = accList.Where(a => EF.Functions.IsNumeric(a.Elevation) && a.ElevationInteger >= vm.Elevations.First() && a.ElevationInteger <= (vm.Elevations.Last() + 499));                    
+                    accList = accList.Where(a => EF.Functions.IsNumeric(a.Elevation) && a.ElevationInteger >= vm.minElevation && a.ElevationInteger <= vm.maxElevation);
                 }
-
+                
                 vm.accessions = await accList.ToListAsync(); 
                 var groupList = vm.accessions.GroupBy(a => new {a.LatDec, a.LonDec}).Select(g => new AccessionPin { 
                     LatDec = g.Key.LatDec.Value,
@@ -106,6 +104,8 @@ namespace TGRC.Models
             } else
             {
                 vm.accessions = new List<Accession>();
+                vm.minElevation = 0;
+                vm.maxElevation = 4000;
             }
                 
             return vm;
