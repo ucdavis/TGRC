@@ -31,8 +31,8 @@ namespace TGRC.Models
         public int MarkerCount { get; set; }
         public List<CheckboxListString> Species { get; set; }
         
-        public int minElevation { get; set; }
-        public int maxElevation { get; set; }
+        public int? minElevation { get; set; }
+        public int? maxElevation { get; set; }
         
         
 
@@ -77,9 +77,13 @@ namespace TGRC.Models
                     accList = accList.Where(a => selectedSpecies.Contains(a.Taxon2));
                     //accList = accList.Where(a => vm.Species.Where(s => s.IsChecked).Select(s => s.Name).Contains(a.Taxon2));
                 }
-                if(vm.minElevation != 0 || vm.maxElevation != 4000)
+                if(vm.minElevation != null && vm.minElevation != 0)
+                {                
+                    accList = accList.Where(a => EF.Functions.IsNumeric(a.Elevation) && a.ElevationInteger >= vm.minElevation);
+                }
+                if(vm.maxElevation != null && vm.maxElevation != 4000)
                 {
-                    accList = accList.Where(a => EF.Functions.IsNumeric(a.Elevation) && a.ElevationInteger >= vm.minElevation && a.ElevationInteger <= vm.maxElevation);
+                    accList = accList.Where(a => EF.Functions.IsNumeric(a.Elevation) && a.ElevationInteger <= vm.maxElevation);
                 }
                 
                 vm.accessions = await accList.ToListAsync(); 
@@ -104,8 +108,8 @@ namespace TGRC.Models
             } else
             {
                 vm.accessions = new List<Accession>();
-                vm.minElevation = 0;
-                vm.maxElevation = 4000;
+                //vm.minElevation = 0;
+                //vm.maxElevation = 4000;
             }
                 
             return vm;

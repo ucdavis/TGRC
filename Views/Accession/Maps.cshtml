@@ -11,7 +11,7 @@
                     <th>Country</th>
                     <th>Province</th>
                     <th>Status</th>
-                    <th>Elevation (m)</th>
+                    <th>Elevation (m) &dagger;</th>
                     <th></th>
                 </tr>
                 <tr>
@@ -31,8 +31,8 @@
                             <option value="Unavailable">Unavailable</option>
                         </select>
                     </td>
-                    <td valign="top">Min:<input type="number" asp-for="minElevation" style="width: 65px">
-                    Max:<input type="number" asp-for="maxElevation" style="width: 65px"></td>           
+                    <td valign="top">Min<input type="number" asp-for="minElevation" style="width: 65px">
+                    Max<input type="number" asp-for="maxElevation" style="width: 65px"></td>           
                     <td valign="top"><input type="submit" class="btn btn-primary" value="Create Map/Table"> | 
             <a asp-action="Maps" class="btn btn-dark">Clear</a></td>
                 </tr>
@@ -66,7 +66,7 @@
         </div>
     </div> 
     <div>
-        <b>&dagger;</b> Default is any value. Hold 'Ctrl/Cmd' and click on the desired range(s).
+        <b>&dagger;</b>Min = collections at or above, Max = collections at or below specified elevation(s).
     </div>   
 </div>
 </form>
