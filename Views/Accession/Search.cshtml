@@ -32,10 +32,6 @@
         <div class="row col-sm-12 border collapse @(!Model.SimpleSearch ? "show" : "hide")" border" id="AdvancedSearch">            
              <div class="row col-sm-12 ">
                 <h6>All search fields are optional; text searches are case insensitive and partial values are allowed; multiple criteria are linked by 'AND'.</h6>
-                    <div class="col-sm-3">
-                         <a class="btn btn-info" onclick="toggleSearch('search')">Hide Search</a>
-                    </div>
-                    <hr>                    
             </div>
             <div class="row">
                 <div class="col-sm-6">@* First column*@
@@ -159,7 +155,7 @@
             </div>
             <div class="text-center">
                 <button name="SubmitButton" value="Advanced" class="btn btn-primary advSearchButton">Search</button> | 
-                <a asp-action="Search" asp-route-search="advanced" class="btn btn-dark">Clear Search</a> 
+                <a asp-action="Search" asp-route-search="advanced" class="btn btn-dark">Clear Search</a>  | <a class="btn btn-info" onclick="toggleSearch('search')">Hide Search</a>
             </div>   
         </div>
     </div>
