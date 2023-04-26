@@ -94,6 +94,14 @@ namespace TGRC.Models
         public string ReferenceOld { get; set; }
         public bool PstvdStatus { get; set; }
 
+        public string ReferenceSafe
+        {
+            get
+            {
+                return string.IsNullOrEmpty(Reference) ? "none found" : Reference;
+            }
+        }
+
 
         public string LatitudeCombined { 
             get

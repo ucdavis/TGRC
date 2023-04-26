@@ -92,7 +92,7 @@ namespace TGRC.Models
                     LonDec = g.Key.LonDec.Value,
                     AccessionNum = string.Join(", ", g.Select(a => a.AccessionNum)), 
                     Taxon2 = string.Join(", ", g.Select(a => a.Taxon2)),
-                    Reference = string.Join(", ", g.Select(a => a.Reference.Replace("'","&#39").Replace(",","&#44"))),
+                    Reference = string.Join(", ", g.Select(a => a.ReferenceSafe.Replace("'","&#39").Replace(",","&#44"))),
                     Title = string.Join(", ", g.Select(a => $"{a.AccessionNum}({a.Taxon2})")),
                     Icon = g.All(a => a.Taxon2 == g.First().Taxon2) ? g.First().Taxon2 : "multi" 
                     }).ToList();
