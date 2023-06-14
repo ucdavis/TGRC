@@ -1,6 +1,5 @@
 @model TGRC.Models.AccessionSearchViewModel
 
-
 <h1>Accession Search</h1>
 <form asp-action="search" method="post">
         <input type="hidden" id="Search" name="Search" value="True">
@@ -16,11 +15,11 @@
             <a class="btn btn-info" onclick="toggleSearch('search')">Hide Search</a>
         </li> *@
     </ul>  
-    <div class="col-12 collapse hide" id="OpenText">
+    <div class="col-12 collapse @(Model.Search ? "show" : "hide")" id="OpenText">
         Click 'Simple Search' or 'Advanced Search' to re-open.
     </div>
     <div class="container col-12 collapse show multi-collapse" id="SearchCollapse">       
-        <div class="row col-sm-12 border collapse @(Model.SimpleSearch ? "show" : "hide")" id="SimpleSearch">            
+        <div class="row col-sm-12 border collapse @(Model.SimpleSearch ? "show" :  "hide")" id="SimpleSearch">            
                 <div class="form-group row">                    
                     <div class="col-sm-6">
                         <input type="text" asp-for="SimpleSearchTerm" class="form-control">
@@ -29,7 +28,7 @@
                     <div class="col-sm-2"><button name="SubmitButton" value="Simple" class="btn btn-primary">Search</button></div>
                 </div>
         </div>
-        <div class="row col-sm-12 border collapse @(!Model.SimpleSearch ? "show" : "hide")" border" id="AdvancedSearch">            
+        <div class="row col-sm-12 border collapse hide" border" id="AdvancedSearch">            
              <div class="row col-sm-12 ">
                 <h6>All search fields are optional; text searches are case insensitive and partial values are allowed; multiple criteria are linked by 'AND'.</h6>
             </div>
@@ -148,7 +147,7 @@
                         <label asp-for="SelectedDonor" class="col-sm-5 col-form-label">Donor</label>
                         <div class="col-sm-4">
                             <select asp-for="SelectedDonor" class="form-select form-select-sm"
-                                asp-items="@(new SelectList(Model.DonorList, "ColleagueNum","DisplayName"))"></select>
+                                asp-items="@(new SelectList(Model.DonorList, "ColleagueNum","ListName"))"></select>
                         </div>
                     </div>
                 </div>
