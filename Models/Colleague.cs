@@ -49,6 +49,16 @@ namespace TGRC.Models
                 return $"{FirstName} {MiddleInitial} {LastName}";
             }            
         }
+         public string ListName {
+            get
+            {
+                if(LastName == "")
+                {
+                    return "";
+                }
+                return $"{LastName}, {FirstName} {MiddleInitial}";
+            }            
+        }
 
         [ForeignKey("ColleagueNum")]
         public ICollection<ColleaguesInImage> Images { get; set; }

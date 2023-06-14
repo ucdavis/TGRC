@@ -148,7 +148,7 @@
                         <label asp-for="SelectedDonor" class="col-sm-5 col-form-label">Donor</label>
                         <div class="col-sm-4">
                             <select asp-for="SelectedDonor" class="form-select form-select-sm"
-                                asp-items="@(new SelectList(Model.DonorList, "ColleagueNum","DisplayName"))"></select>
+                                asp-items="@(new SelectList(Model.DonorList, "ColleagueNum","ListName"))"></select>
                         </div>
                     </div>
                 </div>
