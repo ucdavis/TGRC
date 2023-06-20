@@ -28,7 +28,7 @@
                     <div class="col-sm-2"><button name="SubmitButton" value="Simple" class="btn btn-primary">Search</button></div>
                 </div>
         </div>
-        <div class="row col-sm-12 border collapse hide" border" id="AdvancedSearch">            
+        <div class="row col-sm-12 border collapse @(!Model.SimpleSearch && !Model.Search ? "show" : "hide")" border" id="AdvancedSearch">            
              <div class="row col-sm-12 ">
                 <h6>All search fields are optional; text searches are case insensitive and partial values are allowed; multiple criteria are linked by 'AND'.</h6>
             </div>
