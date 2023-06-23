@@ -27,7 +27,7 @@ namespace TGRC.Models
         public string SelectedMutant { get; set; }
         public List<MutantType> MutantList { get; set; }
         public string SelectedChromosome { get; set; }
-        public List<string> ChromosomeList { get; set; }
+        public List<int?> ChromosomeList { get; set; }
         public string SelectedPhenotypeCategory { get; set; }
         public List<PhenotypicCategory> PhenotypeCategoryList { get; set; }
         public string PhenotypeToSearch { get; set; }
@@ -49,8 +49,8 @@ namespace TGRC.Models
            markerList.Insert(0,"");
            var mutantList = await _context.GenesAndAlleles.Where(ga => ga.MutantType != null).Include(ga => ga.MutantTypeTranslation).Select(ga => ga.MutantTypeTranslation).Distinct().OrderBy(m=> m.MutMeaning).ToListAsync();
            mutantList.Insert(0, new MutantType { Type="0", MutMeaning=""});
-           var chromosomeList = await _context.Genes.Where(g => g.Chromosome != null).Select(g => g.Chromosome).Distinct().OrderBy(a=>a).ToListAsync();
-           chromosomeList.Insert(0, "");
+           var chromosomeList = await _context.Genes.Where(g => g.Chromosome != null).Select(g => g.ChromosomeInt).Distinct().OrderBy(a=> a).ToListAsync();
+           chromosomeList.Insert(0, null);
            var phenoCat = await _context.PhenotypicCategories.Distinct().OrderBy(a =>a.PhenotypicCategory1).ToListAsync();
            phenoCat.Insert(0, new PhenotypicCategory { PhenotypicCategory1 = "" });
 
@@ -65,6 +65,10 @@ namespace TGRC.Models
                 } else  if(!string.IsNullOrWhiteSpace(vm.SelectedAllele))
                 {
                     geneToFind = geneToFind.Where(g => g.Alleles.Any(a => a.Allele == vm.SelectedAllele));
+                }
+                if(vm.SelectedChromosome != null)
+                {
+                    geneToFind = geneToFind.Where(g => g.Chromosome == vm.SelectedChromosome);
                 }
                 if(!string.IsNullOrWhiteSpace(vm.SelectedLocus))
                 {
