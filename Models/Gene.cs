@@ -13,6 +13,8 @@ namespace TGRC.Models
         public string MarkerType { get; set; }
         public string Notes { get; set; }
         public DateTime? DateModified { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public int? ChromosomeInt { get; set; }
 
         [ForeignKey("Gene")]
         public ICollection<GenesAndAllele> Alleles { get; set; }

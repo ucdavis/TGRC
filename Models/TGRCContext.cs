@@ -375,6 +375,7 @@ namespace TGRC.Models
                 entity.Property(e => e.MarkerType).HasMaxLength(50);
 
                 entity.Property(e => e.Notes).HasMaxLength(100);
+                entity.Property(e => e.ChromosomeInt).HasColumnName("ChromosomeInt");
             });
 
             modelBuilder.Entity<GenesAndAllele>(entity =>
