@@ -99,7 +99,7 @@ namespace TGRC.Models
                 
                 var viewModel = new GeneSearchViewModel
                 {
-                    genes = await geneToFind.ToListAsync(),                    
+                    genes = await geneToFind.OrderBy(g => g.Gene1).ToListAsync(),                    
                     SelectedGene = vm.SelectedGene,
                     GeneList = geneList,
                     LocusList = locusList,
