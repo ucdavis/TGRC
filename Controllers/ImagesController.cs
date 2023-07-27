@@ -32,5 +32,13 @@ public class ImagesController : Controller
         return View(model);
     }
 
-    
+    public async Task<IActionResult> GetAllelesForGene(string id)
+    {
+        var model = await _context.GenesAndAllelesInImages.Where(a => a.Gene == id).Select(a => a.Allele).Distinct().OrderBy(a => a).ToListAsync();
+        model.Insert(0, "");
+        return Json(model);
+    }
+
+
+
 }
