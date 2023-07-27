@@ -120,7 +120,25 @@
                     $("#resultFrame").attr("src", link);
                     
                 }
-            });              
+            });
+            $("#SelectedGene").on('change', function () {
+                var gene = $("#SelectedGene").val();
+                //alert(gene);
+                $.ajax({
+                    type: "get",
+                    url: "/Images/GetAllelesForGene/" + gene,
+                    datatype: "json",
+                    traditional: true,
+                    success: function (data) {
+                        var alleles = "";
+                        for (var i = 0; i < data.length; i++) {
+                            alleles = alleles + '<option value=' + data[i] + '>' + data[i] + '</option>';
+                        }
+                        $('#SelectedAllele').html(alleles);
+                    }
+                });
+
+            });
         });  
     </script>
     
