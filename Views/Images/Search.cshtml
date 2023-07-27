@@ -23,12 +23,16 @@
                         <input type="text" asp-for="AccessionSearchString"  class="form-control">                
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label asp-for="SelectedGene" class="col-sm-4 col-form-label">Gene</label>
-                    <div class="col-sm-3">
-                        <select asp-for="SelectedGene" class="form-select form-select-sm"  asp-items="@(new SelectList(Model.GeneList))"></select>                
+                <div class="form-group row col-sm-12">
+                    <label asp-for="SelectedGene" class="col-sm-2 col-form-label">Gene</label>
+                    <div class="col-sm-4">
+                        <select asp-for="SelectedGene" class="form-select form-select-sm" asp-items="@(new SelectList(Model.GeneList))"></select>
                     </div>
-                </div>
+                    <label asp-for="SelectedAllele" class="col-sm-2 col-form-label">Allele</label>
+                    <div class="col-sm-4">
+                        <select asp-for="SelectedAllele" class="form-select form-select-sm" asp-items="@(new SelectList(Model.AlleleList))"></select>
+                    </div>
+                </div>               
                 <div class="form-group row">
                     <label asp-for="SelectedPhenotypeCategory" class="col-sm-4 col-form-label">Phenotypic Category</label>
                     <div class="col-sm-8">

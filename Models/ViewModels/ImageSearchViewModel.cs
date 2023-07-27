@@ -17,6 +17,8 @@ namespace TGRC.Models
 
         public string SelectedGene { get; set; }
         public List<string> GeneList { get; set; }
+        public string SelectedAllele { get; set; }
+        public List<string> AlleleList { get; set; }
         public string SelectedPhenotypeCategory { get; set; }
         public List<PhenotypicCategory> PhenotypeCategoryList { get; set; }
         public string AccessionSearchString { get; set; }        
@@ -36,6 +38,15 @@ namespace TGRC.Models
         { 
            var geneList = await _context.GenesAndAllelesInImages.Select(a => a.Gene).Distinct().OrderBy(a=>a).ToListAsync();
            geneList.Insert(0,"");
+           var alleleList = new List<string>();
+           if (vm != null && !string.IsNullOrWhiteSpace(vm.SelectedGene)) 
+           {
+                alleleList = await _context.GenesAndAllelesInImages.Where(a => a.Gene  == vm.SelectedGene).Select(a => a.Allele).Distinct().OrderBy(a=>a).ToListAsync();
+           } else
+            {
+                alleleList = await _context.GenesAndAllelesInImages.Select(a=>a.Allele).Distinct().OrderBy(a=>a).ToListAsync();
+            }
+            alleleList.Insert(0, "");
            var phenoCat = await _context.PhenotypicCategories.Distinct().OrderBy(a =>a.PhenotypicCategory1).ToListAsync();
            phenoCat.Insert(0, new PhenotypicCategory { PhenotypicCategory1 = "" });           
            var taxa = await _context.Taxa.OrderByDescending(t => t.L).ThenBy(t => t.Taxon).ToListAsync();
@@ -62,6 +73,11 @@ namespace TGRC.Models
                 if(!string.IsNullOrWhiteSpace(vm.SelectedGene))
                 {
                     geneAlleleImages = geneAlleleImages.Where(i => i.Gene == vm.SelectedGene);
+                    genesSearched = true;
+                }
+                if(!string.IsNullOrWhiteSpace(vm.SelectedAllele) && vm.SelectedAllele != "--")
+                {
+                    geneAlleleImages = geneAlleleImages.Where(i => i.Allele == vm.SelectedAllele);
                     genesSearched = true;
                 }
                 if(!string.IsNullOrWhiteSpace(vm.SelectedPhenotypeCategory))
@@ -152,7 +168,9 @@ namespace TGRC.Models
                     ContributorList = contrib,
                     SelectedContributor = vm.SelectedContributor,
                     CaptionSearchString = vm.CaptionSearchString,
-                    Search = true
+                    Search = true,
+                    AlleleList = alleleList,
+                    SelectedAllele = vm.SelectedAllele,
                 };  
                 return viewModel;
 
@@ -166,7 +184,8 @@ namespace TGRC.Models
                 Taxons = taxa,
                 AccessionCategories = cat,
                 ContributorList = contrib,
-                Search = false
+                Search = false,
+                AlleleList = alleleList,
             };           
 
             return freshModel;
