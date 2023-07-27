@@ -82,6 +82,13 @@ public class AccessionController : Controller
         return Json(model);
     }    
 
+    public async Task<IActionResult> GetAllelesForGene(string id)
+    {
+        var model =  await _context.GenesAndAllelesInAccessions.Where(a => a.Gene == id || (id == "" || id == null)).Select(a => a.Allele).Distinct().OrderBy(a => a).ToListAsync();        
+        model.Insert(0, "");
+        return Json(model);
+    }
+
     public async Task<IActionResult> Simple (AccessionSimpleViewModel vm)
     {
         if(!vm.Search)
