@@ -84,11 +84,16 @@
                                 asp-items="@(new SelectList(Model.Cultivars))"></select>
                         </div>
                     </div>  
-                    <div class="form-group row">
-                        <label asp-for="SelectedGene" class="col-sm-5 col-form-label">Gene</label>
+                    <div class="form-group row col-sm-12">
+                        <label asp-for="SelectedGene" class="col-sm-2 col-form-label">Gene</label>
                         <div class="col-sm-4">
-                            <select asp-for="SelectedGene" class="form-select form-select-sm"
+                            <select asp-for="SelectedGene" class="form-select"
                                 asp-items="@(new SelectList(Model.GeneList))"></select>
+                            
+                        </div>
+                        <label asp-for="SelectedAllele" class="col-sm-2 col-form-label">Allele</label>
+                        <div class="col-sm-4">
+                            <select asp-for="SelectedAllele" class="form-select form-select-sm" asp-items="@(new SelectList(Model.AlleleList))"></select>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -222,6 +227,24 @@
                     
                 }
             });
+            $("#SelectedGene").on('change', function() {
+                var gene = $("#SelectedGene").val();
+                //alert(gene);               
+                $.ajax({
+                    type: "get",
+                    url: "/Accession/GetAllelesForGene/" + gene,
+                    datatype: "json",
+                    traditional: true,
+                    success: function (data) {
+                        var alleles = "";
+                        for (var i = 0; i < data.length; i++) {
+                            alleles = alleles + '<option value=' + data[i] + '>' + data[i] + '</option>';
+                        }
+                        $('#SelectedAllele').html(alleles);
+                    }
+                });
+                
+            });
         }); 
 
         function toggleSearch(show)
@@ -252,9 +275,7 @@
             {
                 all.hide();
                 open.show();
-
             }
-
         } 
     </script>    
 }

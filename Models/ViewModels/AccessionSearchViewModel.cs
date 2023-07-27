@@ -44,6 +44,8 @@ namespace TGRC.Models
         public List<string> MattingSystems { get; set; }
         public string SelectedGene { get; set; }
         public List<string> GeneList { get; set; }
+        public List<string> AlleleList { get; set; }
+        public string SelectedAllele { get; set; }
         public string SelectedBackgroundGenotype { get; set; }
         public List<string> BackgroundGenotypeList { get; set; }
         public List<Colleague> DonorList { get; set; }
@@ -76,9 +78,18 @@ namespace TGRC.Models
            genotypeList.Insert(0,"");
            var donorList = await _context.DonorsInAccessions.Include(d => d.Colleague).Select(d => new Colleague { ColleagueNum = d.ColleagueNum, FirstName = d.Colleague.FirstName, MiddleInitial = d.Colleague.MiddleInitial, LastName = d.Colleague.LastName}).Distinct().OrderBy(d => d.LastName).ThenBy(d => d.FirstName).ToListAsync();
            donorList.Insert(0, new Colleague { ColleagueNum = 0, FirstName = "", MiddleInitial = "", LastName = ""});
+           var alleleList = new List<string>();
+			if (vm != null && !string.IsNullOrWhiteSpace(vm.SelectedGene))
+            {
+                alleleList = await _context.GenesAndAllelesInAccessions.Where(a => a.Gene == vm.SelectedGene).Select(a => a.Allele).Distinct().OrderBy(a => a).ToListAsync();
+            } else
+            {
+                alleleList = await _context.GenesAndAllelesInAccessions.Select(a=>a.Allele).Distinct().OrderBy(a=>a).ToListAsync();
+            }
+            alleleList.Insert(0, "");
 
-                              
-            if(vm != null)
+
+				if (vm != null)
             {
                 var accToFind = _context.Accessions.AsQueryable();
 
@@ -160,6 +171,10 @@ namespace TGRC.Models
                     {
                         accToFind = accToFind.Where(a => a.Genes.Any(g => g.Gene == vm.SelectedGene));
                     }
+                    if(!string.IsNullOrWhiteSpace(vm.SelectedAllele) && vm.SelectedAllele != "--")
+                    {
+                        accToFind = accToFind.Where(a => a.Genes.Any(g => g.Allele == vm.SelectedAllele));
+                    }
                     if(!string.IsNullOrWhiteSpace(vm.SelectedBackgroundGenotype))
                     {
                         accToFind = accToFind.Where(a => a.SourceOfAccession == vm.SelectedBackgroundGenotype);
@@ -201,6 +216,8 @@ namespace TGRC.Models
                     Search = true,
                     DonorList = donorList,
                     SelectedDonor = vm.SelectedDonor,
+                    AlleleList = alleleList,
+                    SelectedAllele = vm.SelectedAllele,
                 };  
                  if(vm.SubmitButton == "Simple" && !string.IsNullOrWhiteSpace(vm.SimpleSearchTerm))
                 {
@@ -226,6 +243,7 @@ namespace TGRC.Models
                 Search = false,
                 DonorList = donorList,
                 SimpleSearch = true,
+                AlleleList = alleleList,
             };           
 
             return freshModel;
