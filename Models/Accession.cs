@@ -18,7 +18,7 @@ namespace TGRC.Models
         public string Taxon2 { get; set; }
         [Display(Name ="Ils Number")]
         public string IlsNumber { get; set; }
-        [Display(Name ="Other (Identification)")]
+        [Display(Name = "Other Identifier")]
         public string OtherId { get; set; }
         public string Traits { get; set; }
         [Display(Name ="Mating System")]
@@ -161,7 +161,7 @@ namespace TGRC.Models
             }
         }
 
-        [Display(Name ="Collection Date (mm-dd-yyyy)")]
+        [Display(Name = "Collection Date (m-d-y)")]
         public string CollectionDateCombined {
             get 
             {
