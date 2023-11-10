@@ -49,6 +49,8 @@ namespace TGRC.Models
         [Display(Name ="Sample Size")]
         public string SampleSize { get; set; }
         public string Habitat { get; set; }
+
+        [Display(Name = "Elevation (m)")] 
         public string Elevation { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int ElevationInteger { get; set; }
