@@ -97,19 +97,22 @@ namespace TGRC.Models
                 {
                     var accPad = AccessionSearchViewModel.padAccessionSearch(vm.SimpleSearchTerm);
                     var accFuzzy = fuzzySearch(vm.SimpleSearchTerm);
-                    accToFind = accToFind.Where(a => (EF.Functions.Like(a.AccessionNum, "%" + vm.SimpleSearchTerm + "%") 
-                        || EF.Functions.Like(a.AccessionNum, "%" + accPad + "%")
-                        || EF.Functions.Like(a.AccessionNum, "%" + accFuzzy + "%")
+                    accToFind = accToFind.Where(a => (EF.Functions.Like(a.AccessionNum, vm.SimpleSearchTerm) 
+                        || EF.Functions.Like(a.AccessionNum, accPad)
+                        || EF.Functions.Like(a.AccessionNum, accFuzzy )
                         || EF.Functions.Like(a.OtherId, "%" + vm.SimpleSearchTerm + "%") 
-                        || EF.Functions.Like(a.OtherId, "%" + accFuzzy + "%")
+                        //|| EF.Functions.Like(a.OtherId, "%" + accFuzzy + "%")
                         || EF.Functions.Like(a.CultivarName, "%" + vm.SimpleSearchTerm + "%") 
-                        || EF.Functions.Like(a.CultivarName, "%" + accFuzzy + "%")
+                        //|| EF.Functions.Like(a.CultivarName, "%" + accFuzzy + "%")
                         || EF.Functions.Like(a.Reference, "%" + vm.SimpleSearchTerm + "%") 
-                        || EF.Functions.Like(a.Reference, "%" + accFuzzy + "%")
+                        //|| EF.Functions.Like(a.Reference, "%" + accFuzzy + "%")
                         || EF.Functions.Like(a.Comments, "%" + vm.SimpleSearchTerm + "%") 
-                        || EF.Functions.Like(a.Comments, "%" + accFuzzy + "%")
+                        //|| EF.Functions.Like(a.Comments, "%" + accFuzzy + "%")
                         || EF.Functions.Like(a.Traits, "%" + vm.SimpleSearchTerm + "%") 
-                        || EF.Functions.Like(a.Traits, "%" + accFuzzy + "%")));
+                        /*|| EF.Functions.Like(a.Traits, "%" + accFuzzy + "%")*/
+                        || EF.Functions.Like(a.CollectionNum, "%" + vm.SimpleSearchTerm + "%")
+                        //|| EF.Functions.Like(a.CollectionNum, "%" + accFuzzy + "%")
+                        ));
                 } else {
                 
                     if(!string.IsNullOrWhiteSpace(vm.AccessionNumberToSearch))
@@ -305,7 +308,7 @@ namespace TGRC.Models
             {
                 return search.Replace("-","%");
             }
-            return Regex.Replace(search, "(?<=[A-Za-z])(?=[0-9])","%");
+            return Regex.Replace(search, "(?<=(LA))(?=[0-9])", "%", RegexOptions.IgnoreCase);
         }
 
         
