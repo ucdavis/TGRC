@@ -302,11 +302,11 @@ namespace TGRC.Models
         {
             if(search == null)
             {
-                return "%";
+                return "IGNORETHISSEARCH";
             }
-            if(search.IndexOf("-", StringComparison.OrdinalIgnoreCase) >= 0)
+            if (search.IndexOf("LA-", StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                return search.Replace("-","%");
+                return search.Replace("-", "%");
             }
             return Regex.Replace(search, "(?<=(LA))(?=[0-9])", "%", RegexOptions.IgnoreCase);
         }
