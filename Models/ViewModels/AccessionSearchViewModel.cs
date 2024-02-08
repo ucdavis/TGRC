@@ -97,8 +97,8 @@ namespace TGRC.Models
                 {
                     var accPad = AccessionSearchViewModel.padAccessionSearch(vm.SimpleSearchTerm);
                     var accFuzzy = fuzzySearch(vm.SimpleSearchTerm);
-                    accToFind = accToFind.Where(a => (EF.Functions.Like(a.AccessionNum, vm.SimpleSearchTerm) 
-                        || EF.Functions.Like(a.AccessionNum, accPad)
+                    accToFind = accToFind.Where(a => (EF.Functions.Like(a.AccessionNum, vm.SimpleSearchTerm + "%") 
+                        || EF.Functions.Like(a.AccessionNum, accPad )
                         || EF.Functions.Like(a.AccessionNum, accFuzzy )
                         || EF.Functions.Like(a.OtherId, "%" + vm.SimpleSearchTerm + "%") 
                         //|| EF.Functions.Like(a.OtherId, "%" + accFuzzy + "%")
@@ -262,7 +262,7 @@ namespace TGRC.Models
             if(search.IndexOf("la", StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 int a;
-                if(int.TryParse(search.Replace("LA","").Replace("La","").Replace("la","").Replace("lA",""), out a))
+                if(int.TryParse(search.Replace("-","").Replace("LA","", StringComparison.OrdinalIgnoreCase), out a))
                 {
                     newSearch = "LA" + a.ToString("D4");
                     return newSearch;
@@ -304,11 +304,12 @@ namespace TGRC.Models
             {
                 return "IGNORETHISSEARCH";
             }
-            if (search.IndexOf("LA-", StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return search.Replace("-", "%");
-            }
-            return Regex.Replace(search, "(?<=(LA))(?=[0-9])", "%", RegexOptions.IgnoreCase);
+            //if (search.IndexOf("LA-", StringComparison.OrdinalIgnoreCase) >= 0)
+            //{
+            //    return search.Replace("-", "%");
+            //}
+            //return Regex.Replace(search, "(?<=(LA))(?=[0-9])", "%", RegexOptions.IgnoreCase);
+            return "IGNORETHISSEARCH";
         }
 
         
