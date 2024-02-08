@@ -96,10 +96,10 @@ namespace TGRC.Models
                 if(vm.SubmitButton == "Simple" && !string.IsNullOrWhiteSpace(vm.SimpleSearchTerm))
                 {
                     var accPad = AccessionSearchViewModel.padAccessionSearch(vm.SimpleSearchTerm);
-                    var accFuzzy = fuzzySearch(vm.SimpleSearchTerm);
+                    //var accFuzzy = fuzzySearch(vm.SimpleSearchTerm);
                     accToFind = accToFind.Where(a => (EF.Functions.Like(a.AccessionNum, vm.SimpleSearchTerm + "%") 
                         || EF.Functions.Like(a.AccessionNum, accPad )
-                        || EF.Functions.Like(a.AccessionNum, accFuzzy )
+                      //  || EF.Functions.Like(a.AccessionNum, accFuzzy )
                         || EF.Functions.Like(a.OtherId, "%" + vm.SimpleSearchTerm + "%") 
                         //|| EF.Functions.Like(a.OtherId, "%" + accFuzzy + "%")
                         || EF.Functions.Like(a.CultivarName, "%" + vm.SimpleSearchTerm + "%") 
@@ -298,19 +298,19 @@ namespace TGRC.Models
             return newSearch;
         }
 
-        private static string fuzzySearch(string search)
-        {
-            if(search == null)
-            {
-                return "IGNORETHISSEARCH";
-            }
-            //if (search.IndexOf("LA-", StringComparison.OrdinalIgnoreCase) >= 0)
-            //{
-            //    return search.Replace("-", "%");
-            //}
-            //return Regex.Replace(search, "(?<=(LA))(?=[0-9])", "%", RegexOptions.IgnoreCase);
-            return "IGNORETHISSEARCH";
-        }
+        //private static string fuzzySearch(string search)
+        //{
+        //    if(search == null)
+        //    {
+        //        return "IGNORETHISSEARCH";
+        //    }
+        //    //if (search.IndexOf("LA-", StringComparison.OrdinalIgnoreCase) >= 0)
+        //    //{
+        //    //    return search.Replace("-", "%");
+        //    //}
+        //    //return Regex.Replace(search, "(?<=(LA))(?=[0-9])", "%", RegexOptions.IgnoreCase);
+        //    return "IGNORETHISSEARCH";
+        //}
 
         
     } 
