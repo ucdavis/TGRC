@@ -97,7 +97,7 @@ namespace TGRC.Models
                 {
                     var accPad = AccessionSearchViewModel.padAccessionSearch(vm.SimpleSearchTerm);
                     //var accFuzzy = fuzzySearch(vm.SimpleSearchTerm);
-                    accToFind = accToFind.Where(a => (EF.Functions.Like(a.AccessionNum, vm.SimpleSearchTerm + "%") 
+                    accToFind = accToFind.Where(a => (EF.Functions.Like(a.AccessionNum, "%" + vm.SimpleSearchTerm + "%") 
                         || EF.Functions.Like(a.AccessionNum, accPad )
                       //  || EF.Functions.Like(a.AccessionNum, accFuzzy )
                         || EF.Functions.Like(a.OtherId, "%" + vm.SimpleSearchTerm + "%") 
