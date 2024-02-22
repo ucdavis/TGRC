@@ -170,13 +170,21 @@ namespace TGRC.Models
                     {
                         accToFind = accToFind.Where(a => a.MatingSystem == vm.SelectedMatingSystem);
                     }
-                    if(!string.IsNullOrWhiteSpace(vm.SelectedGene))
+
+                    if (!string.IsNullOrWhiteSpace(vm.SelectedGene) && !string.IsNullOrWhiteSpace(vm.SelectedAllele))
                     {
-                        accToFind = accToFind.Where(a => a.Genes.Any(g => g.Gene == vm.SelectedGene));
+                        accToFind = accToFind.Where(a => a.Genes.Any(g => g.Gene == vm.SelectedGene && g.Allele == vm.SelectedAllele));
                     }
-                    if(!string.IsNullOrWhiteSpace(vm.SelectedAllele) && vm.SelectedAllele != "--")
+                    else
                     {
-                        accToFind = accToFind.Where(a => a.Genes.Any(g => g.Allele == vm.SelectedAllele));
+                        if (!string.IsNullOrWhiteSpace(vm.SelectedGene))
+                        {
+                            accToFind = accToFind.Where(a => a.Genes.Any(g => g.Gene == vm.SelectedGene));
+                        }
+                        if (!string.IsNullOrWhiteSpace(vm.SelectedAllele))
+                        {
+                            accToFind = accToFind.Where(a => a.Genes.Any(g => g.Allele == vm.SelectedAllele));
+                        }
                     }
                     if(!string.IsNullOrWhiteSpace(vm.SelectedBackgroundGenotype))
                     {
