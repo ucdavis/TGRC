@@ -437,7 +437,14 @@
             <p class="bolded"><asp:label id="lblMap" runat="server" Visible="false" Text="Google Map:" /></p>
             <div id="map" style="width: 600px; height: 450px;" runat="server" visible="true"></div>  
         </div>
-        <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.APIKey&callback=initMap&v=weekly" defer></script>        
+        <script>
+            (g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })({
+                key: "@ViewBag.APIKey",
+                v: "weekly",
+                // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
+                // Add other bootstrap parameters as needed, using camel case.
+            });
+        </script>
     }
 </div>
 
@@ -447,93 +454,80 @@
     
     
     <script type="text/Javascript">
+
+        var locations = [@Html.Raw(Model.Markers)]
+        async function initMap() {
+            
+            const position = { lat: 0, lng: 180 };
+            const beachFlagImg = document.createElement("img");
+
+            beachFlagImg.src = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
+            
+
+
+            const { Map } = await google.maps.importLibrary("maps");
+            const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");            
+
+            map = new Map(document.getElementById("map"), {
+                zoom: 10,
+                center: position,
+                streetViewControl: false,
+                mapId: "DEMO_MAP_ID",
+            });
+
+            const infowindow = new google.maps.InfoWindow();
+
+            var bounds = new google.maps.LatLngBounds();
+
+            var pin, i, posit;
+
+            for (i = 0; i < locations.length; i++) {
+                posit = { lat: locations[i][1], lng: locations[i][2] };
+                // const pinRedBackground = new PinElement({
+                //     background: "red",
+                //     glyph: `*`,
+                //     glyphColor: "black",
+                // });
+                    if (locations[i][3] == "primary") {
+                        pin = new AdvancedMarkerElement({
+                            position: posit,
+                            map: map,
+                            content: beachFlagImg,
+                            zIndex: 999999999,
+                        });
+                    } else {
+                        pin = new AdvancedMarkerElement({
+                            position: posit,
+                            map: map,
+                            //content: pinRedBackground.element,
+                            zIndex: i,
+                        });
+                    }
+                    bounds.extend(posit);
+                    google.maps.event.addListener(pin, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent(locations[i][0]);
+                            infowindow.open(map, marker);
+                        }
+                    })(pin, i));
+        
+                    }
+            map.fitBounds(bounds);
+        }
+        
+        initMap();
+        
+
         $("textarea").each(function () {
             this.setAttribute("style", "height:" + (this.scrollHeight) + "px;overflow-y:hidden;");
         });
 
-        function getPin(Icon)
-        {
-            switch (Icon) {
-                case 'related':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=|87CEEB|000000";                             
-                default:
-                    return "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";            
-            }
-        }
+        
 
         
-        var locations = [@Html.Raw(Model.Markers)]
-        $( document ).ready(function() {  
-            @if((Model.accession.LatDec != null && Model.accession.LonDeg != null))
-            {
-                <text>
-                var infowindow = new google.maps.InfoWindow;
-                </text>
-            }
-           
-
-           var marker, i;
-            @if((Model.accession.LatDec != null && Model.accession.LonDeg != null))
-            {
-                <text>
-                var bounds = new google.maps.LatLngBounds();
-                </text>
-            }
-           
-
-           for (i = 0; i < locations.length; i++) {
-                @if((Model.accession.LatDec != null && Model.accession.LonDeg != null))
-                {
-                    <text>
-                                      
-                    if(locations[i][3] == "primary")
-                    {                        
-                        marker = new google.maps.Marker({
-                            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                            map: map,                        
-                            icon: getPin(locations[i][3]),
-                            zIndex: 999999999,
-                        });                          
-                    } else
-                    {
-                         marker = new google.maps.Marker({
-                            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                            map: map,  
-                            icon: getPin(locations[i][3]),
-                            zIndex: i,                   
-                        });  
-                    }
-                    bounds.extend(marker.position);
-                    google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                        return function() {
-                            infowindow.setContent(locations[i][0]);                            
-                            infowindow.open(map, marker);
-                        }
-                    })(marker, i));
-                    </text>
-                }  
-            }            
-            
-            @if((Model.accession.LatDec != null && Model.accession.LonDeg != null))
-            {
-                <text>
-                 map.fitBounds(bounds);     
-                </text>
-            }
-                       
-        }); 
-
-        let map;
-
-        function initMap() {
-            map = new google.maps.Map(document.getElementById("map"), {
-                center: { lat: 0, lng: 180 },
-                zoom: 10,
-                streetViewControl: false,
-            });
-        }
-
-        window.initMap = initMap; 
+       
+       
+        
              
     </script>
     
