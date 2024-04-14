@@ -39,14 +39,14 @@
                 </tr>
             </table>      
     </div>
-
+   
 <div class="container col-sm-12 row ">
     <div class="col-sm-3 ">
         @for (var index = 0; index < @Model.Species.Count(); index++)
         {
             <div><input type="checkbox" asp-for="@Model.Species[index].IsChecked" class="form-check-input" /> 
             <label class="form-check-label" asp-for="@Model.Species[index].IsChecked">
-                <img src="@Model.Species[index].Icon"> @Model.Species[index].Name
+                <img src="~/siteImages/@Model.Species[index].Icon"> @Model.Species[index].Name
                 </label>
             <input type="hidden" asp-for="@Model.Species[index].Name" />
             <input type="hidden" asp-for="@Model.Species[index].Icon" />
@@ -56,7 +56,7 @@
         <br>
         
         <br>
-        <img src="http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=*|000000|FFFFFF"> = Two or more species at the same site
+        <img src="~/siteImages/multi.JPG"> = Two or more species at the same site
     </div>
     <div class="col-sm-9 embed-responsive">
         @if(Model.MarkerCount > 0)
@@ -128,7 +128,12 @@
 
 @section Scripts {
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=@ViewBag.APIKey&callback=initMap" defer></script>
+    <script>
+        (g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })({
+            key: "@ViewBag.APIKey",
+            v: "weekly",
+        });
+    </script>
     <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>   
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.4/css/buttons.dataTables.min.css" />
@@ -136,55 +141,11 @@
     <script src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.html5.min.js"></script>
     
    
-    <script type="text/Javascript">       
+    <script type="text/Javascript">
         var locations = [@Html.Raw(Model.Markers)]
+        console.log(locations);
 
-        function getPin(taxon)
-        {
-            switch (taxon) {
-                case 'S. arcanum':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=A|FF0000|000000";
-                case 'S. cheesmaniae':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=C|FFF000|FF0000";
-                case 'S. chilense':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=C|00FF99|000000";
-                case 'S. chmielewskii':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=C|E6E6E6|FF0000";
-                case 'S. corneliomulleri':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=C|87CEEB|000000";
-                case 'S. galapagense':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=G|FF0000|000000";
-                case 'S. habrochaites':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=H|FFF000|FF0000";
-                case 'S. huaylasense':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=H|00FF99|000000";                     
-                case 'S. juglandifolium':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=J|FF0000|000000";
-                case 'S. lycopersicoides':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=L|FFF000|FF0000";
-                case 'S. lycopersicum':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=L|E5FFE5|000000|";
-                case 'S. lycopersicum var. cerasiforme':
-                    return   "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=C|E5FFE5|000000|";
-                case 'S. neorickii':
-                    return  "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=N|FF0000|000000";
-                case 'S. ochranthum':
-                    return  "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=O|FF0000|000000";
-                case 'S. pennellii':
-                    return  "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=P|FFF000|FF0000";
-                case 'S. peruvianum':
-                    return  "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=P|00FF99|000000" ;
-                case 'S. pimpinellifolium':
-                    return  "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=P|E6E6E6|FF0000";
-                case 'S. sitiens':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=S|FF0000|000000" ;
-                case 'multi':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=*|000000|FFFFFF";
-                default:
-                    //return "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";            
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=X|FFFFFF|000000";
-            }
-        }
+        
 
         $( document ).ready(function() {           
             
@@ -193,28 +154,7 @@
                 buttons: [ 'csvHtml5'],
                 "paging": false,
             });
-           
-           var infowindow = new google.maps.InfoWindow;
-
-            var marker, i;
-            var bounds = new google.maps.LatLngBounds();
-
-            for (i = 0; i < locations.length; i++) {  
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                    map: map,
-                    icon: getPin(locations[i][3])
-                });
-                bounds.extend(marker.position);
-
-                google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                    return function() {
-                        infowindow.setContent(locations[i][0]);                        
-                        infowindow.open(map, marker);
-                    }
-                })(marker, i));
-            }
-            map.fitBounds(bounds);
+          
 
             $("#CountrySelected").change(function() {
                var country = $("#CountrySelected").val();
@@ -237,18 +177,352 @@
                     });  
                }
             });     
-        });  
+        });
         let map;
 
-        function initMap() {
-        map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: 0, lng: 180 },
-            zoom: 10,
-            streetViewControl: false,
-        });
+        async function initMap() {
+            const { Map } = await google.maps.importLibrary("maps");
+            const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+            
+
+            map = new Map(document.getElementById("map"), {
+                center: { lat: 0, lng: 180 },
+                zoom: 10,
+                streetViewControl: false,
+                mapId: "GISMap",
+            });
+
+            // const test = new PinElement({
+            //     background: "#000000",
+            //     glyph: `*`,
+            //     glyphColor: "#FFFFFF",
+            // });
+            // pin = new AdvancedMarkerElement({
+            //     position: { lat: 0, lng: 180 },
+            //     map: map,
+            //     content: test.element,
+            //     zIndex: 0,
+            // });
+
+            const infowindow = new google.maps.InfoWindow();
+
+            var bounds = new google.maps.LatLngBounds();
+
+            for (i = 0; i < locations.length; i++) {
+                posit = { lat: locations[i][1], lng: locations[i][2] };
+                const pinRedBackground = new PinElement({
+                    background: "#FF0000",
+                    glyph: `*`,
+                    glyphColor: "black",
+                });
+                const Sarcanum = new PinElement({
+                    background: "#FF0000",
+                    glyph: `A`,
+                    glyphColor: "#000000",
+                });
+                const Scheesmaniae = new PinElement({
+                    background: "#FFF000",
+                    glyph: `C`,
+                    glyphColor: "#FF0000",
+                });
+                const Schilense = new PinElement({
+                    background: "#00FF99",
+                    glyph: `C`,
+                    glyphColor: "#000000",
+                });
+                const Schmielewskii = new PinElement({
+                    background: "#E6E6E6",
+                    glyph: `C`,
+                    glyphColor: "#FF0000",
+                });
+                const Scorneliomulleri = new PinElement({
+                    background: "#87CEEB",
+                    glyph: `C`,
+                    glyphColor: "#000000",
+                });
+                const Sgalapagense = new PinElement({
+                    background: "#FF0000",
+                    glyph: `G`,
+                    glyphColor: "#000000",
+                });
+                const Shabrochaites = new PinElement({
+                    background: "#FFF000",
+                    glyph: `H`,
+                    glyphColor: "#FF0000",
+                });
+                const Shuaylasense = new PinElement({
+                    background: "#00FF99",
+                    glyph: `H`,
+                    glyphColor: "#000000",
+                });
+                const Sjuglandifolium = new PinElement({
+                    background: "#FF0000",
+                    glyph: `J`,
+                    glyphColor: "#000000",
+                });
+                const Slycopersicoides = new PinElement({
+                    background: "#FFF000",
+                    glyph: `L`,
+                    glyphColor: "#FF0000",
+                });
+                const Slycopersicum = new PinElement({
+                    background: "#E5FFE5",
+                    glyph: `L`,
+                    glyphColor: "#000000",
+                });
+                const Slycopersicumvarcerasiforme = new PinElement({
+                    background: "#E5FFE5",
+                    glyph: `C`,
+                    glyphColor: "#000000",
+                });
+                const Sneorickii = new PinElement({
+                    background: "#FF0000",
+                    glyph: `N`,
+                    glyphColor: "#000000",
+                });
+                const Sochranthum = new PinElement({
+                    background: "#FF0000",
+                    glyph: `O`,
+                    glyphColor: "#000000",
+                });
+                const Spennellii = new PinElement({
+                    background: "#FFF000",
+                    glyph: `P`,
+                    glyphColor: "#FF0000",
+                });
+                const Speruvianum = new PinElement({
+                    background: "#00FF99",
+                    glyph: `P`,
+                    glyphColor: "#000000",
+                });
+                const Spimpinellifolium = new PinElement({
+                    background: "#E6E6E6",
+                    glyph: `P`,
+                    glyphColor: "#FF0000",
+                });
+                const Ssitiens = new PinElement({
+                    background: "#FF0000",
+                    glyph: `S`,
+                    glyphColor: "#000000",
+                });
+                const multi = new PinElement({
+                    background: "#000000",
+                    glyph: `*`,
+                    glyphColor: "#FFFFFF",
+                });
+
+                if (locations[i][3] === 'S. sitiens') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Ssitiens.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'multi') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: multi.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. pennellii') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Spennellii.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. peruvianum') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Speruvianum.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. pimpinellifolium') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Spimpinellifolium.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. arcanum') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Sarcanum.element,                        
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. cheesmaniae') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Scheesmaniae.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. chilense') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Schilense.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. chmielewskii') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Schmielewskii.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. corneliomulleri') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Scorneliomulleri.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. galapagense') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Sgalapagense.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. habrochaites') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Shabrochaites.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. huaylasense') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Shuaylasense.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. juglandifolium') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Sjuglandifolium.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. lycopersicoides') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Slycopersicoides.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. lycopersicum') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Slycopersicum.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. lycopersicum var. cerasiforme') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Slycopersicumvarcerasiforme.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. neorickii') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Sneorickii.element,
+                        zIndex: i,
+                    });
+                }
+                if (locations[i][3] === 'S. ochranthum') {
+                    pin = new AdvancedMarkerElement({
+                        position: posit,
+                        map: map,
+                        content: Sochranthum.element,
+                        zIndex: i,
+                    });
+                }
+
+
+               
+                    
+               
+                bounds.extend(posit);
+                google.maps.event.addListener(pin, 'click', (function (marker, i) {
+                    return function () {
+                        infowindow.setContent(locations[i][0]);
+                        infowindow.open(map, marker);
+                    }
+                })(pin, i));
+
+            }
+            map.fitBounds(bounds);
+
         }
 
-        window.initMap = initMap;  
+        initMap();
+
+        function getPin(taxon) {
+            switch (taxon) {
+                case 'S. chmielewskii':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=C|E6E6E6|FF0000";
+                case 'S. corneliomulleri':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=C|87CEEB|000000";
+                case 'S. galapagense':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=G|FF0000|000000";
+                case 'S. habrochaites':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=H|FFF000|FF0000";
+                case 'S. huaylasense':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=H|00FF99|000000";
+                case 'S. juglandifolium':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=J|FF0000|000000";
+                case 'S. lycopersicoides':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=L|FFF000|FF0000";
+                case 'S. lycopersicum':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=L|E5FFE5|000000|";
+                case 'S. lycopersicum var. cerasiforme':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=C|E5FFE5|000000|";
+                case 'S. neorickii':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=N|FF0000|000000";
+                case 'S. ochranthum':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=O|FF0000|000000";
+                case 'S. pennellii':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=P|FFF000|FF0000";
+                case 'S. peruvianum':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=P|00FF99|000000";
+                case 'S. pimpinellifolium':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=P|E6E6E6|FF0000";
+                case 'S. sitiens':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=S|FF0000|000000";
+                case 'multi':
+                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=*|000000|FFFFFF";
+                default:
+                    return "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
+                //return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=X|FFFFFF|000000";
+            }
+        }
+        
     </script>
     
     
