@@ -143,9 +143,7 @@
    
     <script type="text/Javascript">
         var locations = [@Html.Raw(Model.Markers)]
-        console.log(locations);
-
-        
+        //console.log(locations);
 
         $( document ).ready(function() {           
             
@@ -153,8 +151,7 @@
                 dom: 'Bfrtip',
                 buttons: [ 'csvHtml5'],
                 "paging": false,
-            });
-          
+            });          
 
             $("#CountrySelected").change(function() {
                var country = $("#CountrySelected").val();
@@ -178,12 +175,11 @@
                }
             });     
         });
-        let map;
 
+        let map;
         async function initMap() {
             const { Map } = await google.maps.importLibrary("maps");
             const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
-            
 
             map = new Map(document.getElementById("map"), {
                 center: { lat: 0, lng: 180 },
@@ -464,10 +460,6 @@
                     });
                 }
 
-
-               
-                    
-               
                 bounds.extend(posit);
                 google.maps.event.addListener(pin, 'click', (function (marker, i) {
                     return function () {
@@ -475,54 +467,10 @@
                         infowindow.open(map, marker);
                     }
                 })(pin, i));
-
             }
             map.fitBounds(bounds);
-
         }
-
-        initMap();
-
-        function getPin(taxon) {
-            switch (taxon) {
-                case 'S. chmielewskii':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=C|E6E6E6|FF0000";
-                case 'S. corneliomulleri':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=C|87CEEB|000000";
-                case 'S. galapagense':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=G|FF0000|000000";
-                case 'S. habrochaites':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=H|FFF000|FF0000";
-                case 'S. huaylasense':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=H|00FF99|000000";
-                case 'S. juglandifolium':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=J|FF0000|000000";
-                case 'S. lycopersicoides':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=L|FFF000|FF0000";
-                case 'S. lycopersicum':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=L|E5FFE5|000000|";
-                case 'S. lycopersicum var. cerasiforme':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=C|E5FFE5|000000|";
-                case 'S. neorickii':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=N|FF0000|000000";
-                case 'S. ochranthum':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=O|FF0000|000000";
-                case 'S. pennellii':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=P|FFF000|FF0000";
-                case 'S. peruvianum':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=P|00FF99|000000";
-                case 'S. pimpinellifolium':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=P|E6E6E6|FF0000";
-                case 'S. sitiens':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=S|FF0000|000000";
-                case 'multi':
-                    return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=*|000000|FFFFFF";
-                default:
-                    return "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
-                //return "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=X|FFFFFF|000000";
-            }
-        }
-        
+        initMap();        
     </script>
     
     
