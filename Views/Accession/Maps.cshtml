@@ -37,7 +37,8 @@
     </div>
    
 <div class="container col-sm-12 row ">
-    <div class="col-sm-3 ">
+        <div class="col-sm-3 ">
+            Limit search results to:<br />
         @for (var index = 0; index < @Model.Species.Count(); index++)
         {
             <div><input type="checkbox" asp-for="@Model.Species[index].IsChecked" class="form-check-input" /> 
