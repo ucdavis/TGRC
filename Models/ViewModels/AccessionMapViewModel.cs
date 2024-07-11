@@ -50,7 +50,7 @@ namespace TGRC.Models
             provinces.Insert(0,"[Any]");
 
             var countries = await _context.Accessions.Where(a => a.Country != null && a.LatDec.HasValue && a.LonDec.HasValue).Select(a => a.Country).Distinct().OrderBy(a => a).ToListAsync();
-            countries.Insert(0, "[Any");
+            countries.Insert(0, "[Any]");
 
             vm.ProvinceList = provinces;
             vm.CountryList = countries;
