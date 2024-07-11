@@ -24,6 +24,7 @@ namespace TGRC.Models
         public bool Search { get; set; }
         public string StatusSelected { get; set; }
         
+        public List<string> CountryList { get; set; }
         public string CountrySelected { get; set; }
         public List<string> ProvinceList { get; set; }
         public string ProvinceSelected { get; set; }
@@ -45,10 +46,14 @@ namespace TGRC.Models
         
         public static async Task<AccessionMapViewModel> Create(TGRCContext _context, AccessionMapViewModel vm)
         {             
-            var provinces = await _context.Accessions.Where(a=> a.ProvinceOrDepartment != null).Select(a => a.ProvinceOrDepartment).Distinct().OrderBy(a=>a).ToListAsync();
+            var provinces = await _context.Accessions.Where(a=> a.ProvinceOrDepartment != null && a.LatDec.HasValue && a.LonDec.HasValue).Select(a => a.ProvinceOrDepartment).Distinct().OrderBy(a=>a).ToListAsync();
             provinces.Insert(0,"[Any]");
 
+            var countries = await _context.Accessions.Where(a => a.Country != null && a.LatDec.HasValue && a.LonDec.HasValue).Select(a => a.Country).Distinct().OrderBy(a => a).ToListAsync();
+            countries.Insert(0, "[Any");
+
             vm.ProvinceList = provinces;
+            vm.CountryList = countries;
             if(vm.Species == null)
             {
                 vm.Species = await _context.Species.Select(s => new CheckboxListString { Name = s.Taxon, IsChecked = false, Icon = s.Icon}).OrderBy(a=>a.Name).ToListAsync();
